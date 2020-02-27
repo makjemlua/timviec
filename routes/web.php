@@ -3,6 +3,7 @@
 Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home.index');
+Route::post('/', 'UserController@applied');
 
 Route::get('/about-us', function () {
 	return view('about-us');
@@ -56,6 +57,8 @@ Route::group(['prefix' => 'user', 'middleware' => 'CheckLoginUser'], function ()
 
 	Route::get('/viec-lam-da-luu', 'UserController@saveProfile')->name('save.profile');
 
+	Route::get('/viec-lam-da-ung-tuyen', 'UserController@applieProfile')->name('applie.profile');
+
 	Route::get('/setting-account', 'UserController@settingAccount')->name('user.setting.account');
 
 });
@@ -93,7 +96,8 @@ Route::group(['prefix' => 'nha-tuyen-dung'], function () {
 
 //Thông tin tuyển việc
 Route::get('/thong-tin/{slug}-{id}', 'EmployerController@thongtinProfile')->name('employer.thongtin.profile');
-Route::post('/thong-tin/{slug}-{id}', 'UserController@createProfile');
+Route::post('/luu-viec-lam/{slug}-{id}', 'UserController@createProfile');
+Route::post('/nop-ho-so/{slug}-{id}', 'UserController@applied');
 
 //Hồ sơ tuyển dụng
 Route::group(['prefix' => 'nha-tuyen-dung/profile', 'middleware' => 'CheckLoginEmployer'], function () {

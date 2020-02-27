@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Applied;
 use App\Model\Employer;
 use App\Model\EmployerProfile;
 use App\Model\Job;
@@ -67,12 +68,20 @@ class EmployerController extends Controller {
 
 			$sameJob = EmployerProfile::with('employer:id,name,em_company,em_avatar')->where('pr_career', 'like', '%' . $info->pr_career . '%')->orderByDesc('id')->paginate(5);
 
-			$usersaves = SaveProfileEmployer::where('usa_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
+			$usersaves = SaveProfileEmployer::all();
+
+			$applies = Applied::all();
+
+			if (Auth::guard('web')->check()) {
+				$usersaves = SaveProfileEmployer::where('usa_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->where('usa_profile_id', $id)->get();
+				$applies = Applied::where('ap_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->where('ap_profile_id', $id)->get();
+			}
 
 			$viewData = [
 				'info' => $info,
 				'sameJob' => $sameJob,
 				'usersaves' => $usersaves,
+				'applies' => $applies,
 			];
 			return view('nhatuyendung.thongtin', $viewData);
 		}

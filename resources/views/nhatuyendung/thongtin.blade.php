@@ -8,11 +8,12 @@
   input.btn
   {
     font-weight: bold;
+    background-color: #46e761;
   }
   input.btn:hover
   {
     color: white;
-    background-color: black;
+    background-color: blue;
   }
   div.jobButtons
   {
@@ -58,20 +59,37 @@
         </div>
       </div>
       <div class="jobButtons">
-      	<a href="" class="btn apply"><i class="fa fa-paper-plane" aria-hidden="true"></i> Nộp hồ sơ</a>
-      	{{-- <a href="" class="btn"><i class="fa fa-envelope" aria-hidden="true"></i> Gửi email</a> --}}
-        @if(!$usersaves->count() > 0)
-        <form action="" method="POST">
-          @csrf
-          <input type="hidden" name="usa_profile_id" value="{{ $info->id }}">
-          <input type="hidden" name="usa_title" value="{{ $info->pr_title }}">
-          <input type="hidden" name="usa_company" value="{{ $info->employer->em_company }}">
-          <input class="btn" type="submit" value="Lưu việc làm">
-        </form>
-        @else
-          <a href="#" class="btn"><i class="fa fa-envelope" aria-hidden="true"></i> Đã lưu</a>
+        @if(Auth::guard('web')->check()) {{-- Nếu tồn tại user thì mới cho lưu --}}
+          @if(!$applies->count() > 0) {{-- Nếu chưa lưu thì mới cho lưu --}}
+          <form action="{{ url('/nop-ho-so/{slug}-{id}')}}" method="POST">
+            @csrf
+            <input type="hidden" name="ap_profile_id" value="{{ $info->id }}">
+            <input type="hidden" name="ap_title" value="{{ $info->pr_title }}">
+            <input type="hidden" name="ap_name" value="{{ $info->employer->name }}">
+            <input type="hidden" name="ap_company" value="{{ $info->employer->em_company }}">
+            <input type="hidden" name="ap_career" value="{{ $info->pr_career }}">
+            <input type="hidden" name="ap_provinces" value="{{ $info->pr_provinces }}">
+            <input class="btn" type="submit" name="applies" value="Nộp hồ sơ">
+          </form>
+          @else
+            <a href="#" class="btn"><i class="fa fa-envelope" aria-hidden="true"></i> Đã nộp hồ sơ</a>
+          @endif
         @endif
-      	<a href="" class="btn report"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Báo cáo lạm dụng</a>
+
+        @if(Auth::guard('web')->check()) {{-- Nếu tồn tại user thì mới cho lưu --}}
+          @if(!$usersaves->count() > 0) {{-- Nếu chưa lưu thì mới cho lưu --}}
+          <form action="{{ url('/luu-viec-lam/{slug}-{id}')}}" method="POST">
+            @csrf
+            <input type="hidden" name="usa_profile_id" value="{{ $info->id }}">
+            <input type="hidden" name="usa_title" value="{{ $info->pr_title }}">
+            <input type="hidden" name="usa_company" value="{{ $info->employer->em_company }}">
+            <input type="hidden" name="usa_career" value="{{ $info->pr_career }}">
+            <input class="btn" type="submit" name="usersaves" value="Lưu việc làm">
+          </form>
+          @else
+            <a href="#" class="btn"><i class="fa fa-envelope" aria-hidden="true"></i> Đã lưu</a>
+          @endif
+        @endif
       </div>
     </div>
 
@@ -98,7 +116,7 @@
           </div>
         </div>
         <!-- Job Description end -->
-		{{-- @if($sameJob)
+		@if($sameJob)
         <!-- related jobs start -->
         <div class="relatedJobs">
           <h3>Việc làm tương tự</h3>
@@ -127,7 +145,7 @@
 
           </ul>
         </div>
-		@endif --}}
+		@endif
 
 
       </div>
@@ -221,7 +239,7 @@
           <div class="jobdetail">
             <h3>Google Map</h3>
             <div class="gmap">
-              <iframe src="./jobdetail_files/embed.html" allowfullscreen=""></iframe>
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.85762996266!2d106.6853084146229!3d10.822205392290451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174deb3ef536f31%3A0x8b7bb8b7c956157b!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBDw7RuZyBuZ2hp4buHcCBUUC5IQ00!5e0!3m2!1svi!2s!4v1582530176833!5m2!1svi!2s" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
             </div>
           </div>
         </div>

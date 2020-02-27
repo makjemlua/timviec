@@ -6,6 +6,7 @@ use App\Model\Degree;
 use App\Model\Job;
 use App\Model\Language;
 use App\Model\Province;
+use App\Model\SaveProfileEmployer;
 use App\Model\Skill;
 use App\Model\UserExperience;
 use App\Model\UserGeneralInfo;
@@ -25,7 +26,14 @@ class UserProfileController extends DashboardController {
 
 		$userProfile = UserGeneralInfo::where('ge_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
 
-		return view('users.profile.index', compact('userProfile'));
+		$saveProfile = SaveProfileEmployer::where('usa_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
+
+		$viewData = [
+			'userProfile' => $userProfile,
+			'saveProfile' => $saveProfile,
+		];
+
+		return view('users.profile.index', $viewData);
 	}
 
 	//Xem hồ sơ

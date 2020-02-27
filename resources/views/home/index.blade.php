@@ -9,8 +9,18 @@
     -webkit-box-orient: vertical;
     display: -webkit-box;
   }
+  input.btn
+  {
+    font-weight: bold;
+  }
+  input.btn:hover
+  {
+    color: white;
+    background-color: blue;
+  }
 </style>
 <!-- Search start -->
+
 <form>
   <div class="searchwrap">
     <div class="container">
@@ -56,6 +66,8 @@
 
 <!-- Search End -->
 {{-- ------------------------------------------------------------------------ --}}
+
+
 @if($profileNew)
 
     <!-- Việc làm mới start -->
@@ -71,22 +83,20 @@
         <ul class="jobslist row">
 
           @foreach($profileNew as $new)
-
-          <!--Job start-->
-          <li class="col-md-6">
-            <div class="jobint">
-              <div class="row">
-                <div class="col-md-2 col-sm-2"><img src="{{ old('em_avatar',(isset($new->employer->em_avatar)) ? asset(pare_url_file($new->employer->em_avatar)) : asset('images/default.png') ) }}" alt="Job Name"></div>
-                <div class="col-md-7 col-sm-7">
-                  <h4><a class="content-1" href="{{ route('employer.thongtin.profile', [$new->pr_slug, $new->id]) }}">{{ $new->pr_title }}</a></h4>
-                  <div class="company"><a href="{{ route('employer.thongtin.profile', [$new->pr_slug, $new->id]) }}">{{ $new->employer->em_company }}</a></div>
-                  <div class="jobloc"><label class="partTime">{{ $new->pr_salary }}</label>   - <span>{{ $new->pr_provinces }}</span></div>
+            <!--Job start-->
+            <li class="col-md-6">
+              <div class="jobint">
+                <div class="row">
+                  <div class="col-md-2 col-sm-2"><img src="{{ old('em_avatar',(isset($new->employer->em_avatar)) ? asset(pare_url_file($new->employer->em_avatar)) : asset('images/default.png') ) }}" alt="Job Name"></div>
+                  <div class="col-md-7 col-sm-7">
+                    <h4><a class="content-1" href="{{ route('employer.thongtin.profile', [$new->pr_slug, $new->id]) }}">{{ $new->pr_title }}</a></h4>
+                    <div class="company"><a href="{{ route('employer.thongtin.profile', [$new->pr_slug, $new->id]) }}">{{ $new->employer->em_company }}</a></div>
+                    <div class="jobloc"><label class="partTime">{{ $new->pr_salary }}</label>   - <span>{{ $new->pr_provinces }}</span></div>
+                  </div>
                 </div>
-                <div class="col-md-3 col-sm-3"><a href="#" class="applybtn">Apply Now</a></div>
               </div>
-            </div>
-          </li>
-          <!--Job end-->
+            </li>
+            <!--Job end-->
 
           @endforeach
 

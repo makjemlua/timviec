@@ -42,7 +42,7 @@
               <li><a href="{{ route('login.index') }}">Đăng nhập</a></li>
 
               @elseif(Auth::guard('web')->check())
-              <li class="dropdown userbtn"><a href="#"><img src="{{ asset('images/candidates/01.jpg') }}" alt="" class="userimg"></a>
+              <li class="dropdown userbtn"><a href="{{ route('user.info') }}"><img src="{{ asset('images/candidates/01.jpg') }}" alt="" class="userimg"></a>
               	 <ul class="dropdown-menu">
                     <li><a href="{{ route('user.info') }}"><i class="fa fa-tachometer" aria-hidden="true"></i> {{ Auth::guard('web')->user()->name }}</a></li>
                     <li><a href="{{-- {{ route('user.editprofile') }} --}}"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa hồ sơ</a></li>
@@ -53,7 +53,7 @@
               </li>
 
               @elseif(Auth::guard('employers')->check())
-              <li class="dropdown userbtn"><a href="#"><img src="{{ asset('images/candidates/01.jpg') }}" alt="" class="userimg"></a>
+              <li class="dropdown userbtn"><a href="{{ route('employer.info') }}"><img src="{{ asset('images/candidates/01.jpg') }}" alt="" class="userimg"></a>
                  <ul class="dropdown-menu">
                     <li><a href="{{ route('employer.info') }}"><i class="fa fa-tachometer" aria-hidden="true"></i> {{ Auth::guard('employers')->user()->name }}</a></li>
                     <li><a href=""><i class="fa fa-pencil" aria-hidden="true"></i> Đăng tin</a></li>

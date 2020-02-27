@@ -11,7 +11,7 @@ class HomeController extends Controller {
 	public function index(Request $request) {
 
 		//Bài đăng mới
-		$profileNew = EmployerProfile::with('employer:id,em_company,em_avatar')
+		$profileNew = EmployerProfile::with('employer:id,em_company,em_avatar,name')
 			->where([
 				'pr_status' => EmployerProfile::STATUS_ON,
 				'pr_active' => EmployerProfile::ACTIVE_ON,

@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Online Job Portal HTML</title>
+<title>Tuyển dụng - Tìm việc làm</title>
 <!-- Fav Icon -->
 <link rel="shortcut icon" href="favicon.ico">
 
@@ -71,7 +71,7 @@
           <li><a href="{{ route('user.profile.index') }}"><i class="fa fa-user" aria-hidden="true"></i> Hồ sơ</a></li>
           <li><a href="{{ route('user.exam.cv') }}"><i class="fa fa-desktop" aria-hidden="true"></i> Mẫu CV</a></li>
           <li><a href="{{ route('save.profile') }}"><i class="fa fa-download" aria-hidden="true"></i> Việc làm đã lưu</a></li>
-          <li><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Việc làm đã ứng tuyển</a></li>
+          <li><a href="{{ route('applie.profile') }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Việc làm đã ứng tuyển</a></li>
           <li><a href="#"><i class="fa fa-eye" aria-hidden="true"></i> Nhà tuyển dụng theo dõi</a></li>
           <li><a href="#"><i class="fa fa-paper-plane" aria-hidden="true"></i> Hướng  dẫn thao tác</a></li>
           <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> Thông báo</a></li>
@@ -88,7 +88,7 @@
           </li>
           <li class="col-md-2 col-sm-4 col-xs-6">
             <div class="inbox"> <i class="fa fa-download" aria-hidden="true"></i>
-              <h6>2</h6>
+              <h6>{{ $saveProfile->count() }}</h6>
               <strong>Việc làm đã lưu</strong> </div>
           </li>
           <li class="col-md-2 col-sm-4 col-xs-6">
@@ -114,8 +114,6 @@
         </ul>
 
         @yield('content')
-
-
 
 
       </div>

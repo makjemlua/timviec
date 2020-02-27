@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Online Job Portal HTML</title>
+<title>Tuyển dụng - Tìm việc làm</title>
 <!-- Fav Icon -->
 <link rel="shortcut icon" href="favicon.ico">
 
@@ -116,6 +116,71 @@
         </ul>
 
         @yield('content')
+
+        <div class="myads">
+          <h3>Similar Jobs</h3>
+          <ul class="searchList">
+            <!-- start -->
+            <li>
+            <div class="row">
+              <div class="col-md-8 col-sm-8">
+                <div class="jobimg"><img src="images/jobs/jobimg.jpg" alt="Job Name"></div>
+                <div class="jobinfo">
+                  <h3><a href="#.">Technical Database Engineer</a></h3>
+                  <div class="companyName"><a href="#.">Datebase Management Company</a></div>
+                  <div class="location">Permanent   - <span>New York</span></div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="col-md-4 col-sm-4">
+                <div class="listbtn"><a href="#.">Apply Now</a></div>
+              </div>
+            </div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce venenatis arcu est. Phasellus vel dignissim tellus. Aenean fermentum fermentum convallis.</p>
+          </li>
+            <!-- end -->
+
+            <!-- start -->
+            <li>
+            <div class="row">
+              <div class="col-md-8 col-sm-8">
+                <div class="jobimg"><img src="images/jobs/jobimg.jpg" alt="Job Name"></div>
+                <div class="jobinfo">
+                  <h3><a href="#.">Technical Database Engineer</a></h3>
+                  <div class="companyName"><a href="#.">Datebase Management Company</a></div>
+                  <div class="location">Permanent   - <span>New York</span></div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="col-md-4 col-sm-4">
+                <div class="listbtn"><a href="#.">Apply Now</a></div>
+              </div>
+            </div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce venenatis arcu est. Phasellus vel dignissim tellus. Aenean fermentum fermentum convallis.</p>
+          </li>
+            <!-- end -->
+
+            <!-- start -->
+            <li>
+            <div class="row">
+              <div class="col-md-8 col-sm-8">
+                <div class="jobimg"><img src="images/jobs/jobimg.jpg" alt="Job Name"></div>
+                <div class="jobinfo">
+                  <h3><a href="#.">Technical Database Engineer</a></h3>
+                  <div class="companyName"><a href="#.">Datebase Management Company</a></div>
+                  <div class="location">Permanent   - <span>New York</span></div>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <div class="col-md-4 col-sm-4">
+                <div class="listbtn"><a href="#.">Apply Now</a></div>
+              </div>
+            </div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce venenatis arcu est. Phasellus vel dignissim tellus. Aenean fermentum fermentum convallis.</p>
+          </li>
+            <!-- end -->
+          </ul>
+        </div>
 
 
 
