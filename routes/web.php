@@ -11,6 +11,12 @@ Route::get('/about-us', function () {
 
 Route::get('/blogs', 'BlogController@index')->name('get.news');
 Route::get('/blogs/{slug}-{id}', 'BlogController@detail')->name('get.detail.news');
+Route::post('/blogs/{slug}-{id}', 'CommentController@store');
+
+Route::group(['prefix' => 'danh-gia'], function () {
+	Route::get('/comment-article/{id}', 'CommentController@savingRatingArticle')->name('post.rating.article');
+	Route::get('/comment-reply/{id}/{reply}', 'CommentController@savingReplyComment')->name('post.reply.article');
+});
 
 Route::get('/contact', 'ContactController@index')->name('contact');
 
@@ -46,6 +52,31 @@ Route::group(['prefix' => 'dang-ky', 'namespace' => 'Auth'], function () {
 
 	Route::get('/nha-tuyen-dung', 'RegisterController@getRegisterEmployer')->name('register.employer');
 	Route::post('/nha-tuyen-dung', 'RegisterController@postRegisterEmployer');
+});
+
+//Search job
+Route::group(['prefix' => 'jobs'], function () {
+	Route::get('/viec-lam-{slug}/{job}', 'SearchController@index')->name('search.index');
+
+});
+
+//Search province
+Route::group(['prefix' => 'provinces'], function () {
+	Route::get('/khu-vuc-{slug}/{province}', 'SearchController@serachjob')->name('search.province');
+
+});
+
+//Search hồ sơ
+Route::group(['prefix' => 'nha-tuyen-dung'], function () {
+	Route::get('/', 'EmployerController@trangchu')->name('home.tuyendung');
+	Route::get('/ho-so', 'SearchController@timhoso')->name('search.hoso');
+	//Chi tiet ho so
+	Route::get('/ho-so/{slug}-{id}', 'SearchController@viewProfile')->name('employer.detail.userprofile');
+	//Luu ho so
+	Route::post('/luu-ho-so', 'EmployerController@saveProfile');
+	//Get PDF
+	Route::get('/get-pdf/{slug}-{id}', 'EmployerController@getpdf')->name('get.pdf');
+
 });
 
 //User
@@ -86,18 +117,35 @@ Route::group(['prefix' => 'nha-tuyen-dung', 'middleware' => 'CheckLoginEmployer'
 	Route::get('/setting-account', 'EmployerController@settingAccount')->name('employer.setting.account');
 
 });
-Route::group(['prefix' => 'nha-tuyen-dung'], function () {
 
-	Route::get('/', 'EmployerController@home')->name('employer.home');
+//Cart
+Route::group(['prefix' => 'cart'], function () {
+	Route::get('/add/{id}', 'CartController@addCart')->name('add.cart');
+	Route::get('/delete/{id}', 'CartController@delete')->name('delete.cart');
+	Route::get('/destroy', 'CartController@destroy')->name('destroy.cart');
+	Route::get('/update', 'CartController@updateCart')->name('update.cart');
+	Route::get('/danh-sach', 'CartController@getListCart')->name('get.list.cart');
+	Route::get('/danh-sach/{id}', 'CartController@destroy')->name('cart.destroy');
 
-	Route::get('/danh-sach-ho-so', 'EmployerController@viewListProfile')->name('employer.list.profile');
-
+	Route::get('/thanh-toan', 'CartController@getFormPay')->name('get.form.pay');
+	Route::post('/thanh-toan', 'CartController@shoppingCart');
+	Route::get('/thanh-toan-online', 'CartController@savePay')->name('cart.pay');
+	Route::get('/complete', 'CartController@getComplete')->name('complete.cart');
 });
+
+// Route::group(['prefix' => 'nha-tuyen-dung'], function () {
+
+// 	Route::get('/ho-so/{slug}-{id}', 'EmployerController@viewListProfile')->name('employer.detail.userprofile');
+
+// });
 
 //Thông tin tuyển việc
 Route::get('/thong-tin/{slug}-{id}', 'EmployerController@thongtinProfile')->name('employer.thongtin.profile');
 Route::post('/luu-viec-lam/{slug}-{id}', 'UserController@createProfile');
+Route::get('/delete-save/{id}', 'UserController@deleteSave')->name('user.get.delete.save');
+
 Route::post('/nop-ho-so/{slug}-{id}', 'UserController@applied');
+Route::get('/delete-applie/{id}', 'UserController@deleteApplie')->name('user.get.delete.applie');
 
 //Hồ sơ tuyển dụng
 Route::group(['prefix' => 'nha-tuyen-dung/profile', 'middleware' => 'CheckLoginEmployer'], function () {

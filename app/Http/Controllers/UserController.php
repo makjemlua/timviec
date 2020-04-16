@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Applied;
 use App\Model\SaveProfileEmployer;
+use App\Model\UserApplied;
 use App\Model\UserGeneralInfo;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
-class UserController extends DashboardController {
-	public function __construct() {
-		parent::__construct();
-	}
+class UserController extends Controller {
+	//Trang thông tin user
 	public function index() {
 		$user = User::find(get_data_user('web'));
 
@@ -32,13 +30,12 @@ class UserController extends DashboardController {
 
 	//Lưu thông tin hồ sơ
 	public function saveUpdateInfoUser(Request $requestUser) {
-		$user = User::where('id', get_data_user('web'))->first();
+		$user = User::find(get_data_user('web'));
 		$user->name = $requestUser->name;
 		$user->phone = $requestUser->phone;
 		$user->address = $requestUser->address;
 		$user->birthday = $requestUser->birthday;
 		$user->gender = $requestUser->gender;
-		$user->avatar = $requestUser->image;
 		$user->created_at = Carbon::now();
 		$user->updated_at = Carbon::now();
 		if ($requestUser->hasFile('avatar')) {
@@ -47,6 +44,7 @@ class UserController extends DashboardController {
 				$user->avatar = $file['name'];
 			}
 		}
+		//dd($user);
 		$user->save();
 		return redirect()->back()->with('success', 'Cập nhập thành công');
 	}
@@ -63,14 +61,10 @@ class UserController extends DashboardController {
 
 	// Trang hiển thị việc làm đã lưu
 	public function saveProfile() {
-		//$usersaves = SaveProfileEmployer::with('profile:id,pr_slug')->where('usa_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
-
-		$userProfile = UserGeneralInfo::where('ge_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
 
 		$saveProfile = SaveProfileEmployer::where('usa_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
 
 		$viewData = [
-			'userProfile' => $userProfile,
 			'saveProfile' => $saveProfile,
 		];
 
@@ -96,11 +90,10 @@ class UserController extends DashboardController {
 
 	// Trang hiển thị việc làm đã ứng tuyển
 	public function applieProfile() {
-		$userProfile = UserGeneralInfo::where('ge_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
 
-		$applies = Applied::with('profile:id,pr_slug')->where('ap_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
+		$applies = UserApplied::with('profile:id,pr_slug')->where('ap_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
 
-		return view('users.applie-profile', compact('applies', 'userProfile'));
+		return view('users.applie-profile', compact('applies'));
 	}
 
 	// Trang cài đặt tài khoản
@@ -111,7 +104,7 @@ class UserController extends DashboardController {
 	// Nộp hồ sơ
 	public function applied(Request $request) {
 		if ($request->has('applies')) {
-			$applies = new Applied();
+			$applies = new UserApplied();
 			$applies->ap_user_id = Auth::guard('web')->user()->id;
 			$applies->ap_profile_id = $request->ap_profile_id;
 			$applies->ap_title = $request->ap_title;
@@ -126,6 +119,20 @@ class UserController extends DashboardController {
 			return redirect()->back()->with('success', 'Bạn đã nộp hồ sơ');
 		}
 
+	}
+
+	//Các chức năng xóa applie
+	public function deleteApplie($id) {
+		$applies = UserApplied::find($id);
+		$applies->delete();
+		return redirect()->back();
+	}
+
+	//Các chức năng xóa save
+	public function deleteSave($id) {
+		$saveProfile = SaveProfileEmployer::find($id);
+		$saveProfile->delete();
+		return redirect()->back();
 	}
 
 }

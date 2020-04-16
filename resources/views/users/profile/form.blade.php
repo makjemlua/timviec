@@ -201,10 +201,7 @@
                 <div class="col-md-12">
                   <div class="formrow">
                     <label>Mục tiêu nghề nghiệp <span class="star">*</span></label>
-                    <textarea name="ge_career" class="form-control">{{ (isset($userProfile->ge_career) ? $userProfile->ge_career : '• Mong muốn tìm được chỗ làm ổn định lâu dài để gắn bó.
-• Mong muốn tìm được chỗ làm có cơ hội thăng tiến tốt, có nhiều cơ hội để phát triển.
-• Mong muốn tìm được nơi có cơ hội cống hiến bản thân tốt.
-• Mức lương phù hợp với năng lực và kinh nghiệm bản thân') }}</textarea>
+                    <textarea name="ge_career" class="form-control">{{ (isset($userProfile->ge_career) ? $userProfile->ge_career : '<p>&bull; Mong muốn t&igrave;m được chỗ l&agrave;m ổn định l&acirc;u d&agrave;i để gắn b&oacute;.</p><p>&bull; Mong muốn t&igrave;m được chỗ l&agrave;m c&oacute; cơ hội thăng tiến tốt, c&oacute; nhiều cơ hội để ph&aacute;t triển.</p><p>&bull; Mong muốn t&igrave;m được nơi c&oacute; cơ hội cống hiến bản th&acirc;n tốt.</p><p>&bull; Mức lương ph&ugrave; hợp với năng lực v&agrave; kinh nghiệm bản th&acirc;n</p>') }}</textarea>
                   </div>
                 </div>
               </div>
@@ -443,15 +440,16 @@
               {{-- <a href="">Add Other</a> --}}
               <hr>
 
-              <!-- Skills -->
+              <!-- Học vấn -->
               <h5>Trình độ & bằng cấp <span class="bat-buoc">(không bắt buộc)</span></h5>
+              1
               <div class="row">
                 <div class="col-md-6">
                   <div class="formrow">
                     <label>Trình độ</label>
-                    <select class="form-control" name="de_level">
-                      <option value="{{ old('de_level',isset($degrees->de_level) ? $degrees->de_level : '') }}">
-                        {{ old('de_level',isset($degrees->de_level) ? $degrees->de_level : 'Loại') }}
+                    <select class="form-control" name="de_level_1">
+                      <option value="{{ old('de_level_1',isset($degrees->de_level_1) ? $degrees->de_level_1 : '') }}">
+                        {{ old('de_level_1',isset($degrees->de_level_1) ? $degrees->de_level_1 : 'Loại') }}
                       </option>
                       <option value="Đại học">Đại học</option>
                       <option value="Cao Đẳng">Cao Đẳng</option>
@@ -466,16 +464,16 @@
                 <div class="col-md-6">
                   <div class="formrow">
                     <label>Đơn vị đào tạo</label>
-                    <input type="text" name="de_school_name" class="form-control" value="{{ old('de_school_name', isset($degrees->de_school_name) ? $degrees->de_school_name : '') }}" placeholder="Location">
+                    <input type="text" name="de_school_1" class="form-control" value="{{ old('de_school_1', isset($degrees->de_school_1) ? $degrees->de_school_1 : '') }}" placeholder="Location">
                   </div>
                 </div>
 
                 <div class="col-md-3">
                   <div class="formrow">
                     <label>Thời gian từ</label>
-                    <select class="form-control" name="de_year_from">
-                      <option value="{{ old('de_year_from',isset($degrees->de_year_from) ? $degrees->de_year_from : '') }}">
-                        {{ old('de_year_from',isset($degrees->de_year_from) ? $degrees->de_year_from : 'Năm') }}
+                    <select class="form-control" name="de_year_from_1">
+                      <option value="{{ old('de_year_from_1',isset($degrees->de_year_from_1) ? $degrees->de_year_from_1 : '') }}">
+                        {{ old('de_year_from_1',isset($degrees->de_year_from_1) ? $degrees->de_year_from_1 : 'Năm') }}
                       </option>
                       <option value="2020">2020</option>
                       <option value="2019">2019</option>
@@ -538,9 +536,9 @@
                 <div class="col-md-3">
                   <div class="formrow">
                     <label>Đến</label>
-                    <select class="form-control" name="de_year_to">
-                      <option value="{{ old('de_year_to',isset($degrees->de_year_to) ? $degrees->de_year_to : '') }}">
-                        {{ old('de_year_to',isset($degrees->de_year_to) ? $degrees->de_year_to : 'Năm') }}
+                    <select class="form-control" name="de_year_to_1">
+                      <option value="{{ old('de_year_to_1',isset($degrees->de_year_to_1) ? $degrees->de_year_to_1 : '') }}">
+                        {{ old('de_year_to_1',isset($degrees->de_year_to_1) ? $degrees->de_year_to_1 : 'Năm') }}
                       </option>
                       <option value="2020">2020</option>
                       <option value="2019">2019</option>
@@ -604,16 +602,195 @@
                 <div class="col-md-6">
                   <div class="formrow">
                     <label>Chuyên ngành</label>
-                    <input type="text" name="de_diploma" class="form-control" value="{{ old('de_diploma', isset($degrees->de_diploma) ? $degrees->de_diploma : '') }}" placeholder="Location">
+                    <input type="text" name="de_diploma_1" class="form-control" value="{{ old('de_diploma_1', isset($degrees->de_diploma_1) ? $degrees->de_diploma_1 : '') }}" placeholder="Location">
                   </div>
                 </div>
 
                 <div class="col-md-3">
                   <div class="formrow">
                     <label>Loại</label>
-                    <select class="form-control" name="de_loai_tn">
-                      <option value="{{ old('de_loai_tn',isset($degrees->de_loai_tn) ? $degrees->de_loai_tn : '') }}">
-                        {{ old('de_loai_tn',isset($degrees->de_loai_tn) ? $degrees->de_loai_tn : 'Loại') }}
+                    <select class="form-control" name="de_loai_tn_1">
+                      <option value="{{ old('de_loai_tn_1',isset($degrees->de_loai_tn_1) ? $degrees->de_loai_tn_1 : '') }}">
+                        {{ old('de_loai_tn_1',isset($degrees->de_loai_tn_1) ? $degrees->de_loai_tn_1 : 'Loại') }}
+                      </option>
+                      <option value="Giỏi">Giỏi</option>
+                      <option value="Khá">Khá</option>
+                      <option value="Trung bình">Trung bình</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              2
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="formrow">
+                    <label>Trình độ</label>
+                    <select class="form-control" name="de_level_2">
+                      <option value="{{ old('de_level_2',isset($degrees->de_level_2) ? $degrees->de_level_2 : '') }}">
+                        {{ old('de_level_2',isset($degrees->de_level_2) ? $degrees->de_level_2 : 'Loại') }}
+                      </option>
+                      <option value="Đại học">Đại học</option>
+                      <option value="Cao Đẳng">Cao Đẳng</option>
+                      <option value="Trung cấp">Trung cấp</option>
+                      <option value="Cao học">Cao học</option>
+                      <option value="Trung học">Trung học</option>
+                      <option value="Chứng chỉ">Chứng chỉ</option>
+                      <option value="Lao động phổ thông">Lao động phổ thông</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="formrow">
+                    <label>Đơn vị đào tạo</label>
+                    <input type="text" name="de_school_2" class="form-control" value="{{ old('de_school_2', isset($degrees->de_school_2) ? $degrees->de_school_2 : '') }}" placeholder="Location">
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="formrow">
+                    <label>Thời gian từ</label>
+                    <select class="form-control" name="de_year_from_2">
+                      <option value="{{ old('de_year_from_2',isset($degrees->de_year_from_2) ? $degrees->de_year_from_2 : '') }}">
+                        {{ old('de_year_from_2',isset($degrees->de_year_from_2) ? $degrees->de_year_from_2 : 'Năm') }}
+                      </option>
+                      <option value="2020">2020</option>
+                      <option value="2019">2019</option>
+                      <option value="2018">2018</option>
+                      <option value="2017">2017</option>
+                      <option value="2016">2016</option>
+                      <option value="2015">2015</option>
+                      <option value="2014">2014</option>
+                      <option value="2013">2013</option>
+                      <option value="2012">2012</option>
+                      <option value="2011">2011</option>
+                      <option value="2010">2010</option>
+
+                      <option value="2009">2009</option>
+                      <option value="2008">2008</option>
+                      <option value="2007">2007</option>
+                      <option value="2006">2006</option>
+                      <option value="2005">2005</option>
+                      <option value="2004">2004</option>
+                      <option value="2003">2003</option>
+                      <option value="2002">2002</option>
+                      <option value="2001">2001</option>
+                      <option value="2000">2000</option>
+
+                      <option value="1999">1999</option>
+                      <option value="1998">1998</option>
+                      <option value="1997">1997</option>
+                      <option value="1996">1996</option>
+                      <option value="1995">1995</option>
+                      <option value="1994">1994</option>
+                      <option value="1993">1993</option>
+                      <option value="1992">1992</option>
+                      <option value="1991">1991</option>
+                      <option value="1990">1990</option>
+
+                      <option value="1989">1989</option>
+                      <option value="1988">1988</option>
+                      <option value="1987">1987</option>
+                      <option value="1986">1986</option>
+                      <option value="1985">1985</option>
+                      <option value="1984">1984</option>
+                      <option value="1983">1983</option>
+                      <option value="1982">1982</option>
+                      <option value="1981">1981</option>
+                      <option value="1980">1980</option>
+
+                      <option value="1979">1979</option>
+                      <option value="1978">1978</option>
+                      <option value="1977">1977</option>
+                      <option value="1976">1976</option>
+                      <option value="1975">1975</option>
+                      <option value="1974">1974</option>
+                      <option value="1973">1973</option>
+                      <option value="1972">1972</option>
+                      <option value="1971">1971</option>
+                      <option value="1970">1970</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="formrow">
+                    <label>Đến</label>
+                    <select class="form-control" name="de_year_to_2">
+                      <option value="{{ old('de_year_to_2',isset($degrees->de_year_to_2) ? $degrees->de_year_to_2 : '') }}">
+                        {{ old('de_year_to_2',isset($degrees->de_year_to_2) ? $degrees->de_year_to_2 : 'Năm') }}
+                      </option>
+                      <option value="2020">2020</option>
+                      <option value="2019">2019</option>
+                      <option value="2018">2018</option>
+                      <option value="2017">2017</option>
+                      <option value="2016">2016</option>
+                      <option value="2015">2015</option>
+                      <option value="2014">2014</option>
+                      <option value="2013">2013</option>
+                      <option value="2012">2012</option>
+                      <option value="2011">2011</option>
+                      <option value="2010">2010</option>
+
+                      <option value="2009">2009</option>
+                      <option value="2008">2008</option>
+                      <option value="2007">2007</option>
+                      <option value="2006">2006</option>
+                      <option value="2005">2005</option>
+                      <option value="2004">2004</option>
+                      <option value="2003">2003</option>
+                      <option value="2002">2002</option>
+                      <option value="2001">2001</option>
+                      <option value="2000">2000</option>
+
+                      <option value="1999">1999</option>
+                      <option value="1998">1998</option>
+                      <option value="1997">1997</option>
+                      <option value="1996">1996</option>
+                      <option value="1995">1995</option>
+                      <option value="1994">1994</option>
+                      <option value="1993">1993</option>
+                      <option value="1992">1992</option>
+                      <option value="1991">1991</option>
+                      <option value="1990">1990</option>
+
+                      <option value="1989">1989</option>
+                      <option value="1988">1988</option>
+                      <option value="1987">1987</option>
+                      <option value="1986">1986</option>
+                      <option value="1985">1985</option>
+                      <option value="1984">1984</option>
+                      <option value="1983">1983</option>
+                      <option value="1982">1982</option>
+                      <option value="1981">1981</option>
+                      <option value="1980">1980</option>
+
+                      <option value="1979">1979</option>
+                      <option value="1978">1978</option>
+                      <option value="1977">1977</option>
+                      <option value="1976">1976</option>
+                      <option value="1975">1975</option>
+                      <option value="1974">1974</option>
+                      <option value="1973">1973</option>
+                      <option value="1972">1972</option>
+                      <option value="1971">1971</option>
+                      <option value="1970">1970</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="formrow">
+                    <label>Chuyên ngành</label>
+                    <input type="text" name="de_diploma_2" class="form-control" value="{{ old('de_diploma_2', isset($degrees->de_diploma_2) ? $degrees->de_diploma_2 : '') }}" placeholder="Location">
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="formrow">
+                    <label>Loại</label>
+                    <select class="form-control" name="de_loai_tn_2">
+                      <option value="{{ old('de_loai_tn_2',isset($degrees->de_loai_tn_2) ? $degrees->de_loai_tn_2 : '') }}">
+                        {{ old('de_loai_tn_2',isset($degrees->de_loai_tn_2) ? $degrees->de_loai_tn_2 : 'Loại') }}
                       </option>
                       <option value="Giỏi">Giỏi</option>
                       <option value="Khá">Khá</option>
@@ -798,22 +975,134 @@
               <!-- Kỹ năng -->
               <h5>Kỹ năng & sở trường <span class="bat-buoc">(không bắt buộc)</h5>
               <div class="row">
-                <div class="col-md-12">
+
+                <div class="col-md-4">
                   <div class="formrow">
-                    <label>Kĩ năng/ Sở trường</label>
-                    <textarea class="form-control" name="sk_skill_name" placeholder="About Degree"></textarea>
+                    <label>Kĩ năng 1</label>
+                    <input type="text" class="form-control" name="sk_skill_1" placeholder="Skill 1" value="{{ old('sk_skill_1',isset($skills->sk_skill_1) ? $skills->sk_skill_1 : '') }}">
                   </div>
                 </div>
+                <div class="col-md-2">
+                  <div class="formrow">
+                    <label>% đạt được</label>
+                    <select class="form-control" name="sk_percent_1">
+                      <option value="{{ old('sk_percent_1',isset($skills->sk_percent_1) ? $skills->sk_percent_1 : '') }}">
+                        {{ old('sk_percent_1',isset($skills->sk_percent_1) ? $skills->sk_percent_1 : 'Chọn') }} %
+                      </option>
+                      <option value="100">100 %</option>
+                      <option value="90">90 %</option>
+                      <option value="80">80 %</option>
+                      <option value="70">70 %</option>
+                      <option value="60">60 %</option>
+                      <option value="50">50 %</option>
+                      <option value="40">40 %</option>
+                      <option value="30">30 %</option>
+                      <option value="20">20 %</option>
+                      <option value="10">10 %</option>
+                      <option value="0">0 %</option>
+                      <option value="">Không chọn</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="formrow">
+                    <label>Kĩ năng 2</label>
+                    <input type="text" class="form-control" name="sk_skill_2" placeholder="Skill 2" value="{{ old('sk_skill_2',isset($skills->sk_skill_2) ? $skills->sk_skill_2 : '') }}">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="formrow">
+                    <label>% đạt được</label>
+                    <select class="form-control" name="sk_percent_2">
+                      <option value="{{ old('sk_percent_2',isset($skills->sk_percent_2) ? $skills->sk_percent_2 : '') }}">
+                        {{ old('sk_percent_2',isset($skills->sk_percent_2) ? $skills->sk_percent_2 : 'Chọn') }} %
+                      </option>
+                      <option value="100">100 %</option>
+                      <option value="90">90 %</option>
+                      <option value="80">80 %</option>
+                      <option value="70">70 %</option>
+                      <option value="60">60 %</option>
+                      <option value="50">50 %</option>
+                      <option value="40">40 %</option>
+                      <option value="30">30 %</option>
+                      <option value="20">20 %</option>
+                      <option value="10">10 %</option>
+                      <option value="0">0 %</option>
+                      <option value="">Không chọn</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="formrow">
+                    <label>Kĩ năng 3</label>
+                    <input type="text" class="form-control" name="sk_skill_3" placeholder="Skill 3" value="{{ old('sk_skill_3',isset($skills->sk_skill_3) ? $skills->sk_skill_3 : '') }}">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="formrow">
+                    <label>% đạt được</label>
+                    <select class="form-control" name="sk_percent_3">
+                      <option value="{{ old('sk_percent_3',isset($skills->sk_percent_3) ? $skills->sk_percent_3 : '') }}">
+                        {{ old('sk_percent_3',isset($skills->sk_percent_3) ? $skills->sk_percent_3 : 'Chọn') }} %
+                      </option>
+                      <option value="100">100 %</option>
+                      <option value="90">90 %</option>
+                      <option value="80">80 %</option>
+                      <option value="70">70 %</option>
+                      <option value="60">60 %</option>
+                      <option value="50">50 %</option>
+                      <option value="40">40 %</option>
+                      <option value="30">30 %</option>
+                      <option value="20">20 %</option>
+                      <option value="10">10 %</option>
+                      <option value="0">0 %</option>
+                      <option value="">Không chọn</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="formrow">
+                    <label>Kĩ năng 4</label>
+                    <input type="text" class="form-control" name="sk_skill_4" placeholder="Skill 4" value="{{ old('sk_skill_4',isset($skills->sk_skill_4) ? $skills->sk_skill_4 : '') }}">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="formrow">
+                    <label>% đạt được</label>
+                    <select class="form-control" name="sk_percent_4">
+                      <option value="{{ old('sk_percent_4',isset($skills->sk_percent_4) ? $skills->sk_percent_4 : '') }}">
+                        {{ old('sk_percent_4',isset($skills->sk_percent_4) ? $skills->sk_percent_4 : 'Chọn') }} %
+                      </option>
+                      <option value="100">100 %</option>
+                      <option value="90">90 %</option>
+                      <option value="80">80 %</option>
+                      <option value="70">70 %</option>
+                      <option value="60">60 %</option>
+                      <option value="50">50 %</option>
+                      <option value="40">40 %</option>
+                      <option value="30">30 %</option>
+                      <option value="20">20 %</option>
+                      <option value="10">10 %</option>
+                      <option value="0">0 %</option>
+                      <option value="">Không chọn</option>
+                    </select>
+                  </div>
+                </div>
+
+
                 <div class="col-md-12">
                   <div class="formrow">
                     <label>Sở thích</label>
-                    <textarea class="form-control" name="sk_interesting" placeholder="About Degree"></textarea>
+                    <input type="text" class="form-control" name="sk_interesting" placeholder="Skill 4" value="{{ old('sk_interesting',isset($skills->sk_interesting) ? $skills->sk_interesting : '') }}">
                   </div>
                 </div>
                 <div class="col-md-12">
                   <div class="formrow">
                     <label>Kĩ năng đặc biệt/ Tài lẻ</label>
-                    <textarea class="form-control" name="sk_speial_skill" placeholder="About Degree"></textarea>
+                    <input type="text" class="form-control" name="sk_speial_skill" placeholder="Skill 4" value="{{ old('sk_speial_skill',isset($skills->sk_speial_skill) ? $skills->sk_speial_skill : '') }}">
                   </div>
                 </div>
               </div>
@@ -832,6 +1121,8 @@
 @section('script')
   <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
   <script>
-    //CKEDITOR.replace('ex_description');
+    CKEDITOR.replace('ge_career');
+    CKEDITOR.replace('ex_description');
+    CKEDITOR.replace('ex_achieve');
   </script>
 @stop

@@ -36,13 +36,13 @@
 
               </li>
               <li><a href="{{ route('contact') }}">Liên hệ</a></li>
-              <li><a href="{{ route('employer.home') }}">Tuyển dụng</a></li>
+              <li><a href="{{ route('home.tuyendung') }}">Tuyển dụng</a></li>
 
               @if(!Auth::guard('web')->check() && !Auth::guard('employers')->check())
               <li><a href="{{ route('login.index') }}">Đăng nhập</a></li>
 
               @elseif(Auth::guard('web')->check())
-              <li class="dropdown userbtn"><a href="{{ route('user.info') }}"><img src="{{ asset('images/candidates/01.jpg') }}" alt="" class="userimg"></a>
+              <li class="dropdown userbtn"><a href="{{ route('user.info') }}"><img src="{{ old('avatar',(isset(Auth::guard('web')->user()->avatar)) ? asset(pare_url_file(Auth::guard('web')->user()->avatar)) : asset('images/default.png') ) }}" alt="" class="userimg"></a>
               	 <ul class="dropdown-menu">
                     <li><a href="{{ route('user.info') }}"><i class="fa fa-tachometer" aria-hidden="true"></i> {{ Auth::guard('web')->user()->name }}</a></li>
                     <li><a href="{{-- {{ route('user.editprofile') }} --}}"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa hồ sơ</a></li>
@@ -53,7 +53,7 @@
               </li>
 
               @elseif(Auth::guard('employers')->check())
-              <li class="dropdown userbtn"><a href="{{ route('employer.info') }}"><img src="{{ asset('images/candidates/01.jpg') }}" alt="" class="userimg"></a>
+              <li class="dropdown userbtn"><a href="{{ route('employer.info') }}"><img src="{{ old('avatar',(isset(Auth::guard('employers')->user()->em_avatar)) ? asset(pare_url_file(Auth::guard('employers')->user()->em_avatar)) : asset('images/default.png') ) }}" alt="" class="userimg"></a>
                  <ul class="dropdown-menu">
                     <li><a href="{{ route('employer.info') }}"><i class="fa fa-tachometer" aria-hidden="true"></i> {{ Auth::guard('employers')->user()->name }}</a></li>
                     <li><a href=""><i class="fa fa-pencil" aria-hidden="true"></i> Đăng tin</a></li>

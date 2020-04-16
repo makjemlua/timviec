@@ -17,8 +17,9 @@
 		<tr>
 			<th scope="col">Vị trí</th>
 			<th scope="col">Công ty</th>
-			<th scope="col">Thời gian nộp hồ sơ</th>
+			<th scope="col">Thời gian</th>
 			<th scope="col">Trạng thái</th>
+			<th scope="col">Thao tác</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -35,6 +36,11 @@
 				@else
 					<p>Đã từ chối</p>
 				@endif
+			</td>
+			<td>
+				<a href="{{ route('user.get.delete.applie', $applie->id) }}">
+					<i class="fa fa-trash" aria-hidden="true"></i> Hủy
+				</a>
 			</td>
 		</tr>
 		@endforeach

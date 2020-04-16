@@ -24,7 +24,7 @@ class EmployerProfileController extends Controller {
 			'employers' => $employers,
 			'profiles' => $profiles,
 		];
-		return view('users.profile.view', $viewData);
+		return view('nhatuyendung.profile.view', $viewData);
 	}
 
 	//Trang tạo thông tin hồ sơ

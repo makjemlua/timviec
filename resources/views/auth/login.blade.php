@@ -80,13 +80,13 @@
       <div class="col-md-4">
       	<div class="userccount">
       		<!-- login form -->
-			<p class="btn-un">Bạn chưa có tài khoản ?</p>
-      		<!-- login form  end-->
-			<div class="row">
-				<div class="col-md-8"><a class="btn btn-success btn-register" href="{{ route('register.index') }}">Đăng ký</a></div>
-				<div class="col-md-4"><img src="{{ asset('images/dang-ky.png') }}" alt="dang-ky" width="50px"></div>
-			</div>
-			<p>Tham gia ngay và truy cập hàng ngàn công việc hàng đầu!</p>
+    			<p class="btn-un">Bạn chưa có tài khoản ?</p>
+          		<!-- login form  end-->
+    			<div class="row">
+    				<div class="col-md-8"><a class="btn btn-success btn-register" href="{{ route('register.index') }}">Đăng ký</a></div>
+    				<div class="col-md-4"><img src="{{ asset('images/dang-ky.png') }}" alt="dang-ky" width="50px"></div>
+    			</div>
+    			<p>Tham gia ngay và truy cập hàng ngàn công việc hàng đầu!</p>
       	</div>
       </div>
       </div>

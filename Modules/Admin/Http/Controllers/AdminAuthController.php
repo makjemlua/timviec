@@ -14,7 +14,12 @@ class AdminAuthController extends Controller {
 		$data = $request->only('email', 'password');
 
 		if (Auth::guard('admins')->attempt($data)) {
-			return redirect()->route('admin.home');
+			if (Auth::guard('admins')->user()->active == 1) {
+				return redirect()->route('admin.home');
+			} else {
+				return redirect()->back()->with('error', 'Tài khoản của bạn đã bị khóa');
+			}
+
 		}
 		return redirect()->back()->with('error', 'Tên tài khoản hoặc mật khẩu không chính xác');
 	}

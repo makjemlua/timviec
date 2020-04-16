@@ -6,6 +6,39 @@ hr
 	border-top: 1px solid #f00;
 }
 </style>
+<ul class="row profilestat">
+          <li class="col-md-4 col-sm-4 col-xs-6">
+            <div class="inbox"> <i class="fa fa-star"></i>
+              <h6>
+              	@if(strtotime($employers->em_timevip) > time())
+					<div data-countdown="{{ date('Y/m/d H:i:s',strtotime($employers->em_timevip)) }}"></div>
+				@else
+					<p>0</p>
+				@endif
+              </h6>
+              <strong>VIP</strong> </div>
+          </li>
+          <li class="col-md-2 col-sm-4 col-xs-6">
+            <div class="inbox"> <i class="fa fa-download" aria-hidden="true"></i>
+              <h6>2</h6>
+              <strong>Việc làm đã lưu</strong> </div>
+          </li>
+          <li class="col-md-2 col-sm-4 col-xs-6">
+            <div class="inbox"> <i class="fa fa-user" aria-hidden="true"></i>
+              <h6>1</h6>
+              <strong>Hồ sơ</strong> </div>
+          </li>
+          <li class="col-md-2 col-sm-4 col-xs-6">
+            <div class="inbox"> <i class="fa fa-desktop" aria-hidden="true"></i>
+              <h6>2</h6>
+              <strong>CV mẫu</strong> </div>
+          </li>
+          <li class="col-md-2 col-sm-4 col-xs-6">
+            <div class="inbox"> <i class="fa fa-envelope-o" aria-hidden="true"></i>
+              <h6>8</h6>
+              <strong>Thông báo</strong> </div>
+          </li>
+        </ul>
 <form action="" method="POST" enctype="multipart/form-data">
 	@csrf
 	<div class="box-content">
@@ -15,7 +48,7 @@ hr
 		<div class="row">
 			<div class="col-md-3">
 				<div class="card" style="width: 18rem;">
-					<img src="{{ asset(pare_url_file($employers->em_avatar)) }}" class="card-img-top" alt="..." >
+					<img src="{{ old('avatar',(isset($employers->em_avatar)) ? asset(pare_url_file($employers->em_avatar)) : asset('images/default.png') ) }}" class="card-img-top" alt="..." >
 					<div>
 						<input type="file" name="avatar">
 					</div>
@@ -118,4 +151,15 @@ hr
 		</div>
 	</div>
 </form>
+
+<script src="http://code.jquery.com/jquery.js"></script>
+<script src="https://cdn.rawgit.com/hilios/jQuery.countdown/2.2.0/dist/jquery.countdown.min.js"></script>
+<script>
+	$('[data-countdown]').each(function() {
+  var $this = $(this), finalDate = $(this).data('countdown');
+  $this.countdown(finalDate, function(event) {
+    $this.html(event.strftime('%D ngày %H:%M:%S'));
+  });
+});
+</script>
 @stop

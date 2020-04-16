@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Applied;
+use App\Model\Degree;
 use App\Model\Employer;
 use App\Model\EmployerProfile;
-use App\Model\Job;
-use App\Model\Province;
 use App\Model\SaveProfileEmployer;
+use App\Model\SaveProfileUser;
+use App\Model\Skill;
+use App\Model\UserApplied;
+use App\Model\UserExperience;
 use App\Model\UserGeneralInfo;
+use App\Services\ProcessView;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
+use PDF;
 
 class EmployerController extends Controller {
 	public function index() {
@@ -30,7 +34,6 @@ class EmployerController extends Controller {
 		$employers->em_description = $requestEmployer->em_description;
 		$employers->em_website = $requestEmployer->em_website;
 		$employers->em_contact_type = $requestEmployer->em_contact_type;
-		$employers->em_avatar = $requestEmployer->avatar;
 		$employers->created_at = Carbon::now();
 		$employers->updated_at = Carbon::now();
 		if ($requestEmployer->hasFile('avatar')) {
@@ -55,27 +58,18 @@ class EmployerController extends Controller {
 				->where('pr_active', EmployerProfile::STATUS_ON)
 				->find($id);
 
-			// $view = 'blog' . $info->id;
-
-			// if (Session::has($view)) {
-			// 	$info->where('id', $info->id)->increment('pr_view_count', 1);
-			// 	Session::put($view, 1);
-			// }
-
-			$view = EmployerProfile::find($id);
-			$view->pr_view_count = $view->pr_view_count + 1;
-			$view->save();
-
 			$sameJob = EmployerProfile::with('employer:id,name,em_company,em_avatar')->where('pr_career', 'like', '%' . $info->pr_career . '%')->orderByDesc('id')->paginate(5);
 
 			$usersaves = SaveProfileEmployer::all();
 
-			$applies = Applied::all();
+			$applies = UserApplied::all();
 
 			if (Auth::guard('web')->check()) {
 				$usersaves = SaveProfileEmployer::where('usa_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->where('usa_profile_id', $id)->get();
-				$applies = Applied::where('ap_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->where('ap_profile_id', $id)->get();
+				$applies = UserApplied::where('ap_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->where('ap_profile_id', $id)->get();
 			}
+
+			ProcessView::view('employer_profile', 'pr_view_count', 'profile', $id);
 
 			$viewData = [
 				'info' => $info,
@@ -87,36 +81,84 @@ class EmployerController extends Controller {
 		}
 	}
 
-	public function viewListProfile() {
+	// Xem tất cả hồ sơ
+	// public function viewListProfile() {
 
-		$profileLists = UserGeneralInfo::with('user:id,name,avatar')->where([
-			'ge_status' => UserGeneralInfo::STATUS_PUBLIC,
-			//'pr_active' => UserGeneralInfo::ACTIVE_ON,
-		])->orderBy('id', 'DESC')->paginate(5);
+	// 	$profileLists = UserGeneralInfo::with('user:id,name,avatar')->where([
+	// 		'ge_status' => UserGeneralInfo::STATUS_PUBLIC,
+	// 		//'pr_active' => UserGeneralInfo::ACTIVE_ON,
+	// 	])->orderBy('id', 'DESC')->paginate(5);
 
-		$viewData = [
-			'profileLists' => $profileLists,
-		];
+	// 	$viewData = [
+	// 		'profileLists' => $profileLists,
+	// 	];
 
-		return view('tuyen-dung', $viewData);
-	}
+	// 	return view('nhatuyendung.tuyen-dung', $viewData);
+	// }
 
-	public function home() {
-		$jobs = Job::all();
-		$provinces = Province::all();
+	//Trang nhà tuyển dụng
+	public function trangchu() {
+		return view('nhatuyendung.home');
 
-		$viewData = [
-			'jobs' => $jobs,
-			'provinces' => $provinces,
-		];
-		return view('nhatuyendung.home', $viewData);
 	}
 
 	public function profileDetail() {
 
 	}
 
-	public function saveProfile() {
+	//Luu ho so
+	public function saveProfile(Request $request) {
+		if ($request->has('employersaves')) {
+			$employersaves = new SaveProfileUser();
+			$employersaves->sa_employer_id = Auth::guard('employers')->user()->id;
+			$employersaves->sa_profile_id = $request->sa_profile_id;
+			$employersaves->sa_title = $request->sa_title;
+			$employersaves->sa_name = $request->sa_name;
+			$employersaves->sa_level = $request->sa_level;
+			$employersaves->created_at = Carbon::now();
+			$employersaves->updated_at = Carbon::now();
+			$employersaves->save();
+			return redirect()->back()->with('success', 'Bạn đã lưu hồ sơ');
+		}
+	}
 
+	public function getpdf(Request $request) {
+		$url = $request->segment(3);
+
+		$url = preg_split('/(-)/i', $url);
+
+		if ($id = array_pop($url)) {
+
+			$info = UserGeneralInfo::with('user:id,name,email,avatar,gender,phone,birthday,address')
+				->where([
+					'ge_status' => UserGeneralInfo::STATUS_PUBLIC,
+					'ge_active' => UserGeneralInfo::ACTIVE_ON,
+				])
+				->find($id);
+
+			$education = Degree::find($id);
+
+			$exp = UserExperience::find($id);
+
+			$skill = Skill::find($id);
+
+			$employersaves = SaveProfileUser::all();
+
+			$years = Carbon::parse($info->user->birthday)->age;
+
+			$rd = Carbon::now()->toDateString();
+
+			$viewData = [
+				'info' => $info,
+				'education' => $education,
+				'exp' => $exp,
+				'skill' => $skill,
+				'years' => $years,
+				'employersaves' => $employersaves,
+			];
+
+			$pdf = PDF::loadView('nhatuyendung.getpdfprofile', $viewData);
+			return $pdf->download('ho-so-' . $info->ge_slug . '-' . $rd . '.pdf');
+		}
 	}
 }

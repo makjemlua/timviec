@@ -101,7 +101,7 @@
 				</tr>
 				<tr>
 					<td>Mục tiêu nghề nghiệp</td>
-					<td class="info">{{ $userProfile->ge_career }}</td>
+					<td class="info">{!! $userProfile->ge_career !!}</td>
 				</tr>
 			</table>
 		</div>
@@ -121,11 +121,11 @@
 				</tr>
 				<tr>
 					<td>Mô tả công việc</td>
-					<td class="info">{{ $userProfileExp->ex_description }}</td>
+					<td class="info">{!! $userProfileExp->ex_description !!}</td>
 				</tr>
 				<tr>
 					<td>Thành tích đạt được</td>
-					<td class="info">{{ $userProfileExp->ex_achieve }}</td>
+					<td class="info">{!! $userProfileExp->ex_achieve !!}</td>
 				</tr>
 			</table>
 		</div>

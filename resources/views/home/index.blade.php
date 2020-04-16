@@ -18,6 +18,10 @@
     color: white;
     background-color: blue;
   }
+  .jobslist li
+  {
+    margin-top: 0;
+  }
 </style>
 <!-- Search start -->
 
@@ -53,9 +57,6 @@
           <input type="submit" class="btn" value="Search Job">
         </div>
       </div>
-      <!-- button start -->
-      <div class="getstarted"><a href="{{ route('home.index') }}"><i class="fa fa-user" aria-hidden="true"></i> Get Started Now</a></div>
-      <!-- button end -->
 
     </div>
   </div>
@@ -72,43 +73,10 @@
 
     <!-- Việc làm mới start -->
     <div class="section greybg">
-      <div class="container">
-        <!-- title start -->
-        <div class="titleTop">
-          <h3>Việc làm <span>mới</span></h3>
-        </div>
-        <!-- title end -->
-
-        <!--Featured Job start-->
-        <ul class="jobslist row">
-
-          @foreach($profileNew as $new)
-            <!--Job start-->
-            <li class="col-md-6">
-              <div class="jobint">
-                <div class="row">
-                  <div class="col-md-2 col-sm-2"><img src="{{ old('em_avatar',(isset($new->employer->em_avatar)) ? asset(pare_url_file($new->employer->em_avatar)) : asset('images/default.png') ) }}" alt="Job Name"></div>
-                  <div class="col-md-7 col-sm-7">
-                    <h4><a class="content-1" href="{{ route('employer.thongtin.profile', [$new->pr_slug, $new->id]) }}">{{ $new->pr_title }}</a></h4>
-                    <div class="company"><a href="{{ route('employer.thongtin.profile', [$new->pr_slug, $new->id]) }}">{{ $new->employer->em_company }}</a></div>
-                    <div class="jobloc"><label class="partTime">{{ $new->pr_salary }}</label>   - <span>{{ $new->pr_provinces }}</span></div>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <!--Job end-->
-
-          @endforeach
-
-        </ul>
-        <!--Featured Job end-->
-
-        <!--button start-->
-        <div class="viewallbtn"><a href="{{ route('home.index') }}">View All Featured Jobs</a>
-        </div>
-        <!--button end-->
-      </div>
+      <div class="container" id="tag_container">
+        @include('home.newajax')
     </div>
+  </div>
     <!-- Việc làm mới ends -->
 @endif
 {{-- ------------------------------------------------------------------------------- --}}
@@ -121,132 +89,112 @@
       <h3>Top <span>Thương hiệu</span></h3>
     </div>
     <!-- title end -->
+    @if($companys)
 
     <ul class="employerList">
+      @foreach($companys as $company)
       <!--employer-->
-      <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Company Name"><a href="{{ route('home.index') }}"><img src="images/employers/emplogo1.jpg" alt="Company Name"></a></li>
-      <!--employer-->
-      <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Company Name"><a href="{{ route('home.index') }}"><img src="images/employers/emplogo2.jpg" alt="Company Name"></a></li>
-      <!--employer-->
-      <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Company Name"><a href="{{ route('home.index') }}"><img src="images/employers/emplogo3.jpg" alt="Company Name"></a></li>
-      <!--employer-->
-      <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Company Name"><a href="{{ route('home.index') }}"><img src="images/employers/emplogo4.jpg" alt="Company Name"></a></li>
-      <!--employer-->
-      <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Company Name"><a href="{{ route('home.index') }}"><img src="images/employers/emplogo5.jpg" alt="Company Name"></a></li>
-      <!--employer-->
-      <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Company Name"><a href="{{ route('home.index') }}"><img src="images/employers/emplogo6.jpg" alt="Company Name"></a></li>
-      <!--employer-->
-      <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Company Name"><a href="{{ route('home.index') }}"><img src="images/employers/emplogo7.jpg" alt="Company Name"></a></li>
-      <!--employer-->
-      <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Company Name"><a href="{{ route('home.index') }}"><img src="images/employers/emplogo8.jpg" alt="Company Name"></a></li>
-      <!--employer-->
-      <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Company Name"><a href="{{ route('home.index') }}"><img src="images/employers/emplogo9.jpg" alt="Company Name"></a></li>
-      <!--employer-->
-      <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Company Name"><a href="{{ route('home.index') }}"><img src="images/employers/emplogo10.jpg" alt="Company Name"></a></li>
-      <!--employer-->
-      <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Company Name"><a href="{{ route('home.index') }}"><img src="images/employers/emplogo11.jpg" alt="Company Name"></a></li>
-      <!--employer-->
-      <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Company Name"><a href="{{ route('home.index') }}"><img src="images/employers/emplogo12.jpg" alt="Company Name"></a></li>
-      <!--employer-->
-      <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Company Name"><a href="{{ route('home.index') }}"><img src="images/employers/emplogo13.jpg" alt="Company Name"></a></li>
-      <!--employer-->
-      <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Company Name"><a href="{{ route('home.index') }}"><img src="images/employers/emplogo14.jpg" alt="Company Name"></a></li>
-      <!--employer-->
-      <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Company Name"><a href="{{ route('home.index') }}"><img src="images/employers/emplogo15.jpg" alt="Company Name"></a></li>
-      <!--employer-->
-      <li data-toggle="tooltip" data-placement="top" title="" data-original-title="Company Name"><a href="{{ route('home.index') }}"><img src="images/employers/emplogo16.jpg" alt="Company Name"></a></li>
+      <li data-toggle="tooltip" data-placement="top" title="" data-original-title="{{ $company->em_company }}"><a href="#"><img src="{{ old('em_avatar',(isset($company->em_avatar)) ? asset(pare_url_file($company->em_avatar)) : asset('images/default.png') ) }}" alt="Company Name"></a></li>
+      @endforeach
+
     </ul>
+    @endif
   </div>
 </div>
 <!-- Top Thương hiệu ends -->
 
-{{-- ------------------------------------------------------------------------------- --}}
-
-@if($profileHot)
-<!-- Việc làm hot start -->
-<div class="section greybg">
-  <div class="container">
-    <!-- title start -->
-    <div class="titleTop">
-      <h3>Việc làm <span>hot</span></h3>
-    </div>
-    <!-- title end -->
-
-    <!--Featured Job start-->
-    <ul class="jobslist row">
-      @foreach($profileHot as $hot)
-        <!--Job start-->
-        <li class="col-md-6">
-          <div class="jobint">
-            <div class="row">
-              <div class="col-md-2 col-sm-2"><img src="{{ old('em_avatar',(isset($hot->employer->em_avatar)) ? asset(pare_url_file($hot->employer->em_avatar)) : asset('images/default.png') ) }}" alt="Job Name"></div>
-              <div class="col-md-7 col-sm-7">
-                <h4><a href="{{ route('employer.thongtin.profile', [$hot->pr_slug, $hot->id]) }}">{{ $hot->pr_title }}</a></h4>
-                <div class="company"><a href="{{ route('home.index') }}">{{ $hot->employer->em_company }}</a></div>
-                <div class="jobloc"><label class="fulltime">{{ $hot->pr_salary }}</label>   - <span>{{ $hot->pr_provinces }}</span></div>
-              </div>
-              <div class="col-md-3 col-sm-3"><a href="{{ route('home.index') }}" class="applybtn">Apply Now</a></div>
-            </div>
-          </div>
-        </li>
-        <!--Job end-->
-      @endforeach
-
-    </ul>
-    <!--Featured Job end-->
-
-    <!--button start-->
-    <div class="viewallbtn"><a href="{{ route('home.index') }}">View All Featured Jobs</a>
-    </div>
-    <!--button end-->
-  </div>
-</div>
-<!-- Việc làm hot ends -->
-@endif
 
 {{-- ------------------------------------------------------------------------------- --}}
 
-@if($profilePrompt)
-<!-- Tuyển gấp start -->
-<div class="section greybg">
+<!-- Popular Searches start -->
+<div class="section">
   <div class="container">
     <!-- title start -->
     <div class="titleTop">
-      <h3>Tuyển <span>gấp</span></h3>
+      <h3>Việc làm theo <span>khu vực</span></h3>
     </div>
     <!-- title end -->
+    <div class="topsearchwrap row">
+      <div class="col-md-12">
+        <!--Categories start-->
+        <ul class="row catelist">
+          @foreach($provinces as $province)
+            <li class="col-md-3 col-sm-3"><a href="{{ route('search.province', [$province->slug, $province->name]) }}">{{ $province->name }}</a></li>
+          @endforeach
+        </ul>
+        <!--Categories end-->
+      </div>
 
-    <!--Featured Job start-->
-    <ul class="jobslist row">
-      @foreach($profilePrompt as $prompt)
-      <!--Job start-->
-      <li class="col-md-6">
-        <div class="jobint">
-          <div class="row">
-            <div class="col-md-2 col-sm-2"><img src="{{ old('em_avatar',(isset($prompt->employer->em_avatar)) ? asset(pare_url_file($prompt->employer->em_avatar)) : asset('images/default.png') ) }}" alt="Job Name"></div>
-            <div class="col-md-7 col-sm-7">
-              <h4><a href="{{ route('home.index') }}">{{ $prompt->pr_title }}</a></h4>
-              <div class="company"><a href="{{ route('employer.thongtin.profile', [$prompt->pr_slug, $prompt->id]) }}">{{ $prompt->employer->em_company }}</a></div>
-              <div class="jobloc"><label class="fulltime">{{ $prompt->pr_salary }}</label>   - <span>{{ $prompt->pr_provinces }}</span></div>
-            </div>
-            <div class="col-md-3 col-sm-3"><a href="{{ route('home.index') }}" class="applybtn">Apply Now</a></div>
-          </div>
-        </div>
-      </li>
-      <!--Job end-->
-      @endforeach
-
-
-    </ul>
-    <!--Featured Job end-->
-
-    <!--button start-->
-    <div class="viewallbtn"><a href="{{ route('home.index') }}">View All Featured Jobs</a>
     </div>
-    <!--button end-->
   </div>
 </div>
-<!-- Tuyển gấp ends -->
-@endif
+<!-- Popular Searches ends -->
+
+{{-- ------------------------------------------------------------------------------- --}}
+
+<!-- Popular Searches start -->
+<div class="section">
+  <div class="container">
+    <!-- title start -->
+    <div class="titleTop">
+      <h3>Việc làm theo <span>ngành nghề</span></h3>
+    </div>
+    <!-- title end -->
+    <div class="topsearchwrap row">
+      <div class="col-md-12">
+        <!--Categories start-->
+        <ul class="row catelist">
+          @foreach($jobs as $job)
+            <li class="col-md-3 col-sm-3"><a href="{{ route('search.index', [$job->slug, $job->name]) }}">{{ $job->name }}</a></li>
+          @endforeach
+        </ul>
+        <!--Categories end-->
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- Popular Searches ends -->
+
+{{-- ------------------------------------------------------------------------------- --}}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(window).on('hashchange', function() {
+        if (window.location.hash) {
+            var page = window.location.hash.replace('#', '');
+            if (page == Number.NaN || page <= 0) {
+                return false;
+            }else{
+                getData(page);
+            }
+        }
+    });
+    $(document).ready(function()
+    {
+        $(document).on('click', '.pagination a',function(event)
+        {
+            event.preventDefault();
+            $('li').removeClass('active');
+            $(this).parent('li').addClass('active');
+            var myurl = $(this).attr('href');
+            var page=$(this).attr('href').split('page=')[1];
+            getData(page);
+        });
+    });
+    function getData(page){
+        $.ajax(
+        {
+            url: '?page=' + page,
+            type: "get",
+            datatype: "html"
+        }).done(function(data){
+            $("#tag_container").empty().html(data);
+            location.hash = page;
+        }).fail(function(jqXHR, ajaxOptions, thrownError){
+              alert('Không có dữ liệu trả về');
+        });
+    }
+</script>
 
 @stop

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Arr;
 
 class User extends Authenticatable {
 	use Notifiable;
@@ -15,25 +16,28 @@ class User extends Authenticatable {
 	 */
 	protected $table = 'users';
 	protected $guarded = ['*'];
-	// protected $fillable = [
-	// 	'name', 'email', 'avatar', 'phone', 'address', 'birthday', 'gender', 'password', 'provider', 'provider_id',
+
+	// protected $hidden = [
+	// 	'password', 'remember_token',
 	// ];
 
-	/**
-	 * The attributes that should be hidden for arrays.
-	 *
-	 * @var array
-	 */
-	protected $hidden = [
-		'password', 'remember_token',
-	];
+	// protected $casts = [
+	// 	'email_verified_at' => 'datetime',
+	// ];
 
-	/**
-	 * The attributes that should be cast to native types.
-	 *
-	 * @var array
-	 */
-	protected $casts = [
-		'email_verified_at' => 'datetime',
+	const STATUS_PUBLIC = 1;
+	const STATUS_PRIVATE = 0;
+	protected $status = [
+		1 => [
+			'name' => 'Public',
+			'class' => 'btn-success',
+		],
+		0 => [
+			'name' => 'Private',
+			'class' => 'btn-danger',
+		],
 	];
+	public function getStatus() {
+		return Arr::get($this->status, $this->active, '[N\A]');
+	}
 }

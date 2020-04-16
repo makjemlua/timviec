@@ -80,38 +80,6 @@
         </ul>
       </div>
       <div class="col-md-9 col-sm-8">
-        <ul class="row profilestat">
-          <li class="col-md-2 col-sm-4 col-xs-6">
-            <div class="inbox"> <i class="fa fa-eye" aria-hidden="true"></i>
-              <h6>10</h6>
-              <strong>Lượt xem</strong> </div>
-          </li>
-          <li class="col-md-2 col-sm-4 col-xs-6">
-            <div class="inbox"> <i class="fa fa-download" aria-hidden="true"></i>
-              <h6>{{ $saveProfile->count() }}</h6>
-              <strong>Việc làm đã lưu</strong> </div>
-          </li>
-          <li class="col-md-2 col-sm-4 col-xs-6">
-            <div class="inbox"> <i class="fa fa-user" aria-hidden="true"></i>
-              <h6>{{ $userProfile->count() }}</h6>
-              <strong>Hồ sơ</strong> </div>
-          </li>
-          <li class="col-md-2 col-sm-4 col-xs-6">
-            <div class="inbox"> <i class="fa fa-eye" aria-hidden="true"></i>
-              <h6>21</h6>
-              <strong>Đang theo dõi</strong> </div>
-          </li>
-          <li class="col-md-2 col-sm-4 col-xs-6">
-            <div class="inbox"> <i class="fa fa-desktop" aria-hidden="true"></i>
-              <h6>2</h6>
-              <strong>CV mẫu</strong> </div>
-          </li>
-          <li class="col-md-2 col-sm-4 col-xs-6">
-            <div class="inbox"> <i class="fa fa-envelope-o" aria-hidden="true"></i>
-              <h6>8</h6>
-              <strong>Thông báo</strong> </div>
-          </li>
-        </ul>
 
         @yield('content')
 

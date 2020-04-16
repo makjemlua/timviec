@@ -1,0 +1,1 @@
+detail {{ $profile->ge_title }}

@@ -6,7 +6,6 @@ use App\Model\Degree;
 use App\Model\Job;
 use App\Model\Language;
 use App\Model\Province;
-use App\Model\SaveProfileEmployer;
 use App\Model\Skill;
 use App\Model\UserExperience;
 use App\Model\UserGeneralInfo;
@@ -14,23 +13,21 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
-class UserProfileController extends DashboardController {
-	public function __construct() {
-		parent::__construct();
-	}
+class UserProfileController extends Controller {
 
 	//Trang hiển thị danh sách hồ sơ
 	public function index() {
-		//$userProfile = UserGeneralInfo::with('user:id');
 
 		$userProfile = UserGeneralInfo::where('ge_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
 
-		$saveProfile = SaveProfileEmployer::where('usa_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
+		$count1 = UserGeneralInfo::where('ge_user_id', get_data_user('web', 'id'))->where('ge_status', 1)->count();
+		//dd($count1);
 
 		$viewData = [
 			'userProfile' => $userProfile,
-			'saveProfile' => $saveProfile,
+			'count1' => $count1,
 		];
 
 		return view('users.profile.index', $viewData);
@@ -73,7 +70,7 @@ class UserProfileController extends DashboardController {
 		$userProfile = new UserGeneralInfo();
 		$userProfile->ge_user_id = Auth::guard('web')->user()->id;
 		$userProfile->ge_title = $requestProfile->ge_title;
-		//$userProfile->ge_title = Str::slug($requestProfile->ge_title);
+		$userProfile->ge_slug = Str::slug($requestProfile->ge_title);
 		$userProfile->ge_level = $requestProfile->ge_level;
 		$userProfile->ge_experience = $requestProfile->ge_experience;
 		$userProfile->ge_position_current = $requestProfile->ge_position_current;
@@ -105,12 +102,20 @@ class UserProfileController extends DashboardController {
 		//Lấy thông trình độ & bằng cấp
 		$degrees = new Degree();
 		$degrees->de_user_id = Auth::guard('web')->user()->id;
-		$degrees->de_level = $requestProfile->de_level;
-		$degrees->de_school_name = $requestProfile->de_school_name;
-		$degrees->de_year_from = $requestProfile->de_year_from;
-		$degrees->de_year_to = $requestProfile->de_year_to;
-		$degrees->de_diploma = $requestProfile->de_diploma;
-		$degrees->de_loai_tn = $requestProfile->de_loai_tn;
+		$degrees->de_level_1 = $requestProfile->de_level_1;
+		$degrees->de_school_1 = $requestProfile->de_school_1;
+		$degrees->de_year_from_1 = $requestProfile->de_year_from_1;
+		$degrees->de_year_to_1 = $requestProfile->de_year_to_1;
+		$degrees->de_diploma_1 = $requestProfile->de_diploma_1;
+		$degrees->de_loai_tn_1 = $requestProfile->de_loai_tn_1;
+
+		$degrees->de_level_2 = $requestProfile->de_level_2;
+		$degrees->de_school_2 = $requestProfile->de_school_2;
+		$degrees->de_year_from_2 = $requestProfile->de_year_from_2;
+		$degrees->de_year_to_2 = $requestProfile->de_year_to_2;
+		$degrees->de_diploma_2 = $requestProfile->de_diploma_2;
+		$degrees->de_loai_tn_2 = $requestProfile->de_loai_tn_2;
+
 		$degrees->created_at = Carbon::now();
 		$degrees->updated_at = Carbon::now();
 		$degrees->save();
@@ -131,7 +136,19 @@ class UserProfileController extends DashboardController {
 		//Lấy thông tin kỹ năng & sở trường
 		$skills = new Skill();
 		$skills->sk_user_id = Auth::guard('web')->user()->id;
-		$skills->sk_skill_name = $requestProfile->sk_skill_name;
+
+		$skills->sk_skill_1 = $requestProfile->sk_skill_1;
+		$skills->sk_percent_1 = $requestProfile->sk_percent_1;
+
+		$skills->sk_skill_2 = $requestProfile->sk_skill_2;
+		$skills->sk_percent_2 = $requestProfile->sk_percent_2;
+
+		$skills->sk_skill_3 = $requestProfile->sk_skill_3;
+		$skills->sk_percent_3 = $requestProfile->sk_percent_3;
+
+		$skills->sk_skill_4 = $requestProfile->sk_skill_4;
+		$skills->sk_percent_4 = $requestProfile->sk_percent_4;
+
 		$skills->sk_interesting = $requestProfile->sk_interesting;
 		$skills->sk_speial_skill = $requestProfile->sk_speial_skill;
 		$skills->created_at = Carbon::now();
@@ -196,12 +213,19 @@ class UserProfileController extends DashboardController {
 
 		//Update thông trình độ & bằng cấp
 		$degrees = Degree::find($id);
-		$degrees->de_level = $requestProfile->de_level;
-		$degrees->de_school_name = $requestProfile->de_school_name;
-		$degrees->de_year_from = $requestProfile->de_year_from;
-		$degrees->de_year_to = $requestProfile->de_year_to;
-		$degrees->de_diploma = $requestProfile->de_diploma;
-		$degrees->de_loai_tn = $requestProfile->de_loai_tn;
+		$degrees->de_level_1 = $requestProfile->de_level_1;
+		$degrees->de_school_1 = $requestProfile->de_school_1;
+		$degrees->de_year_from_1 = $requestProfile->de_year_from_1;
+		$degrees->de_year_to_1 = $requestProfile->de_year_to_1;
+		$degrees->de_diploma_1 = $requestProfile->de_diploma_1;
+		$degrees->de_loai_tn_1 = $requestProfile->de_loai_tn_1;
+
+		$degrees->de_level_2 = $requestProfile->de_level_2;
+		$degrees->de_school_2 = $requestProfile->de_school_2;
+		$degrees->de_year_from_2 = $requestProfile->de_year_from_2;
+		$degrees->de_year_to_2 = $requestProfile->de_year_to_2;
+		$degrees->de_diploma_2 = $requestProfile->de_diploma_2;
+		$degrees->de_loai_tn_2 = $requestProfile->de_loai_tn_2;
 		$degrees->created_at = Carbon::now();
 		$degrees->updated_at = Carbon::now();
 		$degrees->save();
@@ -226,7 +250,19 @@ class UserProfileController extends DashboardController {
 
 		//Update thông tin kỹ năng & sở trường
 		$skills = Skill::find($id);
-		$skills->sk_skill_name = $requestProfile->sk_skill_name;
+
+		$skills->sk_skill_1 = $requestProfile->sk_skill_1;
+		$skills->sk_percent_1 = $requestProfile->sk_percent_1;
+
+		$skills->sk_skill_2 = $requestProfile->sk_skill_2;
+		$skills->sk_percent_2 = $requestProfile->sk_percent_2;
+
+		$skills->sk_skill_3 = $requestProfile->sk_skill_3;
+		$skills->sk_percent_3 = $requestProfile->sk_percent_3;
+
+		$skills->sk_skill_4 = $requestProfile->sk_skill_4;
+		$skills->sk_percent_4 = $requestProfile->sk_percent_4;
+
 		$skills->sk_interesting = $requestProfile->sk_interesting;
 		$skills->sk_speial_skill = $requestProfile->sk_speial_skill;
 		$skills->created_at = Carbon::now();

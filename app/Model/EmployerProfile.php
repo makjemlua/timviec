@@ -17,25 +17,27 @@ class EmployerProfile extends Model {
 	protected $status = [
 		1 => [
 			'name' => 'Public',
-			'class' => 'label-success',
+			'class' => 'btn-success',
 		],
 		0 => [
 			'name' => 'Private',
-			'class' => 'label-danger',
+			'class' => 'btn-danger',
 		],
 	];
-
-	const HOT_ON = 1; // Bài đăng hot
-	const HOT_OFF = 0;
 
 	const ACTIVE_ON = 1; // Duyệt bài đăng
 	const ACTIVE_OFF = 0;
 
-	const MOI_ON = 1; // Bài đăng mới
-	const MOI_OFF = 0;
-
-	const PROMPT_ON = 1; // Bài đăng tuyển gấp
-	const PROMPT_OFF = 0;
+	protected $active = [
+		1 => [
+			'name' => 'Duyệt',
+			'class' => 'btn-success',
+		],
+		0 => [
+			'name' => 'Chưa duyệt',
+			'class' => 'btn-danger',
+		],
+	];
 
 	public function employer() {
 		return $this->belongsTo('App\Model\Employer', 'pr_employer_id', 'id');
@@ -43,5 +45,9 @@ class EmployerProfile extends Model {
 
 	public function getStatus() {
 		return Arr::get($this->status, $this->pr_status, '[N\A]');
+	}
+
+	public function getActive() {
+		return Arr::get($this->active, $this->pr_active, '[N\A]');
 	}
 }

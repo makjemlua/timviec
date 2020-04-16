@@ -44,7 +44,7 @@
         <div class="row">
           <div class="col-md-8">
             <h2>{{ $info->pr_title }}</h2>
-            <div class="ptext">Ngày đăng: {{ $info->created_at }}</div>
+            <div class="ptext">Ngày đăng: {{ date('d-m-Y',strtotime($info->created_at)) }} | Lượt xem: {{ $info->pr_view_count }}</div>
             <div class="salary">Lương tháng: <strong>{{ $info->pr_salary }}</strong></div>
           </div>
           <div class="col-md-4">
@@ -59,8 +59,8 @@
         </div>
       </div>
       <div class="jobButtons">
-        @if(Auth::guard('web')->check()) {{-- Nếu tồn tại user thì mới cho lưu --}}
-          @if(!$applies->count() > 0) {{-- Nếu chưa lưu thì mới cho lưu --}}
+        @if(Auth::guard('web')->check()) {{-- Nếu tồn tại user thì mới cho applie --}}
+          @if(!$applies->count() > 0) {{-- Nếu chưa applie thì mới cho applie --}}
           <form action="{{ url('/nop-ho-so/{slug}-{id}')}}" method="POST">
             @csrf
             <input type="hidden" name="ap_profile_id" value="{{ $info->id }}">

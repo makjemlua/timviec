@@ -20,7 +20,7 @@
 <h1 style="text-align: center; padding: 10px 10px; color: red;">Bạn chưa có hồ sơ nào</h1>
 @else
 <div class="table-responsive">
-<table class="table table-striped table-sm">
+<table class="table table-striped table-sm" id="myForm">
 	<thead>
 		<tr>
 			<th>STT</th>
@@ -37,7 +37,13 @@
 		<tr>
 			<td>{{ $a++ }}</td>
 			<td width="150px">
-				<a href="{{ route('user.get.action.profile',['active', $userProfiles->id]) }}" class="label {{ $userProfiles->getStatus($userProfiles->ge_status)['class'] }}">{{ $userProfiles->getStatus($userProfiles->ge_status)['name'] }}</a>
+				@if($count1 == 1)
+					@if($userProfiles->ge_status == 1)
+					<a href="{{ route('user.get.action.profile',['active', $userProfiles->id]) }}" class="label {{ $userProfiles->getStatus($userProfiles->ge_status)['class'] }}">{{ $userProfiles->getStatus($userProfiles->ge_status)['name'] }}</a>
+					@endif
+				@else
+					<a href="{{ route('user.get.action.profile',['active', $userProfiles->id]) }}" class="label {{ $userProfiles->getStatus($userProfiles->ge_status)['class'] }}">{{ $userProfiles->getStatus($userProfiles->ge_status)['name'] }}</a>
+				@endif
 			</td>
 			<td>
 				{{ $userProfiles->ge_title }}
@@ -74,4 +80,10 @@
 		<a href="{{ route('user.profile.create') }}" class="btn btn-success">Tạo hồ sơ mới</a>
 	</div>
 @endif
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$('#myForm input').on('change', function() {
+	   alert($('input[name=radioName]:checked', '#myForm').val());
+	});
+</script>
 @stop

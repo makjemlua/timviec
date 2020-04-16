@@ -69,20 +69,20 @@
         <ul class="usernavdash">
           <li><a href="{{ route('employer.info') }}"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</a></li>
           <li><a href="{{ route('employer.profile.index') }}"><i class="fa fa-user" aria-hidden="true"></i> Quản lý tin tuyển dụng</a></li>
-          <li><a href=""><i class="fa fa-desktop" aria-hidden="true"></i> Đăng tin tuyển dụng</a></li>
+          <li><a href="{{ route('employer.profile.create') }}"><i class="fa fa-desktop" aria-hidden="true"></i> Đăng tin tuyển dụng</a></li>
           <li><a href="#"><i class="fa fa-download" aria-hidden="true"></i> Tìm hồ sơ ứng viên</a></li>
           <li><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Hồ sơ đã lưu</a></li>
           <li><a href="#"><i class="fa fa-eye" aria-hidden="true"></i> Hồ sơ đã ứng tuyển</a></li>
           <li><a href="#"><i class="fa fa-paper-plane" aria-hidden="true"></i> Hướng  dẫn thao tác</a></li>
           <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> Thông báo</a></li>
           <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> Thông tin thanh toán</a></li>
-          <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> Đăng ký dịch vụ</a></li>
+          <li><a href="{{ route('get.list.cart') }}"><i class="fa fa-envelope" aria-hidden="true"></i> Đăng ký dịch vụ</a></li>
           <li><a href=""><i class="fa fa-lock" aria-hidden="true"></i> Cài đặt tài khoản</a></li>
           <li><a href=""><i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a></li>
         </ul>
       </div>
       <div class="col-md-9 col-sm-8">
-        <ul class="row profilestat">
+        {{-- <ul class="row profilestat">
           <li class="col-md-2 col-sm-4 col-xs-6">
             <div class="inbox"> <i class="fa fa-eye" aria-hidden="true"></i>
               <h6>10</h6>
@@ -113,7 +113,7 @@
               <h6>8</h6>
               <strong>Thông báo</strong> </div>
           </li>
-        </ul>
+        </ul> --}}
 
         @yield('content')
 
