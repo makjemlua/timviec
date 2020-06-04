@@ -44,7 +44,7 @@
 							<b>{{ $a++ }}</b>
 						</td>
 						<td style="width: 200px"><!-- Tên bài viết -->
-							<b>{{ $article->bo_title }}</b>
+							<b><a href="{{ route('get.detail.news', [$article->bo_slug, $article->id]) }}" target="_blank">{{ $article->bo_title }}</a></b>
 						</td>
 						<td>
 							<img src="{{ asset(pare_url_file($article->bo_avatar)) }}" alt="image" width="120px" height="80px">

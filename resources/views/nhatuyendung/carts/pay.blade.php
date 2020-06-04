@@ -23,10 +23,10 @@ $vnp_HashSecret = "GEDLRUNWAXYGESUJNYLRWAHSZUKAEWVW"; //Chuỗi bí mật
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-sm-6">
-        <h1 class="page-heading">Candidates Listing</h1>
+        <h1 class="page-heading">Hóa đơn</h1>
       </div>
       <div class="col-md-6 col-sm-6">
-        <div class="breadCrumb"><a href="">Home</a> / <a href="">Resume Search</a> / <span>Candidates</span></div>
+        <div class="breadCrumb"><a href="">Home</a> / <a href="">Nhà tuyển dụng</a> / <span>Hóa đơn</span></div>
       </div>
     </div>
   </div>
@@ -172,7 +172,8 @@ if (isset($vnp_HashSecret)) {
 								<button type="submit" class="btn btn-primary btn-submit-fix">Đăng ký dịch vụ <i class="fa fa-credit-card"></i>
 								</button>
 							</div>
-							<a class="btn btn-success" href="<?php echo $vnp_Url ?>" class="beta-btn primary">Thanh toán bằng thẻ <i class="fa fa-credit-card"></i></a>
+							{{-- <a class="btn btn-success" href="" class="beta-btn primary">Thanh toán bằng thẻ <i class="fa fa-credit-card"></i>
+							</a> --}}
 						</div>
 					</div>
 				</div>

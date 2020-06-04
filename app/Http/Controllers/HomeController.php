@@ -6,8 +6,8 @@ use App\Model\Employer;
 use App\Model\EmployerProfile;
 use App\Model\Job;
 use App\Model\Province;
+use App\Model\Transaction;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 
 class HomeController extends Controller {
 	public function index(Request $request) {
@@ -140,8 +140,10 @@ class HomeController extends Controller {
 			return view('home.newajax', compact('profileNew'));
 		}
 
-		$now = Carbon::now();
-		//dd($now);
+		$tinhtien = 0;
+		if ($request->date_from && $request->date_to) {
+			$tinhtien = Transaction::whereBetween('created_at', [$request->date_from, $request->date_to])->sum('tr_total');
+		}
 
 		$viewData = [
 			'profileNew' => $profileNew,
@@ -149,6 +151,7 @@ class HomeController extends Controller {
 			'profiles' => $profiles,
 			'jobs' => $jobs,
 			'provinces' => $provinces,
+			'tinhtien' => $tinhtien,
 		];
 
 		return view('home.index', $viewData);

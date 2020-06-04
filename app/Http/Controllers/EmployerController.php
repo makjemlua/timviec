@@ -2,21 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Degree;
+use App\Http\Requests\RequestPasswordEmployer;
 use App\Model\Employer;
 use App\Model\EmployerProfile;
 use App\Model\SaveProfileEmployer;
 use App\Model\SaveProfileUser;
-use App\Model\Skill;
 use App\Model\UserApplied;
-use App\Model\UserExperience;
-use App\Model\UserGeneralInfo;
 use App\Services\ProcessView;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\View;
-use PDF;
 
 class EmployerController extends Controller {
 	public function index() {
@@ -58,22 +55,13 @@ class EmployerController extends Controller {
 				->where('pr_active', EmployerProfile::STATUS_ON)
 				->find($id);
 
-			$sameJob = EmployerProfile::with('employer:id,name,em_company,em_avatar')->where('pr_career', 'like', '%' . $info->pr_career . '%')->orderByDesc('id')->paginate(5);
-
-			$usersaves = SaveProfileEmployer::all();
-
-			$applies = UserApplied::all();
-
-			if (Auth::guard('web')->check()) {
-				$usersaves = SaveProfileEmployer::where('usa_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->where('usa_profile_id', $id)->get();
-				$applies = UserApplied::where('ap_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->where('ap_profile_id', $id)->get();
-			}
+			$usersaves = SaveProfileEmployer::where('usa_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->where('usa_profile_id', $id)->get();
+			$applies = UserApplied::where('ap_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->where('ap_profile_id', $id)->get();
 
 			ProcessView::view('employer_profile', 'pr_view_count', 'profile', $id);
 
 			$viewData = [
 				'info' => $info,
-				'sameJob' => $sameJob,
 				'usersaves' => $usersaves,
 				'applies' => $applies,
 			];
@@ -107,7 +95,7 @@ class EmployerController extends Controller {
 	}
 
 	//Luu ho so
-	public function saveProfile(Request $request) {
+	public function saveProfiles(Request $request) {
 		if ($request->has('employersaves')) {
 			$employersaves = new SaveProfileUser();
 			$employersaves->sa_employer_id = Auth::guard('employers')->user()->id;
@@ -122,43 +110,109 @@ class EmployerController extends Controller {
 		}
 	}
 
-	public function getpdf(Request $request) {
-		$url = $request->segment(3);
+	// public function getpdf(Request $request) {
+	// 	$url = $request->segment(3);
 
-		$url = preg_split('/(-)/i', $url);
+	// 	$url = preg_split('/(-)/i', $url);
 
-		if ($id = array_pop($url)) {
+	// 	if ($id = array_pop($url)) {
 
-			$info = UserGeneralInfo::with('user:id,name,email,avatar,gender,phone,birthday,address')
-				->where([
-					'ge_status' => UserGeneralInfo::STATUS_PUBLIC,
-					'ge_active' => UserGeneralInfo::ACTIVE_ON,
-				])
-				->find($id);
+	// 		$info = UserGeneralInfo::with('user:id,name,email,avatar,gender,phone,birthday,address')
+	// 			->where([
+	// 				'ge_status' => UserGeneralInfo::STATUS_PUBLIC,
+	// 				'ge_active' => UserGeneralInfo::ACTIVE_ON,
+	// 			])
+	// 			->find($id);
 
-			$education = Degree::find($id);
+	// 		$education = Degree::find($id);
 
-			$exp = UserExperience::find($id);
+	// 		$exp = UserExperience::find($id);
 
-			$skill = Skill::find($id);
+	// 		$skill = Skill::find($id);
 
-			$employersaves = SaveProfileUser::all();
+	// 		$employersaves = SaveProfileUser::all();
 
-			$years = Carbon::parse($info->user->birthday)->age;
+	// 		$years = Carbon::parse($info->user->birthday)->age;
 
-			$rd = Carbon::now()->toDateString();
+	// 		$rd = Carbon::now()->toDateString();
 
-			$viewData = [
-				'info' => $info,
-				'education' => $education,
-				'exp' => $exp,
-				'skill' => $skill,
-				'years' => $years,
-				'employersaves' => $employersaves,
-			];
+	// 		$viewData = [
+	// 			'info' => $info,
+	// 			'education' => $education,
+	// 			'exp' => $exp,
+	// 			'skill' => $skill,
+	// 			'years' => $years,
+	// 			'employersaves' => $employersaves,
+	// 		];
 
-			$pdf = PDF::loadView('nhatuyendung.getpdfprofile', $viewData);
-			return $pdf->download('ho-so-' . $info->ge_slug . '-' . $rd . '.pdf');
+	// 		$pdf = PDF::loadView('nhatuyendung.getpdfprofile', $viewData);
+	// 		return $pdf->download('ho-so-' . $info->ge_slug . '-' . $rd . '.pdf');
+	// 	}
+	// }
+
+	// Trang hiển thị hồ sơ đã lưu
+	public function saveInfoProfile() {
+
+		$saveProfile = SaveProfileUser::with('profile:id,ge_slug,ge_active')->where('sa_employer_id', Auth::guard('employers')->user()->id)->orderByDesc('id')->paginate(5);
+
+		$viewData = [
+			'saveProfile' => $saveProfile,
+		];
+
+		return view('nhatuyendung.save-profile', $viewData);
+	}
+
+	// Trang hiển thị hồ sơ ứng tuyển
+	public function profileApplie() {
+
+		$profileApplie = UserApplied::with('hoso:id,ge_slug,ge_title,ge_profession')->with('user:id,name')->where('ap_employer_id', Auth::guard('employers')->user()->id)->orderByDesc('id')->paginate(5);
+
+		$viewData = [
+			'profileApplie' => $profileApplie,
+		];
+
+		return view('nhatuyendung.hosoungtuyen', $viewData);
+	}
+
+	//Trạng thái duyệt hồ sơ ứng tuyển
+	public function actionApplie($active, $id) {
+		$profileApplie = UserApplied::find($id);
+		if ($active) {
+			$profileApplie = UserApplied::find($id);
+			switch ($active) {
+			case 'apply':
+				$profileApplie->ap_status = UserApplied::APPLY;
+				$profileApplie->save();
+				break;
+			case 'cancel':
+				$profileApplie->ap_status = UserApplied::CANCEL;
+				$profileApplie->save();
+				break;
+			}
 		}
+		return redirect()->back()->with('success', 'Đã apply ứng viên');
+	}
+
+	// Trang cài đặt tài khoản
+	public function settingAccount() {
+		return view('nhatuyendung.setting-account');
+	}
+
+	// Trang thay đổi mật khẩu
+	public function changePass() {
+		$employer = Employer::find(get_data_user('employers'));
+		return view('nhatuyendung.changepass', compact('employer'));
+	}
+
+	// Đổi mật khẩu employer
+	public function updatepass(RequestPasswordEmployer $requestPass) {
+		if (Hash::check($requestPass->password_old, get_data_user('employers', 'password'))) {
+			$employer = Employer::find(get_data_user('employers'));
+			$employer->password = bcrypt($requestPass->password);
+			$employer->save();
+			return redirect()->back()->with('success', 'Cập nhập thành công');
+		}
+		return redirect()->back()->with('danger', 'Mật khẩu không đúng');
+
 	}
 }

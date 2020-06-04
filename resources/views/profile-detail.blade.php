@@ -68,14 +68,16 @@
       <!-- Buttons -->
       <div class="jobButtons">
 
-        <a href="#" class="btn apply"><i class="fa fa-paper-plane" aria-hidden="true"></i> Hire Me</a>
-
-        <a href="{{ route('get.pdf', [$info->ge_slug, $info->id]) }}" class="btn"><i class="fa fa-download" aria-hidden="true"></i> Download CV</a>
-
+{{--         <a href="#" class="btn apply"><i class="fa fa-paper-plane" aria-hidden="true"></i> Hire Me</a>
+ --}}
+{{--         <a href="{{ route('get.pdf', [$info->ge_slug, $info->id]) }}" class="btn"><i class="fa fa-download" aria-hidden="true"></i> Download CV</a>
+ --}}
         {{-- <a href="#" class="btn"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save User</a> --}}
-        @if(Auth::guard('employers')->check()) {{-- Nếu tồn tại user thì mới cho lưu --}}
+        @if(Auth::guard('employers')->check()) {{-- Nếu tồn tại employer thì mới cho lưu --}}
           @if(!$employersaves->count() > 0) {{-- Nếu chưa lưu thì mới cho lưu --}}
-          <form action="{{ url('/nha-tuyen-dung/luu-ho-so')}}" method="POST">
+
+
+          <form action="{{ url('/nha-tuyen-dung/luu-ho-so/{slug}-{id}')}}" method="POST">
             @csrf
             <input type="hidden" name="sa_profile_id" value="{{ $info->id }}">
             <input type="hidden" name="sa_title" value="{{ $info->ge_title }}">
@@ -88,8 +90,8 @@
           @endif
         @endif
 
-        <a href="#" class="btn report"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Report Abuse</a>
-      </div>
+{{--         <a href="#" class="btn report"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Report Abuse</a>
+ --}}      </div>
 
     </div>
 

@@ -7,10 +7,23 @@
     font-weight: bold;
   }
 </style>
+<!-- Page Title start -->
+<div class="pageTitle">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <h1 class="page-heading">Register</h1>
+      </div>
+      <div class="col-md-6 col-sm-6">
+        <div class="breadCrumb"><a href="">Home</a> / <a href="">Người tìm việc</a> / <span>Đăng ký</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page Title End -->
 
 <div class="listpgWraper">
   <div class="container">
-    <a class="btn btn-danger" href="{{ route('register.index') }}"><i class="fa fa-chevron-circle-left"></i> Quay lại đăng ký</a>
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
         <div class="userccount">

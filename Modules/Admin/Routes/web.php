@@ -25,10 +25,19 @@ Route::group(['prefix' => 'admincp', 'middleware' => 'CheckLoginAdmin'], functio
 		Route::get('/index', 'AdminEmployerController@index')->name('admin.get.index.employer');
 
 		Route::get('/account', 'AdminEmployerController@account')->name('admin.get.account.employer');
+		Route::get('/account/vip/{active}/{id}', 'AdminEmployerController@actionVip')->name('action.employer.account');
 
 		Route::get('/recruitment', 'AdminEmployerController@recruitment')->name('admin.get.profile.employer');
 		Route::get('/recruitment/detail/{id}', 'AdminEmployerController@detailProfile')->name('admin.get.detail.profile.employer');
 		Route::get('/{action}/{id}', 'AdminEmployerController@action')->name('action.employer.profile');
+
+		Route::get('/hoa-don', 'AdminEmployerController@hoaDon')->name('employer.hoadon');
+
+		Route::get('/hoa-don/trang-thai/{id}', 'AdminEmployerController@actionTransaction')->name('admin.get.active.transaction');
+
+		Route::get('/account/timevip/{id}', 'AdminEmployerController@viewvip')->name('admin.account.changevip');
+		Route::post('/account/timevip/{id}', 'AdminEmployerController@changevip');
+
 	});
 
 	//User

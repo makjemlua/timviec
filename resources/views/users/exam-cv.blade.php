@@ -1,25 +1,6 @@
 @extends('users.dashboard')
 @section('content')
 <style type="text/css">
-	div.card-body
-	{
-		position: relative;
-	}
-	img {
-		width: 230px;
-		transition: all 1s ease;
-		-webkit-transition: all 1s ease;
-		-moz-transition: all 1s ease;
-		-o-transition: all 1s ease;
-	}
-
-	img:hover {
-	transform: scale(1.5,1.5);
-	-webkit-transform: scale(1.5,1.5);
-	-moz-transform: scale(1.5,1.5);
-	-o-transform: scale(1.5,1.5);
-	-ms-transform: scale(1.5,1.5);
-	}
 	div.label.label-primary
 	{
 		padding: 10px 10px;

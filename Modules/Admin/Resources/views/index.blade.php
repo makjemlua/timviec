@@ -4,6 +4,93 @@
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/data.js"></script>
 <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<div class="col-md-12">
+  <div class="row">
+    <div class="col-xl-3 col-sm-6 mb-3">
+          <div class="card text-white bg-primary o-hidden h-100">
+            <div class="card-body">
+              <div class="card-body-icon">
+                <i class="fa fa-fw fa-shopping-cart"></i>
+              </div>
+              <div class="mr-5">{{ $totalTransactionDone }} đơn đã thanh toán</div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1" href="#">
+              <span class="float-left">View Details</span>
+              <span class="float-right">
+                <i class="fa fa-angle-right"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-sm-6 mb-3">
+          <div class="card text-white bg-warning o-hidden h-100">
+            <div class="card-body">
+              <div class="card-body-icon">
+                <i class="fa fa-fw fa-shopping-cart"></i>
+              </div>
+              <div class="mr-5">{{ $totalTransactionWait }} đang chờ xử lý!</div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1" href="#">
+              <span class="float-left">View Details</span>
+              <span class="float-right">
+                <i class="fa fa-angle-right"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-sm-6 mb-3">
+          <div class="card text-white bg-success o-hidden h-100">
+            <div class="card-body">
+              <div class="card-body-icon">
+                <i class="fa fa-fw fa-shopping-cart"></i>
+              </div>
+              <div class="mr-5">{{ $totalTransaction }} tổng hóa đơn!</div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1" href="#">
+              <span class="float-left">View Details</span>
+              <span class="float-right">
+                <i class="fa fa-angle-right"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-sm-6 mb-3">
+          <div class="card text-white bg-danger o-hidden h-100">
+            <div class="card-body">
+              <div class="card-body-icon">
+                <i class="fa fa-fw fa-life-ring"></i>
+              </div>
+              <div class="mr-5"> đã hủy!</div>
+            </div>
+            <a class="card-footer text-white clearfix small z-1" href="#">
+              <span class="float-left">View Details</span>
+              <span class="float-right">
+                <i class="fa fa-angle-right"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+  </div>
+<div class="col-md-3">
+  <form action="" method="">
+  <input class="form-control" type="date" name="date_from">
+  <input class="form-control" type="date" name="date_to">
+  <input class="btn btn-success" type="submit" name="" value="Thống kê">
+  </form>
+</div>
+@if($tinhtien >= 0)
+  <h3>Doanh thu của bạn từ ngày {{ $date_from }} đến ngày {{ $date_to }} là: </h3> <h1 style="color: red;">{{ number_format(($tinhtien),0,',','.') }} VNĐ</h1>
+@endif
+
+
+</div>
     <div class="container-fluid">
 
           <!-- Page Heading -->
@@ -13,56 +100,15 @@
 
           <!-- Content Row -->
           <div class="row">
-  <div class="col-md-12">
-    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-  </div>
-  {{-- <div class="col-md-8">
-    <h3>Danh sách đơn hàng mới nhất</h3>
-    @if(isset($transactionNews))
-    <table class="table table-striped table-sm">
-      <thead>
-        <tr>
-          <th>STT</th>
-          <th>Tên khách hàng</th>
-          <th>Số điện thoại</th>
-          <th>Tổng tiền</th>
-          <th>Trạng thái</th>
-          <th>Ngày đặt</th>
-        </tr>
-      </thead>
-      <tbody>
-        <span style="display: none">{{ $a=1 }}</span>
-          @foreach($transactionNews as $transaction)
-          <tr>
-              <td><!-- id sản phẩm -->
-                <b>{{ $a++ }}</b>
-              </td>
-              <td><!-- Tên sản phẩm -->
-                <b>{{ $transaction->user->name }}</b>
-              </td>
-              <td><!-- Tên sản phẩm -->
-                <b>{{ $transaction->tr_phone }}</b>
-              </td>
-              <td><!-- Tên sản phẩm -->
-                <b>{{ number_format($transaction->tr_total,0, ',', '.') }} VNĐ</b>
-              </td>
-              <td><!-- Tên sản phẩm -->
-                @if($transaction->tr_status == 1)
-                  <a href="" class="label label-success">Đã xử lý</a>
-                @else
-                  <a href="{{ route('admin.get.active.transaction', $transaction->id) }}" class="label label-default" onclick="return confirm('Bạn có muốn thực hiện thao tác này ? Nhấn OK để xử lý');">Chưa xử lý</a>
-                @endif
-              </td>
-              <td>
-                {{ $transaction->created_at->format('d-m-Y') }}
-              </td>
-            </tr>
-        @endforeach
-      </tbody>
-    </table>
-    @endif
-  </div> --}}
-</div>
+            <div class="col-md-12">
+              <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+            </div>
+
+          </div>
+
+
+
+
 <div class="row">
   <div class="col-md-6">
         <h2 class="page-header">Danh sách liên hệ mới nhất</h2>
@@ -148,7 +194,7 @@
 
         </div>
 @endsection
-{{-- @section('script')
+@section('script')
 <script>
   // Create the chart
   let data = "{{ $dataMoney }}";
@@ -177,7 +223,7 @@ Highcharts.chart('container', {
             borderWidth: 0,
             dataLabels: {
                 enabled: true,
-                format: '{point.y} $'
+                format: '{point.y} VND'
             }
         }
     },
@@ -196,4 +242,5 @@ Highcharts.chart('container', {
     ],
 });
 </script>
-@stop --}}
+
+@stop

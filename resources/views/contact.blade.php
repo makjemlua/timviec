@@ -21,10 +21,8 @@
     <div class="contact-wrap">
       <div class="row">
         <div class="col-md-12 column">
-          <div class="title"> <span>We Are Here For Your Help</span>
-            <h2>GET IN TOUCH FAST</h2>
-            <p>Vestibulum at magna tellus. Vivamus sagittis nunc aliquet. Vivamin orci aliquam<br>
-              eros vel saphicula. Donec eget ultricies ipsmconsequat.</p>
+          <div class="title"> <span>Chúng tôi ở đây để giúp bạn</span>
+            <h2>LIÊN HỆ NHANH CHÓNG</h2>
           </div>
         </div>
 
@@ -32,22 +30,22 @@
         <div class="col-md-4 column">
           <div class="contact-now">
             <div class="contact"> <span><i class="fa fa-home"></i></span>
-              <div class="information"> <strong>Address:</strong>
-                <p>8500 lorem, New Ispum, Dolor amet sit 12301</p>
+              <div class="information"> <strong>Địa chỉ:</strong>
+                <p>24 Nguyễn Văn Bảo P4 Gò Vấp Tp HCM</p>
               </div>
             </div>
             <!-- Contact Info -->
             <div class="contact"> <span><i class="fa fa-envelope"></i></span>
-              <div class="information"> <strong>Email Address:</strong>
-                <p>investigate@your-site.com</p>
-                <p>investigate@your-site.com</p>
+              <div class="information"> <strong>Email:</strong>
+                <p>nguyenan.2502@gmail.com</p>
+                <p>caonam@gmail.com</p>
               </div>
             </div>
             <!-- Contact Info -->
             <div class="contact"> <span><i class="fa fa-phone"></i></span>
-              <div class="information"> <strong>Phone No:</strong>
-                <p>+12 345 67 09</p>
-                <p>+12 345 67 09</p>
+              <div class="information"> <strong>Số điện thoại:</strong>
+                <p>0987 654 321</p>
+                <p>09 8888 9999</p>
               </div>
             </div>
             <!-- Contact Info -->
@@ -59,22 +57,23 @@
         <div class="col-md-8 column">
           <div class="contact-form">
             <div id="message"></div>
-            <form method="post" action="https://www.sharjeelanjum.com/html/jobs-portal/demo/contact-us.html" name="contactform" id="contactform">
+            <form method="post" action="" name="contactform" id="contactform">
+              @csrf
               <div class="row">
                 <div class="col-md-6">
-                  <input name="name" type="text" id="name" placeholder="Full Name">
+                  <input name="co_name" type="text" placeholder="Full Name" required>
                 </div>
                 <div class="col-md-6">
-                  <input type="text" name="phone" placeholder="Phone Number">
+                  <input type="text" name="co_phone" placeholder="Phone Number" required>
                 </div>
                 <div class="col-md-12">
-                  <input name="email" type="text" id="email" placeholder="Email">
+                  <input name="co_email" type="text" placeholder="Email" required>
                 </div>
                 <div class="col-md-12">
-                  <textarea rows="4" name="comments" id="comments" placeholder="Details"></textarea>
+                  <textarea rows="4" name="co_content" placeholder="Details" required></textarea>
                 </div>
                 <div class="col-md-12">
-                  <button title="" class="button" type="submit" id="submit">Submit Now</button>
+                  <button title="" class="button" type="submit" id="submit">Gửi ngay</button>
                 </div>
               </div>
             </form>

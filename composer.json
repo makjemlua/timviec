@@ -13,9 +13,12 @@
         "bumbummen99/shoppingcart": "^2.8",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.0",
+        "laravel/socialite": "^4.3",
         "laravel/tinker": "^1.0",
+        "maatwebsite/excel": "^3.1",
         "nwidart/laravel-modules": "^6.2",
-        "phpviet/omnipay-vnpay": "^1.0"
+        "phpviet/omnipay-vnpay": "^1.0",
+        "pragmarx/tracker": "^4.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
@@ -46,12 +49,18 @@
             "database/factories"
         ],
         "files": [
-        "App/Helpers/function.php"
+        "app/Helpers/function.php"
         ]
     },
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
+        }
+    },
+    "repositories": {
+        "packagist.org": {
+          "type": "composer",
+          "url": "https://packagist.org"
         }
     },
     "minimum-stability": "dev",

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RequestPasswordUser;
 use App\Model\SaveProfileEmployer;
 use App\Model\UserApplied;
 use App\Model\UserGeneralInfo;
@@ -9,6 +10,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller {
 	//Trang thông tin user
@@ -63,6 +65,7 @@ class UserController extends Controller {
 	public function saveProfile() {
 
 		$saveProfile = SaveProfileEmployer::where('usa_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
+		//dd($saveProfile->all());
 
 		$viewData = [
 			'saveProfile' => $saveProfile,
@@ -91,7 +94,7 @@ class UserController extends Controller {
 	// Trang hiển thị việc làm đã ứng tuyển
 	public function applieProfile() {
 
-		$applies = UserApplied::with('profile:id,pr_slug')->where('ap_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
+		$applies = UserApplied::with('profile:id,pr_slug,pr_active,pr_status')->where('ap_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
 
 		return view('users.applie-profile', compact('applies'));
 	}
@@ -101,12 +104,32 @@ class UserController extends Controller {
 		return view('users.setting-account');
 	}
 
+	// Trang thay đổi mật khẩu
+	public function changePass() {
+		$user = User::find(get_data_user('web'));
+		return view('users.changepass', compact('user'));
+	}
+
+	// Đổi mật khẩu user
+	public function updatepass(RequestPasswordUser $requestPass) {
+		if (Hash::check($requestPass->password_old, get_data_user('web', 'password'))) {
+			$user = User::find(get_data_user('web'));
+			$user->password = bcrypt($requestPass->password);
+			$user->save();
+			return redirect()->back()->with('success', 'Cập nhập thành công');
+		}
+		return redirect()->back()->with('danger', 'Mật khẩu không đúng');
+
+	}
+
 	// Nộp hồ sơ
 	public function applied(Request $request) {
 		if ($request->has('applies')) {
 			$applies = new UserApplied();
 			$applies->ap_user_id = Auth::guard('web')->user()->id;
+			$applies->ap_hoso_id = UserGeneralInfo::where('ge_user_id', get_data_user('web'))->where('ge_status', 1)->first()->id;
 			$applies->ap_profile_id = $request->ap_profile_id;
+			$applies->ap_employer_id = $request->ap_employer_id;
 			$applies->ap_title = $request->ap_title;
 			$applies->ap_company = $request->ap_company;
 			$applies->ap_name = $request->ap_name;
@@ -114,6 +137,7 @@ class UserController extends Controller {
 			$applies->ap_provinces = $request->ap_provinces;
 			$applies->created_at = Carbon::now();
 			$applies->updated_at = Carbon::now();
+			//dd($applies);
 			$applies->save();
 
 			return redirect()->back()->with('success', 'Bạn đã nộp hồ sơ');

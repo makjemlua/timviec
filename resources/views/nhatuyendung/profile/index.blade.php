@@ -36,7 +36,7 @@
 		@foreach($employers as $employer)
 		<tr>
 			<td>{{ $a++ }}</td>
-			<td width="150px">
+			<td width="50px">
 				<a href="{{ route('employer.get.action.profile',['active', $employer->id]) }}" class="btn {{ $employer->getStatus($employer->pr_status)['class'] }}">{{ $employer->getStatus($employer->pr_status)['name'] }}</a>
 			</td>
 			<td>

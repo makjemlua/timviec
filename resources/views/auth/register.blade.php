@@ -54,7 +54,7 @@
           <!-- login form  end-->
 
           <!-- sign up form -->
-          <div class="note"><i class="fa fa-chevron-circle-right"></i> <a href="">Hướng dẫn người tìm việc đăng ký</a></div>
+          <div class="note"><i class="fa fa-chevron-circle-right"></i> <a href="{{ route('user.huongdan.taotaikhoan') }}">Hướng dẫn người tìm việc đăng ký</a></div>
           <!-- sign up form end-->
 
         </div>
@@ -71,7 +71,7 @@
            <a class="btn btn-success btn-big" href="{{ route('register.employer') }}">Đăng ký Nhà tuyển dụng</a>
 
           <!-- sign up form -->
-          <div class="note"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i> <a href="">Hướng dẫn người tuyển dụng đăng ký</a></div>
+          <div class="note"><i class="fa fa-chevron-circle-right" aria-hidden="true"></i> <a href="{{ route('employer.huongdan.dangky') }}">Hướng dẫn người tuyển dụng đăng ký</a></div>
           <!-- sign up form end-->
 
         </div>

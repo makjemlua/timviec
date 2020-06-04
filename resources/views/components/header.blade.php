@@ -16,7 +16,7 @@
 <div class="header">
   <div class="container">
     <div class="row">
-      <div class="col-md-2 col-sm-3 col-xs-12"> <a href="{{ route('home.index') }}" class="logo"><img src="{{ asset('images/logo.png') }}" alt=""></a>
+      <div class="col-md-2 col-sm-3 col-xs-12"> <a href="{{ route('home.index') }}" class="logo"><img src="{{ asset('images/logo.gif') }}" alt=""></a>
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
         </div>
@@ -42,7 +42,14 @@
               <li><a href="{{ route('login.index') }}">Đăng nhập</a></li>
 
               @elseif(Auth::guard('web')->check())
-              <li class="dropdown userbtn"><a href="{{ route('user.info') }}"><img src="{{ old('avatar',(isset(Auth::guard('web')->user()->avatar)) ? asset(pare_url_file(Auth::guard('web')->user()->avatar)) : asset('images/default.png') ) }}" alt="" class="userimg"></a>
+              <li class="dropdown userbtn"><a href="{{ route('user.info') }}">
+                @if(!Auth::guard('web')->user()->provider)
+                    <img src="{{ old('avatar',(isset(Auth::guard('web')->user()->avatar)) ? asset(pare_url_file(Auth::guard('web')->user()->avatar)) : asset('images/default.png') ) }}" alt="" class="userimg">
+                @else
+                  <img src="{{ old('avatar', (asset(get_data_user('web', 'avatar')) ? get_data_user('web', 'avatar') : asset('images/default.png') ) ) }}" alt="" class="userimg">
+                @endif
+
+              </a>
               	 <ul class="dropdown-menu">
                     <li><a href="{{ route('user.info') }}"><i class="fa fa-tachometer" aria-hidden="true"></i> {{ Auth::guard('web')->user()->name }}</a></li>
                     <li><a href="{{-- {{ route('user.editprofile') }} --}}"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa hồ sơ</a></li>

@@ -110,7 +110,9 @@
 		              <li class="plan-detail"><i class="fa fa-check" aria-hidden="true"></i> Nhận được hồ sơ ứng tuyển</li>
 		              <li class="plan-detail"><i class="fa fa-check" aria-hidden="true"></i> Tuyển dụng nhanh và hiệu quả</li>
 		              <li class="plan-detail ico"><i class="fa fa-times" aria-hidden="true"></i></li>
+		              @if(Auth::guard('employers')->user()->em_vip==0)
 		              <li class="order-1"><a href="{{ route('get.list.cart') }}">Đăng ký ngay</a></li>
+		              @endif
 		            </ul>
 		          </div>
 		        </div>
@@ -162,7 +164,7 @@
 
 <div class="bg-info footer-hotline inner-12" id="footer-hotline">
 
-<div class="container">
+{{-- <div class="container">
     <div class="inner10">
         <div class="title text-primary">
                             <img src="https://cdn.timviecnhanh.com/asset/home/img/call.png" alt="Hotline miền Nam" class="img-call">
@@ -248,7 +250,8 @@
                 Ms. Nguyễn Nga            </span>
                 <div class="blank0"></div>
     </div>
-</div></div>
+</div> --}}
+</div>
 
 
 @stop

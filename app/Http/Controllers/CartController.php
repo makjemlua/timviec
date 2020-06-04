@@ -31,7 +31,7 @@ class CartController extends Controller {
 			'price' => $carts->pri_price,
 			'weight' => 550,
 		]);
-		return redirect()->back()->with('success', 'Đã thêm đơn đặt phòng');
+		return redirect()->back()->with('success', 'Đã thêm hóa đơn thành công');
 	}
 
 	public function getListCart() {
@@ -102,7 +102,7 @@ class CartController extends Controller {
 		$totalMoney = str_replace(',', '', \Cart::initial(0));
 
 		$transactionId = Transaction::insertGetId([
-			'tr_user_id' => get_data_user('employers'),
+			'tr_employer_id' => get_data_user('employers'),
 			'tr_total' => (int) $totalMoney,
 			'tr_note' => $request->note,
 			'tr_address' => get_data_user('employers', 'em_address'),
@@ -135,7 +135,7 @@ class CartController extends Controller {
 			$totalMoney = str_replace(',', '', \Cart::initial(0));
 
 			$transactionId = Transaction::insertGetId([
-				'tr_user_id' => get_data_user('employers'),
+				'tr_employer_id' => get_data_user('employers'),
 				'tr_total' => (int) $totalMoney,
 				'tr_note' => $request->vnp_OrderInfo,
 				'tr_address' => get_data_user('employers', 'em_address'),

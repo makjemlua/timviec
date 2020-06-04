@@ -9,24 +9,7 @@
         <li class="breadcrumb-item active" aria-current="page">Account</li>
       </ol>
     </nav>
-    <div class="row">
-    	<div class="col-md-4">
-    		<form class="form-inline">
-    			<div class="form-group">
-    				<input type="text" class="form-control" name="search" placeholder="Tên" value="{{ \Request::get('search') }}">
-    			</div>
-    			<div class="form-group">
-    				<select class="form-control" name="cate">
-    					<option value="">Tất cả</option>
-						<option value="01" {{ \Request::get('cate') == '01' ? "selected=selected" : "" }}>vip</option>
-						<option value="00" {{ \Request::get('cate') == '00' ? "selected=selected" : "" }}>Normal</option>
-    				</select>
-    			</div>
-				<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-    		</form>
-    	</div>
 
-    </div>
 	<h2 class="page-header">Quản lý nhà tuyển dụng
 	</h2>
 <div class="table-responsive">
@@ -65,11 +48,7 @@
 							<p>{{ $employer->em_company }}</p>
 						</td>
 						<td><!-- Trạng thái -->
-							@if($employer->em_vip == 01)
-								<span class="status--process">Vip</span>
-							@elseif($employer->em_vip == 00)
-								<span class="status-process">0</span>
-							@endif
+							<a href="{{ route('action.employer.account',['vip', $employer->id]) }}" class="btn {{ $employer->getStatus($employer->em_vip)['class'] }}">{{ $employer->getStatus($employer->em_vip)['name'] }}</a>
 						</td>
 						<td><!-- Time -->
 							@if(strtotime($employer->em_timevip) > time())
@@ -84,11 +63,15 @@
 							<p class="btn btn-success">Public</p>
 						</td>
 						<td><!-- Thao tác -->
-							<a class="thao-tac xoa btn btn-danger" href="" title="Khóa">
+							{{-- <a class="thao-tac xoa btn btn-danger" href="" title="Khóa">
 								<i class="fa fa-trash" aria-hidden="true"></i> Khóa
+							</a> --}}
+							<a class="thao-tac xoa btn btn-primary" href="{{ route('admin.account.changevip', $employer->id) }}" title="Vip">
+								<i class="fa fa-star" aria-hidden="true"></i> Vip
 							</a>
 						</td>
 					</tr>
+
 				@endforeach
 			@endif
 		</tbody>
@@ -96,6 +79,10 @@
 	{!! $employers->links() !!}
 </div>
 </div>
+
+
+
+
 <script src="http://code.jquery.com/jquery.js"></script>
 <script src="https://cdn.rawgit.com/hilios/jQuery.countdown/2.2.0/dist/jquery.countdown.min.js"></script>
 <script>

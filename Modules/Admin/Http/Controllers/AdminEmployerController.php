@@ -2,12 +2,15 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\Model\Employer;
 use App\Model\EmployerProfile;
 use App\Model\Job;
 use App\Model\Province;
+use App\Model\Transaction;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Carbon;
 
 class AdminEmployerController extends Controller {
 	public function index() {
@@ -16,7 +19,7 @@ class AdminEmployerController extends Controller {
 
 	//Xem tài khoản
 	public function account(Request $request) {
-		$employers = DB::table('employers');
+		$employers = Employer::whereRaw(1);
 
 		if ($request->search) {
 			$employers->where('name', 'like', '%' . $request->search . '%');
@@ -110,5 +113,55 @@ class AdminEmployerController extends Controller {
 			}
 			return redirect()->back();
 		}
+	}
+
+	//Hóa đơn thanh toán
+	public function hoaDon() {
+		$transactions = Transaction::with('employer:id,name,email,em_phone,em_company')->orderBy('id', 'DESC')->paginate(5);
+		$viewData = [
+			'transactions' => $transactions,
+		];
+		return view('admin::employers.hoadon', $viewData);
+	}
+
+	//Xử lý hóa đơn
+	public function actionTransaction($id) {
+		$transaction = Transaction::find($id);
+		//Cap nhap trang thai don phong
+		$transaction->tr_status = Transaction::STATUS_DONE;
+		$transaction->save();
+		return redirect()->back()->with('success', 'Xử lý đơn hàng thành công');
+	}
+
+	//Trang thay đổi thời gian vip
+	public function viewvip($id) {
+		$employer = DB::table('employers')->find($id);
+
+		$viewData = [
+			'employer' => $employer,
+		];
+		return view('admin::employers.changetime', $viewData);
+	}
+	public function changevip(Request $request, $id) {
+		$employer = Employer::find($id);
+		$employer->em_timevip = $request->em_timevip;
+		$employer->updated_at = Carbon::now();
+		$employer->save();
+		return redirect()->back()->with('success', 'Cập nhập thành công');
+	}
+	public function actionVip($active, $id) {
+		if ($active) {
+			$employer = Employer::find($id);
+			switch ($active) {
+			case 'delete':
+				$employer->delete();
+				break;
+			case 'vip':
+				$employer->em_vip = $employer->em_vip ? 0 : 1;
+				$employer->save();
+				break;
+			}
+		}
+		return redirect()->back();
 	}
 }

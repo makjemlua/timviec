@@ -7,7 +7,7 @@ use Closure;
 class CheckLoginUser {
 	public function handle($request, Closure $next) {
 		if (!get_data_user('web')) {
-			return redirect()->back()->with('warning', 'Bạn không có quyền truy cập');
+			return redirect()->back()->with('warning', 'Bạn cần phải đăng nhập người tìm việc');
 		}
 
 		return $next($request);

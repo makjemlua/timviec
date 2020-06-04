@@ -17,6 +17,7 @@ class AdminAuthController extends Controller {
 			if (Auth::guard('admins')->user()->active == 1) {
 				return redirect()->route('admin.home');
 			} else {
+				Auth::guard('admins')->logout();
 				return redirect()->back()->with('error', 'Tài khoản của bạn đã bị khóa');
 			}
 

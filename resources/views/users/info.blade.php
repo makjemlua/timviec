@@ -78,9 +78,16 @@
       <div class="card" style="width: 18rem;">
 
         <div>
+          @if(!Auth::guard('web')->user()->provider)
           <input type="file" id="imgInp" name="avatar" class="custom-file-input">
+          @endif
         </div>
-        <img id="blah" src="{{ old('avatar',(isset($user->avatar)) ? asset(pare_url_file($user->avatar)) : asset('images/default.png') ) }}" class="card-img-top" alt="..." >
+        @if(!Auth::guard('web')->user()->provider)
+            <img id="blah" src="{{ old('avatar',(isset(Auth::guard('web')->user()->avatar)) ? asset(pare_url_file(Auth::guard('web')->user()->avatar)) : asset('images/default.png') ) }}" alt="" class="userimg">
+        @else
+          <img src="{{ old('avatar', (asset(get_data_user('web', 'avatar')) ? get_data_user('web', 'avatar') : asset('images/default.png') ) ) }}" alt="" class="userimg">
+        @endif
+        <!-- <img id="blah" src="{{ old('avatar',(isset($user->avatar)) ? asset(pare_url_file($user->avatar)) : asset('images/default.png') ) }}" class="card-img-top" alt="..." > -->
       </div>
     </div>
     <div class="col-md-9">

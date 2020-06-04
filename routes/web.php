@@ -19,6 +19,7 @@ Route::group(['prefix' => 'danh-gia'], function () {
 });
 
 Route::get('/contact', 'ContactController@index')->name('contact');
+Route::post('/contact', 'ContactController@saveContact');
 
 // Route::get('nha-tuyen-dung', function () {
 // 	return view('tuyen-dung');
@@ -34,6 +35,10 @@ Route::group(['prefix' => 'dang-nhap', 'namespace' => 'Auth'], function () {
 
 	Route::get('/nha-tuyen-dung', 'LoginController@getLoginEmployer')->name('login.employer');
 	Route::post('/nha-tuyen-dung', 'LoginController@postLoginEmployer');
+
+	//Login FB cho user
+	Route::get('/user/{provider}', 'LoginController@redirectToProvider')->name('get.login.service');
+	Route::get('/user/callback/{provider}', 'LoginController@handleProviderCallback');
 });
 
 //Logout
@@ -67,13 +72,13 @@ Route::group(['prefix' => 'provinces'], function () {
 });
 
 //Search hồ sơ
-Route::group(['prefix' => 'nha-tuyen-dung'], function () {
+Route::group(['prefix' => 'nha-tuyen-dung', 'middleware' => 'CheckLoginEmployer'], function () {
 	Route::get('/', 'EmployerController@trangchu')->name('home.tuyendung');
 	Route::get('/ho-so', 'SearchController@timhoso')->name('search.hoso');
 	//Chi tiet ho so
 	Route::get('/ho-so/{slug}-{id}', 'SearchController@viewProfile')->name('employer.detail.userprofile');
 	//Luu ho so
-	Route::post('/luu-ho-so', 'EmployerController@saveProfile');
+	Route::post('/luu-ho-so/{slug}-{id}', 'EmployerController@saveProfiles');
 	//Get PDF
 	Route::get('/get-pdf/{slug}-{id}', 'EmployerController@getpdf')->name('get.pdf');
 
@@ -91,6 +96,9 @@ Route::group(['prefix' => 'user', 'middleware' => 'CheckLoginUser'], function ()
 	Route::get('/viec-lam-da-ung-tuyen', 'UserController@applieProfile')->name('applie.profile');
 
 	Route::get('/setting-account', 'UserController@settingAccount')->name('user.setting.account');
+
+	Route::get('/change-pass', 'UserController@changePass')->name('user.setting.changepass');
+	Route::post('/change-pass', 'UserController@updatepass');
 
 });
 
@@ -114,7 +122,16 @@ Route::group(['prefix' => 'nha-tuyen-dung', 'middleware' => 'CheckLoginEmployer'
 	Route::get('/info', 'EmployerController@index')->name('employer.info');
 	Route::post('/info', 'EmployerController@saveUpdateInfoEmployer');
 
+	Route::get('/ho-so-da-luu', 'EmployerController@saveInfoProfile')->name('employer.save.profile');
+
+	Route::get('/ho-so-da-ung-tuyen', 'EmployerController@profileApplie')->name('employer.applie.profile');
+
+	Route::get('/applie/{active}/{id}', 'EmployerController@actionApplie')->name('employer.applie.action');
+
 	Route::get('/setting-account', 'EmployerController@settingAccount')->name('employer.setting.account');
+
+	Route::get('/change-pass', 'EmployerController@changePass')->name('employer.setting.changepass');
+	Route::post('/change-pass', 'EmployerController@updatepass');
 
 });
 
@@ -160,4 +177,36 @@ Route::group(['prefix' => 'nha-tuyen-dung/profile', 'middleware' => 'CheckLoginE
 	Route::post('/update/{id}', 'EmployerProfileController@updateProfile');
 
 	Route::get('/{action}/{id}', 'EmployerProfileController@action')->name('employer.get.action.profile');
+});
+
+//Hướng dẫn thao tác user
+Route::group(['prefix' => 'user'], function () {
+
+	Route::get('/huong-dan-thao-tac', function () {
+		return view('huongdan.user.index');
+	})->name('user.huongdan');
+
+	Route::get('/huong-dan-dang-ky', function () {
+		return view('huongdan.user.tao-tai-khoan');
+	})->name('user.huongdan.taotaikhoan');
+
+	Route::get('/huong-dan-dang-nhap', function () {
+		return view('huongdan.user.hd-dang-nhap');
+	})->name('user.huongdan.dangnhap');
+});
+
+//Hướng dẫn thao tác nhà tuyển dụng
+Route::group(['prefix' => 'nha-tuyen-dung'], function () {
+
+	Route::get('/huong-dan-thao-tac', function () {
+		return view('huongdan.employer.index');
+	})->name('employer.huongdan');
+
+	Route::get('/huong-dan-dang-ky', function () {
+		return view('huongdan.employer.hd-dang-ky');
+	})->name('employer.huongdan.dangky');
+
+	Route::get('/huong-dan-dang-nhap', function () {
+		return view('huongdan.employer.hd-dang-nhap');
+	})->name('employer.huongdan.dangnhap');
 });

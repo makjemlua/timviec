@@ -53,26 +53,6 @@
       <hr class="sidebar-divider">
 
 
-      <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="{{-- {{ route('admin.get.list.category') }} --}}">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Danh mục</span></a>
-      </li>
-
-      <!-- Nav Item - Tables -->
-      <li class="nav-item">
-        <a class="nav-link" href="{{-- {{ route('admin.get.list.room') }} --}}">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Phòng</span></a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="{{-- {{ route('admin.get.list.transaction') }} --}}">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Đơn đặt phòng</span></a>
-      </li>
-
       <!-- Nav Item - Tables -->
       <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.get.index.user') }}">
@@ -93,10 +73,22 @@
       </li>
 
       <li class="nav-item">
+        <a class="nav-link" href="">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Liên hệ</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>Đánh giá</span></a>
+      </li>
+
+      {{-- <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.get.list.job') }}">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Jobs</span></a>
-      </li>
+      </li> --}}
 
       <!-- Nav Item - Tables -->
       <li class="nav-item">

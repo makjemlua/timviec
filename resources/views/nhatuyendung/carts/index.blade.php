@@ -114,10 +114,10 @@ input[type=number]
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-sm-6">
-        <h1 class="page-heading">Candidates Listing</h1>
+        <h1 class="page-heading">Đăng ký VIP</h1>
       </div>
       <div class="col-md-6 col-sm-6">
-        <div class="breadCrumb"><a href="">Home</a> / <a href="">Resume Search</a> / <span>Candidates</span></div>
+        <div class="breadCrumb"><a href="">Home</a> / <a href="">Nhà tuyển dụng</a> / <span>Đăng ký VIP</span></div>
       </div>
     </div>
   </div>
@@ -127,6 +127,8 @@ input[type=number]
 <div class="listpgWraper">
   <div class="container">
 		<h1 class="title">Bảng giá gói dịch vụ tuyển dụng</h1>
+
+    @if(Auth::guard('employers')->user()->em_vip==0)
 
 		<table class="table table-striped">
 		  <thead>
@@ -153,6 +155,8 @@ input[type=number]
 		    @endif
 		  </tbody>
 		</table>
+
+    @endif
 
 
 

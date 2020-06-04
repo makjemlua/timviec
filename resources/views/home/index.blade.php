@@ -28,10 +28,10 @@
 <form>
   <div class="searchwrap">
     <div class="container">
-      <h3>One million success stories. <span>Start yours today.</span></h3>
+      <h3>Tìm kiếm hàng ngàn công việc <span>Bắt đầu thôi.</span></h3>
       <div class="searchbar row">
         <div class="col-md-5">
-          <input type="text" class="form-control" name="search" id="search" value="{{ \Request::get('search') }}" placeholder="Enter Skills or job title">
+          <input type="text" class="form-control" name="search" id="search" value="{{ \Request::get('search') }}" placeholder="Nhập từ khóa cần tìm">
         </div>
         <div class="col-md-3">
           <select class="form-control" name="job">
@@ -61,6 +61,7 @@
     </div>
   </div>
 </form>
+
 
 
 

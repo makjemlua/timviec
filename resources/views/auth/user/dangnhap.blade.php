@@ -7,17 +7,29 @@
     font-weight: bold;
   }
 </style>
-
+<!-- Page Title start -->
+<div class="pageTitle">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <h1 class="page-heading">Login</h1>
+      </div>
+      <div class="col-md-6 col-sm-6">
+        <div class="breadCrumb"><a href="">Home</a> / <a href="">Người tìm việc</a> / <span>Đăng nhập</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Page Title End -->
 
 <div class="listpgWraper">
   <div class="container">
-    <a class="btn btn-danger" href="{{ route('login.index') }}"><i class="fa fa-chevron-circle-left"></i> Quay lại đăng nhập</a>
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
         <div class="userccount">
           <div class="socialLogin">
             <h5>Đăng nhập mạng xã hội</h5>
-            <a href="" class="fb"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="{{ route('get.login.service', 'facebook') }}" class="fb"><i class="fa fa-facebook" aria-hidden="true"></i></a>
             <a href="" class="gp"><i class="fa fa-google-plus" aria-hidden="true"></i></a>
             <a href="" class="tw"><i class="fa fa-twitter" aria-hidden="true"></i></a> </div>
           <h5>Người tìm việc đăng nhập</h5>

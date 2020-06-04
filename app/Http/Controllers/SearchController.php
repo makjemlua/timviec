@@ -15,6 +15,7 @@ use App\Model\UserExperience;
 use App\Model\UserGeneralInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 
 class SearchController extends Controller {
@@ -183,7 +184,7 @@ class SearchController extends Controller {
 
 			$skill = Skill::find($id);
 
-			$employersaves = SaveProfileUser::all();
+			$employersaves = SaveProfileUser::where('sa_employer_id', Auth::guard('employers')->user()->id)->orderByDesc('id')->where('sa_profile_id', $id)->get();
 
 			$years = Carbon::parse($info->user->birthday)->age;
 

@@ -12,4 +12,8 @@ class Transaction extends Model {
 	const STATUS_DEFAULT = 0;
 	const TYPE_CART = 1;
 	const TYPE_PAY = 2;
+
+	public function employer() {
+		return $this->belongsTo('App\Model\Employer', 'tr_employer_id');
+	}
 }

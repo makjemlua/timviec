@@ -18,29 +18,23 @@
 			<th scope="col">Vị trí</th>
 			<th scope="col">Công ty</th>
 			<th scope="col">Thời gian lưu</th>
-			<th scope="col">Thời gian vip</th>
 			<th scope="col">Thao tác</th>
 		</tr>
 	</thead>
 	<tbody>
 		@foreach($saveProfile as $save)
+		@if($save->profile->pr_active==1 && $save->profile->pr_status==1)
 		<tr>
 			<td><a href="{{ route('employer.thongtin.profile', [$save->profile->pr_slug, $save->profile->id]) }}">{{ $save->usa_title }}</a></td>
 			<td>{{ $save->usa_company }}</td>
 			<td>{{ date('d-m-Y',strtotime($save->created_at)) }}</td>
 			<td>
-				@if(strtotime($save->created_at) > time())
-					<div data-countdown="{{ date('Y/m/d',strtotime($save->created_at)) }}"></div>
-				@else
-					<p>Hết hạn</p>
-				@endif
-			</td>
-			<td>
-				<a href="{{ route('user.get.delete.save', $save->id) }}">
-					<i class="fa fa-trash" aria-hidden="true"></i>Xóa
+				<a class="btn btn-danger" href="{{ route('user.get.delete.save', $save->id) }}">
+					<i class="fa fa-trash" aria-hidden="true"></i> Xóa
 				</a>
 			</td>
 		</tr>
+		@endif
 		@endforeach
 	</tbody>
 </table>

@@ -64,6 +64,7 @@
           <form action="{{ url('/nop-ho-so/{slug}-{id}')}}" method="POST">
             @csrf
             <input type="hidden" name="ap_profile_id" value="{{ $info->id }}">
+            <input type="hidden" name="ap_employer_id" value="{{ $info->employer->id }}">
             <input type="hidden" name="ap_title" value="{{ $info->pr_title }}">
             <input type="hidden" name="ap_name" value="{{ $info->employer->name }}">
             <input type="hidden" name="ap_company" value="{{ $info->employer->em_company }}">
@@ -116,36 +117,7 @@
           </div>
         </div>
         <!-- Job Description end -->
-		@if($sameJob)
-        <!-- related jobs start -->
-        <div class="relatedJobs">
-          <h3>Việc làm tương tự</h3>
-          <ul class="searchList">
 
-	          	@foreach($sameJob as $job)
-		            <!-- Job start -->
-		            <li>
-		            <div class="row">
-		              <div class="col-md-8 col-sm-8">
-		                <div class="jobimg"><img src="{{ old('em_avatar',(isset($job->employer->em_avatar)) ? asset(pare_url_file($job->employer->em_avatar)) : asset('images/default.png') ) }}" alt="Job Name"></div>
-		                <div class="jobinfo">
-		                  <h3><a href="{{ route('employer.thongtin.profile', [$job->pr_slug, $job->id]) }}">{{ $job->pr_title }}</a></h3>
-		                  <div class="companyName"><a href="{{ route('employer.thongtin.profile', [$job->pr_slug, $job->id]) }}">{{ $job->employer->em_company }}</a></div>
-		                  <div class="location"><label class="fulltime">{{ $job->pr_salary }}</label>   - <span>{{ $job->pr_provinces }}</span></div>
-		                </div>
-		                <div class="clearfix"></div>
-		              </div>
-		              <div class="col-md-4 col-sm-4">
-		                <div class="listbtn"><a href="">Apply Now</a></div>
-		              </div>
-		            </div>
-		          </li>
-		            <!-- Job end -->
-	            @endforeach
-
-          </ul>
-        </div>
-		@endif
 
 
       </div>

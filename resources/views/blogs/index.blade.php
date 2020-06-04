@@ -58,7 +58,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4">
+      {{-- <div class="col-md-4">
         <!-- Side Bar -->
         <div class="sidebar">
           <!-- Search -->
@@ -94,7 +94,7 @@
             </ul>
           </div>
         </div>
-      </div>
+      </div> --}}
     </div>
   </div>
 </div>
