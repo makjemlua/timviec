@@ -2,8 +2,10 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\Exports\CsvExport;
 use App\Model\Admin;
 use App\Model\Transaction;
+use Excel;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -76,6 +78,11 @@ class AdminController extends Controller {
 		];
 
 		return view('admin::index', $viewData);
+	}
+
+	public function csv_export() {
+		$headers = ['Tên khách hàng', 'Địa chỉ', 'Số điện thoại', 'Ngày đặt phòng', 'Tổng tiền'];
+		return Excel::download(new CsvExport, 'booking.xlsx', null, $headers);
 	}
 
 	/**

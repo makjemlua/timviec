@@ -12,7 +12,20 @@
   {
     border-bottom: 2px solid #e5e0e0;
   }
+  a.postjob
+  {
+    background-color: #263BD6;
+    padding: 16px 15px !important;
+    color: #FFFFFF !important;
+  }
 </style>
+@php
+  if(!empty($page)){
+    $pages = $page;
+  }
+  else
+    $pages = "";
+@endphp
 <div class="header">
   <div class="container">
     <div class="row">
@@ -27,19 +40,18 @@
         <div class="navbar navbar-default" role="navigation">
           <div class="navbar-collapse collapse" id="nav-main">
             <ul class="nav navbar-nav">
-              <li class="postjob"><a href="{{ route('home.index') }}">Trang chủ</a>
-              </li>
+              <li class="<?php if ($pages == "home") {echo "postjob";}?>"><a href="{{ route('home.index') }}">Trang chủ</a></li>
 
-              <li><a href="{{ route('about-us') }}">Về chúng tôi</a></li>
+              <li class="<?php if ($pages == "about-us") {echo "postjob";}?>"><a href="{{ route('about-us') }}">Về chúng tôi</a></li>
 
-              <li><a href="{{ route('get.news') }}">Blog</a>
+              <li class="<?php if ($pages == "blogs") {echo "postjob";}?>"><a href="{{ route('get.news') }}">Blog</a></li>
 
-              </li>
-              <li><a href="{{ route('contact') }}">Liên hệ</a></li>
-              <li><a href="{{ route('home.tuyendung') }}">Tuyển dụng</a></li>
+              <li class="<?php if ($pages == "contact") {echo "postjob";}?>"><a href="{{ route('contact') }}">Liên hệ</a></li>
+
+              <li class="<?php if ($pages == "nha-tuyen-dung") {echo "postjob";}?>"><a href="{{ route('home.tuyendung') }}">Tuyển dụng</a></li>
 
               @if(!Auth::guard('web')->check() && !Auth::guard('employers')->check())
-              <li><a href="{{ route('login.index') }}">Đăng nhập</a></li>
+              <li class="<?php if ($pages == "login") {echo "postjob";}?>"><a href="{{ route('login.index') }}">Đăng nhập</a></li>
 
               @elseif(Auth::guard('web')->check())
               <li class="dropdown userbtn"><a href="{{ route('user.info') }}">

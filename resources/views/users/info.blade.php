@@ -52,17 +52,17 @@
   </li>
   <li class="col-md-2 col-sm-4 col-xs-6">
     <div class="inbox"> <i class="fa fa-eye" aria-hidden="true"></i>
-      <h6>21</h6>
+      <h6>0</h6>
       <strong>Đang theo dõi</strong> </div>
   </li>
   <li class="col-md-2 col-sm-4 col-xs-6">
     <div class="inbox"> <i class="fa fa-desktop" aria-hidden="true"></i>
-      <h6>2</h6>
+      <h6>0</h6>
       <strong>CV mẫu</strong> </div>
   </li>
   <li class="col-md-2 col-sm-4 col-xs-6">
     <div class="inbox"> <i class="fa fa-envelope-o" aria-hidden="true"></i>
-      <h6>8</h6>
+      <h6>0</h6>
       <strong>Thông báo</strong> </div>
   </li>
 </ul>
@@ -83,9 +83,9 @@
           @endif
         </div>
         @if(!Auth::guard('web')->user()->provider)
-            <img id="blah" src="{{ old('avatar',(isset(Auth::guard('web')->user()->avatar)) ? asset(pare_url_file(Auth::guard('web')->user()->avatar)) : asset('images/default.png') ) }}" alt="" class="userimg">
+            <img id="blah" src="{{ old('avatar',(isset(Auth::guard('web')->user()->avatar)) ? asset(pare_url_file(Auth::guard('web')->user()->avatar)) : asset('images/default.png') ) }}" alt="" class="userimg card-img-top" style="width: 100px;height: 100px">
         @else
-          <img src="{{ old('avatar', (asset(get_data_user('web', 'avatar')) ? get_data_user('web', 'avatar') : asset('images/default.png') ) ) }}" alt="" class="userimg">
+          <img src="{{ old('avatar', (asset(get_data_user('web', 'avatar')) ? get_data_user('web', 'avatar') : asset('images/default.png') ) ) }}" alt="" class="userimg card-img-top" style="width: 100px;height: 100px">
         @endif
         <!-- <img id="blah" src="{{ old('avatar',(isset($user->avatar)) ? asset(pare_url_file($user->avatar)) : asset('images/default.png') ) }}" class="card-img-top" alt="..." > -->
       </div>
@@ -97,7 +97,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Name</label>
-                <input type="text" name="name" class="form-control" value="{{ $user->name }}" placeholder="User Name">
+                <input type="text" name="name" class="form-control" value="{{ $user->name }}" placeholder="User Name" required>
               </div>
             </div>
             <div class="col-md-6">
@@ -109,25 +109,25 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Số điện thoại</label>
-                <input type="text" name="phone" class="form-control" value="{{ $user->phone }}" placeholder="Phone">
+                <input type="text" name="phone" class="form-control" value="{{ $user->phone }}" placeholder="Phone" required>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Địa chỉ</label>
-                <input type="text" name="address" class="form-control" value="{{ $user->address }}" placeholder="Address">
+                <input type="text" name="address" class="form-control" value="{{ $user->address }}" placeholder="Address" required>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Ngày sinh</label>
-                <input type="date" name="birthday" class="form-control" value="{{ $user->birthday }}" placeholder="Birthday">
+                <input type="date" name="birthday" class="form-control" value="{{ $user->birthday }}" placeholder="Birthday" required>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Giới tính</label>
-                <select class="form-control" name="gender">
+                <select class="form-control" name="gender" required>
                   <option value="{{ old('gender',isset($user->gender) ? $user->gender : '') }}">
                     {{ old('gender',isset($user->gender) ? $user->gender : 'Chọn giới tính') }}
                   </option>

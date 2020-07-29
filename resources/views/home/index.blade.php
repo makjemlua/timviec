@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('content')
+@php
+    $page = "home";
+@endphp
 <style type="text/css">
   a.content-1
   {
@@ -22,16 +25,23 @@
   {
     margin-top: 0;
   }
+
+  .autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; height: 150px;}
+    .autocomplete-suggestion { padding: 15px 5px; white-space: nowrap; overflow: hidden; height: 50px;}
+    .autocomplete-selected { background: #F0F0F0;}
+    /*.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }*/
+    .autocomplete-group { padding: 2px 5px; }
+    .autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
 </style>
 <!-- Search start -->
 
 <form>
   <div class="searchwrap">
     <div class="container">
-      <h3>Tìm kiếm hàng ngàn công việc <span>Bắt đầu thôi.</span></h3>
+      <h3>Tìm kiếm hàng ngàn công việc.</h3>
       <div class="searchbar row">
         <div class="col-md-5">
-          <input type="text" class="form-control" name="search" id="search" value="{{ \Request::get('search') }}" placeholder="Nhập từ khóa cần tìm">
+          <input type="text" class="form-control" name="search" id="keyword" value="{{ \Request::get('search') }}" placeholder="Nhập từ khóa cần tìm">
         </div>
         <div class="col-md-3">
           <select class="form-control" name="job">
@@ -54,7 +64,7 @@
           </select>
         </div>
         <div class="col-md-2">
-          <input type="submit" class="btn" value="Search Job">
+          <input type="submit" class="btn" value="Tìm kiếm công việc">
         </div>
       </div>
 
@@ -68,8 +78,6 @@
 
 <!-- Search End -->
 {{-- ------------------------------------------------------------------------ --}}
-
-
 @if($profileNew)
 
     <!-- Việc làm mới start -->
@@ -85,17 +93,14 @@
 <!-- Top Thương hiệu start -->
 <div class="section greybg">
   <div class="container">
-    <!-- title start -->
     <div class="titleTop">
       <h3>Top <span>Thương hiệu</span></h3>
     </div>
-    <!-- title end -->
     @if($companys)
 
     <ul class="employerList">
       @foreach($companys as $company)
-      <!--employer-->
-      <li data-toggle="tooltip" data-placement="top" title="" data-original-title="{{ $company->em_company }}"><a href="#"><img src="{{ old('em_avatar',(isset($company->em_avatar)) ? asset(pare_url_file($company->em_avatar)) : asset('images/default.png') ) }}" alt="Company Name"></a></li>
+      <li data-toggle="tooltip" data-placement="top" title="" data-original-title="{{ $company->em_company }}"><a href="#"><img src="{{ old('em_avatar',(isset($company->em_avatar)) ? asset(pare_url_file($company->em_avatar)) : asset('images/default.png') ) }}" alt="Company Name" width="115px" height="92px"></a></li>
       @endforeach
 
     </ul>
@@ -156,6 +161,10 @@
   </div>
 </div>
 <!-- Popular Searches ends -->
+<div id="allData" style="display: none">
+  {{ $maps }}
+</div>
+<div id="googleMap" style="width:auto;height:600px;"></div>
 
 {{-- ------------------------------------------------------------------------------- --}}
 
@@ -198,4 +207,126 @@
     }
 </script>
 
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+{{-- javascript code --}}
+<script src="https://maps.google.com/maps/api/js?key=AIzaSyARuxTvO42oUK9Bj5j-fCGKPbvA-VsMIhY&libraries=places" type="text/javascript"></script>
+<script>
+function initialize() {
+
+
+    var zoom = 11;
+
+    var LatLng = new google.maps.LatLng(10.8232662, 106.6860602);
+
+    var bounds = new google.maps.LatLngBounds();
+
+  var mapProp = {
+    center: LatLng,
+    zoom:12,
+    mapTypeId:google.maps.MapTypeId.ROADMAP
+  };
+
+  var infowindow = new google.maps.InfoWindow;
+
+  var map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+  var AllData = JSON.parse(document.getElementById('allData').innerHTML);//show all data
+
+  Array.prototype.forEach.call(AllData, function(data){
+
+    var marker = new google.maps.Marker({
+      position: new google.maps.LatLng(data.map.latitude , data.map.longitude),
+      map: map,
+      icon: 'http://maps.google.com/mapfiles/kml/pal3/icon21.png',
+
+    })
+
+      var content = '<div style="width:500px;height:auto; font-weight:bold; font-size: 15px;">'+
+                      '<div class="col-md-12">'+
+                        'Địa chỉ: '+ data.map.address+
+                      '</div>'+
+
+                      '<div class="row">'+
+                        '<div class="col-md-6">'+
+                          'Ngành nghề: '+ data.pr_career+
+                        '</div>'+
+                        '<div class="col-md-6">'+
+                          'Trình độ: '+ data.pr_level+
+                        '</div>'+
+                      '</div>'+
+
+                      '<div class="row">'+
+                        '<div class="col-md-6">'+
+                          'Mức lương: '+ data.pr_salary+
+                        '</div>'+
+                        '<div class="col-md-6">'+
+                          'Giới tính: '+ data.pr_gender+
+                        '</div>'+
+                      '</div>'+
+
+                      '<div class="row">'+
+                        '<div class="col-md-6">'+
+                          'Kinh nghiệm: '+ data.pr_experience+
+                        '</div>'+
+                        '<div class="col-md-6">'+
+                          'Số lượng: '+ data.pr_quantity+
+                        '</div>'+
+                      '</div>'+
+
+                      '<div class="row">'+
+                        '<div class="col-md-6">'+
+                          'Hồ sơ: <a href="thong-tin/'+data.pr_slug+'-'+data.id+'" target="_blank">'+data.pr_title+'</a>'+
+                        '</div>'+
+                        '<div class="col-md-6">'+
+                          'Thời hạn: '+ data.pr_expired_at+
+                        '</div>'+
+                      '</div>'+
+
+                    '</div>';
+
+
+
+      marker.addListener("click", function() {
+      infowindow.setContent(content);
+      infowindow.open(map, marker);
+    })
+  })
+
+}
+google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>
+
+
+@endsection
+@section('script')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+{{--jquery.autocomplete.js--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.devbridge-autocomplete/1.4.10/jquery.autocomplete.min.js"></script>
+<script>
+    $(function () {
+        $("#keyword").autocomplete({
+            serviceUrl:'search',
+            paramName: "keyword",
+            onSelect: function(suggestion) {
+                $("#keyword").val(suggestion.value);
+            },
+            transformResult: function(response) {
+                return {
+                    suggestions: $.map($.parseJSON(response), function(item) {
+                        return {
+                            value: item.pr_title,
+                        };
+                    })
+                };
+            },
+        });
+    })
+</script>
 @stop

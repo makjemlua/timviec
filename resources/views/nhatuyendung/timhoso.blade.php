@@ -27,10 +27,10 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-sm-6">
-        <h1 class="page-heading">Candidates Listing</h1>
+        <h1 class="page-heading">Tìm hồ sơ</h1>
       </div>
       <div class="col-md-6 col-sm-6">
-        <div class="breadCrumb"><a href="">Home</a> / <a href="">Resume Search</a> / <span>Candidates</span></div>
+        <div class="breadCrumb"><a href="">Trang chủ</a> / <span>Tìm hồ sơ</span></div>
       </div>
     </div>
   </div>

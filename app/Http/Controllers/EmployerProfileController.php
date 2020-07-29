@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Employer;
 use App\Model\EmployerProfile;
 use App\Model\Job;
+use App\Model\Map;
 use App\Model\Province;
+use App\Model\SaveProfileEmployer;
+use App\Model\UserApplied;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +18,9 @@ class EmployerProfileController extends Controller {
 	public function index() {
 		$employers = EmployerProfile::where('pr_employer_id', Auth::guard('employers')->user()->id)->orderByDesc('id')->paginate(5);
 
-		return view('nhatuyendung.profile.index', compact('employers'));
+		$check_info = Employer::where('id', get_data_user('employers'))->first();
+
+		return view('nhatuyendung.profile.index', compact('employers', 'check_info'));
 	}
 
 	public function view($id) {
@@ -31,10 +37,19 @@ class EmployerProfileController extends Controller {
 	public function createProfile() {
 		$jobs = Job::all();
 		$provinces = Province::all();
+		$check_info = Employer::where('id', get_data_user('employers'))->first();
+		if ($check_info->em_phone == null || $check_info->em_address == null || $check_info->em_avatar == null || $check_info->em_company == null) {
+			return redirect()->route('employer.info')->with('danger', 'Bạn chưa nhập đầy đủ thông tin');
+		}
+		$check_10 = EmployerProfile::where('pr_employer_id', Auth::guard('employers')->user()->id)->orderByDesc('id')->paginate(5);
+		if (count($check_10) >= 10) {
+			return redirect()->route('employer.profile.index')->with('danger', 'Bạn đã tạo 10 bài tuyển dụng');
+		}
 
 		$viewData = [
 			'jobs' => $jobs,
 			'provinces' => $provinces,
+			'check_info' => $check_info,
 		];
 		return view('nhatuyendung.profile.create', $viewData);
 	}
@@ -66,6 +81,15 @@ class EmployerProfileController extends Controller {
 		$employerProfile->updated_at = Carbon::now();
 		$employerProfile->save();
 
+		$map = new Map();
+		$map->ma_employer_id = get_data_user('employers');
+		$map->address = $requestProfile->autocomplete;
+		$map->latitude = $requestProfile->latitude;
+		$map->longitude = $requestProfile->longitude;
+		$map->created_at = Carbon::now();
+		$map->updated_at = Carbon::now();
+		$map->save();
+
 		return redirect()->back()->with('success', 'Thêm mới bài đăng thành công');
 	}
 
@@ -73,11 +97,13 @@ class EmployerProfileController extends Controller {
 		$jobs = Job::all();
 		$provinces = Province::all();
 		$employerProfile = EmployerProfile::find($id);
+		$map = Map::find($id);
 
 		$viewData = [
 			'jobs' => $jobs,
 			'provinces' => $provinces,
 			'employerProfile' => $employerProfile,
+			'map' => $map,
 		];
 		return view('nhatuyendung.profile.update', $viewData);
 	}
@@ -107,6 +133,15 @@ class EmployerProfileController extends Controller {
 		$employerProfile->updated_at = Carbon::now();
 		$employerProfile->save();
 
+		$map = Map::find($id);
+		$map->ma_employer_id = get_data_user('employers');
+		$map->address = $requestProfile->autocomplete;
+		$map->latitude = $requestProfile->latitude;
+		$map->longitude = $requestProfile->longitude;
+		$map->created_at = Carbon::now();
+		$map->updated_at = Carbon::now();
+		$map->save();
+
 		return redirect()->back()->with('success', 'Cập nhập bài đăng thành công');
 	}
 
@@ -114,8 +149,14 @@ class EmployerProfileController extends Controller {
 	public function action($action, $id) {
 		if ($action) {
 			$employerProfile = EmployerProfile::find($id);
+			$applie = UserApplied::where('ap_profile_id', $id);
+			$userSaveEmployer = SaveProfileEmployer::where('usa_profile_id', $id);
+			//$transaction = Transaction::find('tr_employer_id', $id);
 			switch ($action) {
 			case 'delete':
+				$applie->delete();
+				$userSaveEmployer->delete();
+				//$transaction->delete();
 				$employerProfile->delete();
 				break;
 			case 'active':

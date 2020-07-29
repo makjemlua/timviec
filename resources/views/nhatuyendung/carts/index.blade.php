@@ -128,7 +128,6 @@ input[type=number]
   <div class="container">
 		<h1 class="title">Bảng giá gói dịch vụ tuyển dụng</h1>
 
-    @if(Auth::guard('employers')->user()->em_vip==0)
 
 		<table class="table table-striped">
 		  <thead>
@@ -156,7 +155,6 @@ input[type=number]
 		  </tbody>
 		</table>
 
-    @endif
 
 
 
@@ -205,7 +203,7 @@ input[type=number]
 			</table>
 		@endif
 
-			<form action="{{ route('get.form.pay') }}" method="GET">
+			<form action="{{ route('get.form.pay_online') }}" method="GET">
 				<div class="col-md-9 ml-auto">
 					<div class="cart-page-total">
 						@if(isset($key))

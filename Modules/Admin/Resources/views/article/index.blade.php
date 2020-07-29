@@ -1,6 +1,15 @@
 @extends('admin::layouts.master')
-
 @section('content')
+<style type="text/css">
+	.content-1
+	  {
+	    text-overflow: ellipsis;
+	    overflow: hidden;
+	    -webkit-line-clamp: 4;
+	    -webkit-box-orient: vertical;
+	    display: -webkit-box;
+	  }
+</style>
 <div class="container-fluid">
 	<nav aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -39,6 +48,9 @@
 			@if(isset($articles))
 			<span style="display: none">{{ $a=1 }}</span>
 				@foreach($articles as $article)
+				<div class="col-md">
+		          <input type="hidden" name="id" id="id" value="{{ old('id',isset($article->id) ? $article->id : '') }}">
+		        </div>
 					<tr>
 						<td><!-- STT -->
 							<b>{{ $a++ }}</b>
@@ -50,10 +62,10 @@
 							<img src="{{ asset(pare_url_file($article->bo_avatar)) }}" alt="image" width="120px" height="80px">
 						</td>
 						<td style="width: 400px"><!-- Mô tả -->
-							{{ $article->bo_description }}
+							<span class="content-1">{{ $article->bo_description }}</span>
 						</td>
 						<td><!-- Trạng thái -->
-							<a href="{{ route('admin.get.action.article',['active', $article->id]) }}" class="btn {{ $article->getStatus($article->bo_active)['class'] }}">{{ $article->getStatus($article->bo_active)['name'] }}</a>
+							<a href="{{ route('admin.get.action.article',['active', $article->id]) }}" class="btn {{ $article->getStatus($article->bo_active)['class'] }} status">{{ $article->getStatus($article->bo_active)['name'] }}</a>
 						</td>
 						<td><!-- Ngày tạo -->
 							{{ $article->created_at }}
@@ -62,7 +74,7 @@
 							<a class="thao-tac sua btn btn-primary" href="{{ route('admin.get.edit.article',$article->id) }}" title="Cập nhập">
 								<i class="fa fa-pencil-square-o" aria-hidden="true"></i>Sửa
 							</a>
-							<a class="thao-tac xoa btn btn-danger" href="{{ route('admin.get.action.article',['delete', $article->id]) }}" title="Xóa">
+							<a class="thao-tac xoa btn btn-danger" id="deleteItem" href="{{ route('admin.get.action.article',['delete', $article->id]) }}" title="Xóa">
 								<i class="fa fa-trash" aria-hidden="true"></i>Xóa
 							</a>
 						</td>
@@ -74,4 +86,44 @@
 	{!! $articles->links() !!}
 </div>
 </div>
+@stop
+@section('script')
+<script type="text/javascript">
+// $('.xoa').click(function (e) {
+// 	e.preventDefault();
+//   var id = $('#id').val();
+//   var el = this;
+//   var token = $("meta[name='csrf-token']").attr("content");
+//   $.ajax({
+//     url: "/timviec/public/admincp/article/delete/" + id,
+//     type: 'GET',
+//     data: {
+//             _token: token,
+//                 id: id
+//         },
+//     success: function(response){
+//       $(el).closest( "tr" ).remove();
+//       alert("Xóa thành công");
+//     }
+//   });
+// });
+
+// $('.status').click(function (e) {
+// 	e.preventDefault();
+//   var id = $('#id').val();
+//   var el = this;
+//   var token = $("meta[name='csrf-token']").attr("content");
+//   $.ajax({
+//     url: "/timviec/public/admincp/article/active/" + id,
+//     type: 'GET',
+//     data: {
+//             _token: token,
+//                 id: id
+//         },
+//     success: function(response){
+
+// 	}
+//   });
+// });
+</script>
 @stop

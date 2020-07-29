@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('content')
+@php
+  $page = "login";
+@endphp
 <style type="text/css">
 	.btn-big
 	{

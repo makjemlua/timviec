@@ -4,7 +4,7 @@
 		<div class="col-md-4 col-md-offset-2">
 			<div class="form-group">
 				<label for="name">Tên:</label>
-				<input type="text" class="form-control" name="name" value="{{ old('name',isset($admin->name) ? $admin->name : '') }}" placeholder="Tên">
+				<input type="text" class="form-control" name="name" value="{{ old('name',isset($admin->name) ? $admin->name : '') }}" placeholder="Tên" required pattern=".{5,10}" title="5 tới 10 ký tự">
 				@if ($errors->has('name'))
 				<div class="error">{{ $errors->first('name') }}</div>
 				@endif

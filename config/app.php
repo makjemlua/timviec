@@ -39,7 +39,7 @@ return [
 		    |
 	*/
 
-	'debug' => env('APP_DEBUG', false),
+	'debug' => env('APP_DEBUG', true),
 
 	/*
 		    |--------------------------------------------------------------------------
@@ -171,11 +171,12 @@ return [
 		*/
 		App\Providers\AppServiceProvider::class,
 		App\Providers\AuthServiceProvider::class,
-		// App\Providers\BroadcastServiceProvider::class,
+		App\Providers\BroadcastServiceProvider::class,
 		App\Providers\EventServiceProvider::class,
 		App\Providers\RouteServiceProvider::class,
 
 		Laravel\Socialite\SocialiteServiceProvider::class,
+		Maatwebsite\Excel\ExcelServiceProvider::class,
 
 	],
 
@@ -231,6 +232,7 @@ return [
 		//'Tracker' => 'PragmaRX\Tracker\Vendor\Laravel\Facade',
 
 		'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+		'Excel' => 'Maatwebsite\Excel\Facades\Excel',
 
 	],
 

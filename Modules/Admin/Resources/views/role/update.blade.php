@@ -1,6 +1,15 @@
 @extends('admin::layouts.master')
 
 @section('content')
+<style type="text/css">
+  .error
+  {
+    font-weight: bold;
+    color: red;
+    font-size: 15px;
+    width: 100%;
+  }
+</style>
 	<nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Trang chủ</a></li>

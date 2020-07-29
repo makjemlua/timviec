@@ -24,16 +24,18 @@
 	<tbody>
 		@foreach($saveProfile as $save)
 		@if($save->profile->ge_active==1)
-		<tr>
-			<td><a href="{{ route('employer.detail.userprofile', [$save->profile->ge_slug, $save->profile->id]) }}">{{ $save->sa_title }}</a></td>
-			<td>{{ $save->sa_name }}</td>
-			<td>{{ date('d-m-Y',strtotime($save->created_at)) }}</td>
-			<td>
-				<a class="btn btn-danger" href="{{ route('user.get.delete.save', $save->id) }}">
-					<i class="fa fa-trash" aria-hidden="true"></i> Xóa
-				</a>
-			</td>
-		</tr>
+			@if($save->profile->ge_status==1)
+			<tr>
+				<td><a href="{{ route('employer.detail.userprofile', [$save->profile->ge_slug, $save->profile->id]) }}">{{ $save->sa_title }}</a></td>
+				<td>{{ $save->sa_name }}</td>
+				<td>{{ date('d-m-Y',strtotime($save->created_at)) }}</td>
+				<td>
+					<a class="btn btn-danger" href="{{ route('user.get.delete.save', $save->id) }}">
+						<i class="fa fa-trash" aria-hidden="true"></i> Xóa
+					</a>
+				</td>
+			</tr>
+			@endif
 		@endif
 		@endforeach
 	</tbody>

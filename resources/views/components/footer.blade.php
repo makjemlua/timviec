@@ -9,7 +9,19 @@
   .text-center {
       margin-left: 25%;
   }
+  div.fb_dialog_content iframe
+  {
+      margin: -10px 50px !important;
+  }
 </style>
+
+<!-- Zalo -->
+<div class="zalo-chat-widget" data-oaid="386984686957454687" data-welcome-message="Rất vui khi được hỗ trợ bạn!" data-autopopup="0" data-width="350" data-height="420"></div>
+
+<script src="https://sp.zalo.me/plugins/sdk.js"></script>
+
+<!-- End Zalo -->
+
 <!-- Load Facebook SDK for JavaScript -->
       <div id="fb-root"></div>
       <script>
@@ -151,7 +163,7 @@
       <!--About Us-->
       <div class="col-md-3 col-sm-12">
         <div class="ft-logo"><img src="{{ asset('images/logo.gif') }}" alt="Your alt text here"></div>
-        <p>Hello</p>
+        <p>Chào mừng đến với website tìm việc</p>
 
         <!-- Social Icons -->
         <div class="social"> <a href="#" target="_blank"> <i class="fa fa-facebook-square" aria-hidden="true"></i></a> <a href="#" target="_blank"><i class="fa fa-twitter-square" aria-hidden="true"></i></a> <a href="#" target="_blank"><i class="fa fa-google-plus-square" aria-hidden="true"></i></a> <a href="#" target="_blank"><i class="fa fa-linkedin-square" aria-hidden="true"></i></a> <a href="#" target="_blank"><i class="fa fa-youtube-square" aria-hidden="true"></i></a> </div>

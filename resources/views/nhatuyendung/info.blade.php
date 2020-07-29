@@ -20,22 +20,22 @@ hr
           </li>
           <li class="col-md-2 col-sm-4 col-xs-6">
             <div class="inbox"> <i class="fa fa-download" aria-hidden="true"></i>
-              <h6>2</h6>
+              <h6>0</h6>
               <strong>Việc làm đã lưu</strong> </div>
           </li>
           <li class="col-md-2 col-sm-4 col-xs-6">
             <div class="inbox"> <i class="fa fa-user" aria-hidden="true"></i>
-              <h6>1</h6>
+              <h6>0</h6>
               <strong>Hồ sơ</strong> </div>
           </li>
           <li class="col-md-2 col-sm-4 col-xs-6">
             <div class="inbox"> <i class="fa fa-desktop" aria-hidden="true"></i>
-              <h6>2</h6>
+              <h6>0</h6>
               <strong>CV mẫu</strong> </div>
           </li>
           <li class="col-md-2 col-sm-4 col-xs-6">
             <div class="inbox"> <i class="fa fa-envelope-o" aria-hidden="true"></i>
-              <h6>8</h6>
+              <h6>0</h6>
               <strong>Thông báo</strong> </div>
           </li>
         </ul>
@@ -48,7 +48,7 @@ hr
 		<div class="row">
 			<div class="col-md-3">
 				<div class="card" style="width: 18rem;">
-					<img src="{{ old('avatar',(isset($employers->em_avatar)) ? asset(pare_url_file($employers->em_avatar)) : asset('images/default.png') ) }}" class="card-img-top" alt="..." >
+					<img src="{{ old('avatar',(isset($employers->em_avatar)) ? asset(pare_url_file($employers->em_avatar)) : asset('images/default.png') ) }}" class="card-img-top" alt="..." style="width: 100px;height: 100px">
 					<div>
 						<input type="file" name="avatar">
 					</div>
@@ -61,7 +61,7 @@ hr
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Name</label>
-								<input type="text" name="name" class="form-control" value="{{ old('name', isset($employers->name) ? $employers->name : '') }}" placeholder="User Name">
+								<input type="text" name="name" class="form-control" value="{{ old('name', isset($employers->name) ? $employers->name : '') }}" placeholder="User Name" required>
 							</div>
 						</div>
 						<div class="col-md-6">
@@ -73,13 +73,13 @@ hr
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Số điện thoại</label>
-								<input type="text" name="em_phone" class="form-control" value="{{ old('em_phone', isset($employers->em_phone) ? $employers->em_phone : '') }}" placeholder="Phone">
+								<input type="text" name="em_phone" class="form-control" value="{{ old('em_phone', isset($employers->em_phone) ? $employers->em_phone : '') }}" placeholder="Phone" required>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Địa chỉ</label>
-								<input type="text" name="em_address" class="form-control" value="{{ old('em_address', isset($employers->em_address) ? $employers->em_address : '') }}" placeholder="Address">
+								<input type="text" name="em_address" class="form-control" value="{{ old('em_address', isset($employers->em_address) ? $employers->em_address : '') }}" placeholder="Address" required>
 							</div>
 						</div>
 					</div>
@@ -100,7 +100,7 @@ hr
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Tên công ty</label>
-								<input type="text" name="em_company" class="form-control" value="{{ old('em_company', isset($employers->em_company) ? $employers->em_company : '') }}" placeholder="User Name">
+								<input type="text" name="em_company" class="form-control" value="{{ old('em_company', isset($employers->em_company) ? $employers->em_company : '') }}" placeholder="User Name" required>
 							</div>
 						</div>
 						<div class="col-md-3">
@@ -152,8 +152,8 @@ hr
 	</div>
 </form>
 
-<script src="http://code.jquery.com/jquery.js"></script>
-<script src="https://cdn.rawgit.com/hilios/jQuery.countdown/2.2.0/dist/jquery.countdown.min.js"></script>
+<script src="{{ asset('js/jquery.js') }}"></script>
+<script src="{{ asset('js/jquery.countdown.min.js') }}"></script>
 <script>
 	$('[data-countdown]').each(function() {
   var $this = $(this), finalDate = $(this).data('countdown');

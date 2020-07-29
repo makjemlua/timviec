@@ -2,8 +2,12 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\Model\Degree;
 use App\Model\Job;
+use App\Model\Language;
 use App\Model\Province;
+use App\Model\Skill;
+use App\Model\UserExperience;
 use App\Model\UserGeneralInfo;
 use App\User;
 use Illuminate\Http\Request;
@@ -28,41 +32,33 @@ class AdminUserController extends Controller {
 		return view('admin::users.account', $viewData);
 	}
 
-	public function accountDetail($id) {
-		$user = User::find($id);
-		$viewData = [
-			'user' => $user,
-		];
-		return view('admin::users.account-detail', compact('user'));
-	}
-
 	public function profile(Request $request) {
-		$userProfiles = UserGeneralInfo::with('user:id,name');
+		$userProfiles = UserGeneralInfo::with('user:id,name,email');
 
 		$jobs = Job::all();
 
 		$provinces = Province::all();
 
 		if ($request->search) {
-			$userProfiles->where('pr_title', 'like', '%' . $request->search . '%');
+			$userProfiles->where('ge_title', 'like', '%' . $request->search . '%');
 		}
 
 		if ($request->cate) {
-			$userProfiles->where('pr_career', $request->cate);
+			$userProfiles->where('ge_profession', $request->cate);
 		}
 
 		if ($request->province) {
-			$userProfiles->where('pr_provinces', $request->province);
+			$userProfiles->where('ge_provinces', $request->province);
 		}
 
 		if ($request->orderby) {
 			$orderby = $request->orderby;
 			switch ($orderby) {
 			case 'name_a':
-				$userProfiles->orderBy('pr_title', 'DESC');
+				$userProfiles->orderBy('ge_title', 'DESC');
 				break;
 			case 'name_z':
-				$userProfiles->orderBy('pr_title', 'ASC');
+				$userProfiles->orderBy('ge_title', 'ASC');
 				break;
 			case 'date_desc':
 				$userProfiles->orderBy('id', 'ASC');
@@ -90,10 +86,19 @@ class AdminUserController extends Controller {
 
 	public function detailProfile($id) {
 		$profile = UserGeneralInfo::find($id);
+		$profileExp = UserExperience::find($id);
+		$degrees = Degree::find($id);
+		$languages = Language::find($id);
+		$skills = Skill::find($id);
+
 		$viewData = [
 			'profile' => $profile,
+			'profileExp' => $profileExp,
+			'degrees' => $degrees,
+			'languages' => $languages,
+			'skills' => $skills,
 		];
-		return view('admin::users.profile-detail', compact('profile'));
+		return view('admin::users.profile-detail', $viewData);
 	}
 
 	public function actionAccount($active, $id) {

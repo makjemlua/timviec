@@ -10,6 +10,12 @@
       </ol>
     </nav>
 
+    <div class="row">
+	  <div class="col-md-6">
+	    <a href ="{{ route('export.employer') }}" class="btn btn-info export pull-right" id="export-button"> Export Nhà tuyển dụng </a>
+	  </div>
+	</div>
+
 	<h2 class="page-header">Quản lý nhà tuyển dụng
 	</h2>
 <div class="table-responsive">
@@ -24,7 +30,7 @@
 				<th>Vip</th>
 				<th>Time vip</th>
 				<th>Trạng thái</th>
-				<th>Thao tác</th>
+				{{-- <th>Thao tác</th> --}}
 			</tr>
 		</thead>
 		<tbody>
@@ -48,7 +54,7 @@
 							<p>{{ $employer->em_company }}</p>
 						</td>
 						<td><!-- Trạng thái -->
-							<a href="{{ route('action.employer.account',['vip', $employer->id]) }}" class="btn {{ $employer->getStatus($employer->em_vip)['class'] }}">{{ $employer->getStatus($employer->em_vip)['name'] }}</a>
+							<a href="{{ route('action.employer.vip',['vip', $employer->id]) }}" class="btn {{ $employer->getStatus($employer->em_vip)['class'] }}">{{ $employer->getStatus($employer->em_vip)['name'] }}</a>
 						</td>
 						<td><!-- Time -->
 							@if(strtotime($employer->em_timevip) > time())
@@ -60,16 +66,13 @@
 							@endif
 						</td>
 						<td>
-							<p class="btn btn-success">Public</p>
+							<a href="{{ route('action.employer.account',['active', $employer->id]) }}" class="btn {{ $employer->getStatuss($employer->active)['class'] }}">{{ $employer->getStatuss($employer->active)['name'] }}</a>
 						</td>
-						<td><!-- Thao tác -->
-							{{-- <a class="thao-tac xoa btn btn-danger" href="" title="Khóa">
-								<i class="fa fa-trash" aria-hidden="true"></i> Khóa
-							</a> --}}
+						{{-- <td><!-- Thao tác -->
 							<a class="thao-tac xoa btn btn-primary" href="{{ route('admin.account.changevip', $employer->id) }}" title="Vip">
 								<i class="fa fa-star" aria-hidden="true"></i> Vip
 							</a>
-						</td>
+						</td> --}}
 					</tr>
 
 				@endforeach
@@ -83,8 +86,8 @@
 
 
 
-<script src="http://code.jquery.com/jquery.js"></script>
-<script src="https://cdn.rawgit.com/hilios/jQuery.countdown/2.2.0/dist/jquery.countdown.min.js"></script>
+<script src="{{ asset('js/jquery.js') }}"></script>
+<script src="{{ asset('js/jquery.countdown.min.js') }}"></script>
 <script>
 	$('[data-countdown]').each(function() {
   var $this = $(this), finalDate = $(this).data('countdown');

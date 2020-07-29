@@ -21,8 +21,8 @@ if (!function_exists('upload_image')) {
 			return $data['code'] = 0;
 		}
 // Tên file mới
-		$nameFile = trim(str_replace('.' . $ext, '', strtolower($info->getFilename())));
-		$filename = date('Y-m-d__') . Str::slug($nameFile) . '.' . $ext;
+		$nameFile = str_replace('.' . $ext, '', strtolower($info->getFilename()));
+		$filename = md5(time()) . '_' . Str::slug($nameFile) . '.' . $ext;
 // thu muc goc de upload
 		$path = public_path() . '/uploads/';
 		if (!\File::exists($path)) {

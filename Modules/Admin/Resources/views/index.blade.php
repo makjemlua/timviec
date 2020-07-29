@@ -78,16 +78,26 @@
           </div>
         </div>
   </div>
-<div class="col-md-3">
-  <form action="" method="">
-  <input class="form-control" type="date" name="date_from">
-  <input class="form-control" type="date" name="date_to">
-  <input class="btn btn-success" type="submit" name="" value="Thống kê">
-  </form>
+<div class="row">
+  <div class="col-md-3">
+    <form action="" method="">
+    <input class="form-control" type="date" name="date_from">
+    <input class="form-control" type="date" name="date_to">
+    <input class="btn btn-success" type="submit" name="" value="Thống kê">
+    </form>
+  </div>
+  <div class="col-md-9">
+    @if($tinhtien >= 0)
+      <h3>Doanh thu của bạn từ ngày {{ date('d-m-Y',strtotime($date_from)) }} đến ngày {{ date('d-m-Y',strtotime($date_to)) }} là: </h3> <h1 style="color: red;">{{ number_format(($tinhtien),0,',','.') }} VNĐ</h1>
+    @endif
+  </div>
 </div>
-@if($tinhtien >= 0)
-  <h3>Doanh thu của bạn từ ngày {{ $date_from }} đến ngày {{ $date_to }} là: </h3> <h1 style="color: red;">{{ number_format(($tinhtien),0,',','.') }} VNĐ</h1>
-@endif
+
+<div class="row">
+  <div class="col-md-6">
+    <a href ="{{ route('export.doanhthu') }}" class="btn btn-info export pull-right" id="export-button"> Export đơn hàng </a>
+  </div>
+</div>
 
 
 </div>

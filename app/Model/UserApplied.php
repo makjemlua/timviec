@@ -12,7 +12,7 @@ class UserApplied extends Model {
 		return $this->belongsTo('App\User', 'ap_user_id', 'id');
 	}
 
-	public function profile() {
+	public function profileEmployer() {
 		return $this->belongsTo('App\Model\EmployerProfile', 'ap_profile_id', 'id');
 	}
 

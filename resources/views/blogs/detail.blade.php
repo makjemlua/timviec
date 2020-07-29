@@ -11,16 +11,21 @@
     font-size: 10px;
     padding: 8px 12px;
   }
+  .contact-news
+  {
+    background: #e3e8f4;
+    padding: 20px;
+  }
 </style>
 <!-- Page Title start -->
 <div class="pageTitle">
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-sm-6">
-        <h1 class="page-heading">Blog Detail</h1>
+        <h1 class="page-heading">Bài viết</h1>
       </div>
       <div class="col-md-6 col-sm-6">
-        <div class="breadCrumb"><a href="#">Home</a> / <span>Post Name</span></div>
+        <div class="breadCrumb"><a href="#">Trang chủ</a> / <span>Bài viết</span></div>
       </div>
     </div>
   </div>
@@ -44,9 +49,15 @@
             <p>
             	{!! $articleDetail->bo_content !!}
             </p>
+            <div class="contact-news">
+                <p>
+                    Hãy chia sẻ những khó khăn của bạn trong quá trình Tìm việc làm / Tuyển dụng qua email
+                    <a href="mailto:nghenghiep@timviecnhanh.xyz">nghenghiep@timviecnhanh.xyz</a> để nhận được tư vấn từ các chuyên gia của Tìm Việc Nhanh.
+                </p>
+            </div>
           </div>
           <div class="comments margin-top30">
-            <h4>Comments</h4>
+            <h4>Bình luận</h4>
             <ul class="media-list">
               <!-- COMMENTS -->
 
@@ -58,17 +69,17 @@
 
             <!-- LEAVE COMMENTS -->
             <div class="commnetsfrm">
-              <h4>Leave Your Comments</h4>
+              <h4>Viết bình luận</h4>
               <form action="{{ route('post.rating.article', $articleDetail) }}" method="GET">
                 @csrf
                 <ul class="row">
                   <li class="col-sm-12">
                     <label>
-                      <textarea name="ra_content" class="form-control" placeholder="MESSAGE" required></textarea>
+                      <textarea name="ra_content" class="form-control" placeholder="Nội dung" required></textarea>
                     </label>
                   </li>
                   <li class="col-sm-12">
-                    <button type="submit" class="btn margin-top-20">SEND</button>
+                    <button type="submit" class="btn margin-top-20">Gửi</button>
                   </li>
                 </ul>
               </form>
@@ -80,7 +91,7 @@
         <!-- Side Bar -->
         <div class="sidebar">
           <!-- Search -->
-          <div class="widget">
+          {{-- <div class="widget">
             <h5 class="widget-title">Search</h5>
             <div class="search">
               <form>
@@ -88,10 +99,10 @@
                 <button type="submit" class="btn"><i class="fa fa-search"></i></button>
               </form>
             </div>
-          </div>
+          </div> --}}
           <!-- Recent Posts -->
           <div class="widget">
-            <h5 class="widget-title">Recent Posts</h5>
+            <h5 class="widget-title">Bài viết mới</h5>
             <ul class="papu-post">
             	@if($articles)
             		@foreach($articles as $article)

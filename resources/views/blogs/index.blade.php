@@ -1,14 +1,27 @@
 @extends('layouts.app')
 @section('content')
+@php
+  $page = "blogs";
+@endphp
+<style type="text/css">
+  span.content-1
+    {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
+    }
+</style>
 <!-- Page Title start -->
 <div class="pageTitle">
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-sm-6">
-        <h1 class="page-heading">Blog</h1>
+        <h1 class="page-heading">Góc nghề nghiệp</h1>
       </div>
       <div class="col-md-6 col-sm-6">
-        <div class="breadCrumb"><a href="{{ route('home.index') }}">Home</a> / <span>Blog</span></div>
+        <div class="breadCrumb"><a href="{{ route('home.index') }}">Trang chủ</a> / <span>Góc nghề nghiệp</span></div>
       </div>
     </div>
   </div>
@@ -37,8 +50,8 @@
                         <h4><a href="{{ route('get.detail.news', [$article->bo_slug, $article->id]) }}">{{ $article->bo_title }}</a></h4>
                         <div class="postmeta">By : <span>{{ $article->admin->name }} </span> </div>
                       </div>
-                      <p>{{ $article->bo_description }}</p>
-                      <a href="{{ route('get.detail.news', [$article->bo_slug, $article->id]) }}" class="readmore">Read More</a> </div>
+                      <span class="content-1">{{ $article->bo_description }}</span>
+                      <a href="{{ route('get.detail.news', [$article->bo_slug, $article->id]) }}" class="readmore">Đọc thêm</a> </div>
                   </div>
                 </li>
               @endforeach
@@ -50,7 +63,7 @@
         <div class="pagiWrap">
           <div class="row">
             <div class="col-md-4 col-sm-6">
-              <div class="showreslt">Showing 1-3</div>
+              <div class="showreslt">Hiển thị 1-3</div>
             </div>
             <div class="col-md-8 col-sm-6 text-right">
               {!! $articles->links() !!}

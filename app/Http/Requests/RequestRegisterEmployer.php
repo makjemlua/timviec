@@ -25,6 +25,7 @@ class RequestRegisterEmployer extends FormRequest {
 			'name' => 'required|min:5|max:30',
 			'password' => 'required|min:3',
 			'repassword' => 'required|same:password',
+			'g-recaptcha-response' => 'required',
 		];
 	}
 	public function messages() {
@@ -38,6 +39,7 @@ class RequestRegisterEmployer extends FormRequest {
 			'password.min' => 'Mật khẩu phải lớn hơn 3 kí tự',
 			'repassword.required' => 'Mật khẩu không được để trống',
 			'repassword.same' => 'Mật khẩu phải giống nhau',
+			'g-recaptcha-response.required' => 'Vui lòng nhập Captcha',
 		];
 	}
 }

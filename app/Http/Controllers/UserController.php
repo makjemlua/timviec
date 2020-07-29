@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RequestPasswordUser;
+use App\Model\Notification;
 use App\Model\SaveProfileEmployer;
 use App\Model\UserApplied;
 use App\Model\UserGeneralInfo;
@@ -19,7 +20,11 @@ class UserController extends Controller {
 
 		$userProfile = UserGeneralInfo::where('ge_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
 
-		$saveProfile = SaveProfileEmployer::where('usa_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
+		$saveProfile = '';
+
+		if (Auth::guard('web')->check()) {
+			$saveProfile = SaveProfileEmployer::where('usa_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
+		}
 
 		$viewData = [
 			'user' => $user,
@@ -64,7 +69,7 @@ class UserController extends Controller {
 	// Trang hiển thị việc làm đã lưu
 	public function saveProfile() {
 
-		$saveProfile = SaveProfileEmployer::where('usa_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
+		$saveProfile = SaveProfileEmployer::with('profile:id,pr_title,pr_slug,pr_active,pr_expired_at')->where('usa_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
 		//dd($saveProfile->all());
 
 		$viewData = [
@@ -83,8 +88,10 @@ class UserController extends Controller {
 			$usersaves->usa_title = $request->usa_title;
 			$usersaves->usa_company = $request->usa_company;
 			$usersaves->usa_career = $request->usa_career;
+			$usersaves->usa_expired_at = $request->usa_expired_at;
 			$usersaves->created_at = Carbon::now();
 			$usersaves->updated_at = Carbon::now();
+			//dd($usersaves);
 			$usersaves->save();
 			return redirect()->back()->with('success', 'Bạn đã lưu hồ sơ');
 		}
@@ -94,7 +101,7 @@ class UserController extends Controller {
 	// Trang hiển thị việc làm đã ứng tuyển
 	public function applieProfile() {
 
-		$applies = UserApplied::with('profile:id,pr_slug,pr_active,pr_status')->where('ap_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
+		$applies = UserApplied::with('profileEmployer:id,pr_title,pr_slug,pr_active,pr_status', 'hoso:id,ge_title')->where('ap_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
 
 		return view('users.applie-profile', compact('applies'));
 	}
@@ -127,7 +134,7 @@ class UserController extends Controller {
 		if ($request->has('applies')) {
 			$applies = new UserApplied();
 			$applies->ap_user_id = Auth::guard('web')->user()->id;
-			$applies->ap_hoso_id = UserGeneralInfo::where('ge_user_id', get_data_user('web'))->where('ge_status', 1)->first()->id;
+			$applies->ap_hoso_id = UserGeneralInfo::where('ge_user_id', get_data_user('web', 'id'))->where('ge_status', 1)->first()->id;
 			$applies->ap_profile_id = $request->ap_profile_id;
 			$applies->ap_employer_id = $request->ap_employer_id;
 			$applies->ap_title = $request->ap_title;
@@ -135,6 +142,7 @@ class UserController extends Controller {
 			$applies->ap_name = $request->ap_name;
 			$applies->ap_career = $request->ap_career;
 			$applies->ap_provinces = $request->ap_provinces;
+			$applies->ap_expired_at = $request->ap_expired_at;
 			$applies->created_at = Carbon::now();
 			$applies->updated_at = Carbon::now();
 			//dd($applies);
@@ -143,6 +151,12 @@ class UserController extends Controller {
 			return redirect()->back()->with('success', 'Bạn đã nộp hồ sơ');
 		}
 
+	}
+
+	//Thông báo
+	public function notification() {
+		$notifi = Notification::where('no_check', 1)->where('no_active', 1)->get();
+		return view('users.notification', compact('notifi'));
 	}
 
 	//Các chức năng xóa applie

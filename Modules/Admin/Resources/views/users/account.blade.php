@@ -20,6 +20,13 @@
     	</div>
 
     </div>
+
+    <div class="row">
+	  <div class="col-md-6">
+	    <a href ="{{ route('export.user') }}" class="btn btn-info export pull-right" id="export-button"> Export User </a>
+	  </div>
+	</div>
+
 	<h2 class="page-header">Quản lý nhà tuyển dụng
 	</h2>
 <div class="table-responsive">
@@ -30,8 +37,13 @@
 				<th>Tên</th>
 				<th>email</th>
 				<th>Phone</th>
+				<th>Birthday</th>
+				<th>Giới tính</th>
+				<th>Địa chỉ</th>
+				<th>Avatar</th>
+				<th>Provider</th>
 				<th>Trạng thái</th>
-				<th>Thao tác</th>
+				{{-- <th>Thao tác</th> --}}
 			</tr>
 		</thead>
 		<tbody>
@@ -52,12 +64,31 @@
 							<p>{{ $user->phone }}</p>
 						</td>
 						<td>
+							<p>{{ $user->birthday }}</p>
+						</td>
+						<td>
+							<p>{{ $user->gender }}</p>
+						</td>
+						<td>
+							<p>{{ $user->address }}</p>
+						</td>
+						<td>
+							@if($user->provider)
+					            <img id="blah" src="{{ old('avatar',(isset($user->avatar)) ? asset($user->avatar) : asset('images/default.png') ) }}" alt="" class="userimg card-img-top" style="width: 60px;height: 50px">
+					        @else
+					          <img src="{{ old('avatar', (isset($user->avatar) ? asset(pare_url_file($user->avatar)) : asset('images/default.png') ) ) }}" alt="" class="userimg card-img-top" style="width: 60px;height: 50px">
+					        @endif
+						</td>
+						<td>
+							<p>{{ $user->provider }}</p>
+						</td>
+						<td>
 							<a href="{{ route('action.user.account',['active', $user->id]) }}" class="btn {{ $user->getStatus($user->active)['class'] }}">{{ $user->getStatus($user->active)['name'] }}</a>
 						</td>
 						<td><!-- Thao tác -->
-							<a class="btn btn-primary" href="{{ route('admin.get.detail.account.user', [$user->id]) }}" title="Xem">
+							{{-- <a class="btn btn-primary" href="{{ route('admin.get.detail.account.user', [$user->id]) }}" title="Xem">
 								<i class="fa fa-eye" aria-hidden="true"></i> Xem
-							</a>
+							</a> --}}
 						</td>
 					</tr>
 				@endforeach

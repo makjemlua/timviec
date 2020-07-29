@@ -3,6 +3,7 @@
 namespace Modules\Admin\Http\Controllers;
 
 use App\Http\Requests\RequestPasswordAdmin;
+use App\Http\Requests\RequestRoleAdmin;
 use App\Model\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -23,7 +24,7 @@ class AdminRoleController extends Controller {
 	public function create() {
 		return view('admin::role.create');
 	}
-	public function store(Request $requestRole) {
+	public function store(RequestRoleAdmin $requestRole) {
 		$admin = new Admin();
 		$admin->name = $requestRole->name;
 		$admin->email = $requestRole->email;
@@ -49,7 +50,7 @@ class AdminRoleController extends Controller {
 		$admin->created_at = Carbon::now();
 		$admin->updated_at = Carbon::now();
 		$admin->save();
-		return redirect()->back();
+		return redirect()->back()->with('success', 'Cập nhập thành công');
 	}
 
 	public function editpass() {
@@ -63,7 +64,7 @@ class AdminRoleController extends Controller {
 			$admin->save();
 			return redirect()->back()->with('success', 'Cập nhập thành công');
 		}
-		return redirect()->back()->with('danger', 'Mật khẩu không đúng');
+		return redirect()->back()->with('danger', 'Mật khẩu cũ không đúng');
 
 	}
 	public function action($action, $id) {

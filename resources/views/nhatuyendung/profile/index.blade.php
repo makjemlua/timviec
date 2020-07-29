@@ -24,7 +24,7 @@
 	<thead>
 		<tr>
 			<th>STT</th>
-			<th>Hiển thị</th>
+			{{-- <th>Hiển thị</th> --}}
 			<th>Tên hồ sơ</th>
 			<th>Thao tác</th>
 			<th>Tình trạng</th>
@@ -36,9 +36,11 @@
 		@foreach($employers as $employer)
 		<tr>
 			<td>{{ $a++ }}</td>
-			<td width="50px">
-				<a href="{{ route('employer.get.action.profile',['active', $employer->id]) }}" class="btn {{ $employer->getStatus($employer->pr_status)['class'] }}">{{ $employer->getStatus($employer->pr_status)['name'] }}</a>
-			</td>
+			{{-- <td width="50px">
+				<a href="{{ route('employer.get.action.profile',['active', $employer->id]) }}" class="btn {{ $employer->getStatus($employer->pr_status)['class'] }}">
+					{{ $employer->getStatus($employer->pr_status)['name'] }}
+				</a>
+			</td> --}}
 			<td>
 				{{ $employer->pr_title }}
 			</td>
@@ -55,7 +57,7 @@
 			</td>
 			<td>
 				@if($employer->pr_active == 0)
-					<p class="btn btn-danger" title="Hồ sơ của bạn chưa được cấp phép">Chưa duyệt</p>
+					<p class="btn btn-danger" title="Hồ sơ của bạn chưa được cấp phép" onclick="alert('Bạn cần phải chờ cho admin duyệt hồ sơ tuyển dụng của bạn, do admin chưa xác nhận hoặc hồ sơ của bạn bị thiếu');">Chưa duyệt</p>
 				@else
 					<p class="btn btn-success" title="Hồ sơ của bạn đã được cấp phép">Đã duyệt</p>
 				@endif
@@ -71,8 +73,14 @@
 @endif
 @if(count($employers) >= 10)
 @else
-	<div>
-		<a href="{{ route('employer.profile.create') }}" class="btn btn-success">Đăng tin</a>
-	</div>
+	@if($check_info->em_phone == null || $check_info->em_address == null || $check_info->em_avatar == null || $check_info->em_company == null)
+		<div>
+			<a href="#" class="btn btn-success" onclick="alert('Vui lòng cập nhập đầy đủ thông tin để có thể đăng bài !');">Đăng tin</a>
+		</div>
+	@else
+		<div>
+			<a href="{{ route('employer.profile.create') }}" class="btn btn-success">Đăng tin</a>
+		</div>
+	@endif
 @endif
 @stop

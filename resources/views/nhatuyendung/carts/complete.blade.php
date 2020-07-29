@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+
 <!-- Page Title start -->
 <div class="pageTitle">
   <div class="container">

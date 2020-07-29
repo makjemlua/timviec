@@ -43,6 +43,10 @@ class EmployerProfile extends Model {
 		return $this->belongsTo('App\Model\Employer', 'pr_employer_id', 'id');
 	}
 
+	public function map() {
+		return $this->belongsTo('App\Model\Map', 'id', 'id');
+	}
+
 	public function getStatus() {
 		return Arr::get($this->status, $this->pr_status, '[N\A]');
 	}

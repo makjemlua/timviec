@@ -25,6 +25,7 @@ class RequestRegisterUser extends FormRequest {
 			'name' => 'required|min:5|max:30',
 			'password' => 'required|min:3',
 			'repassword' => 'required|same:password',
+			'g-recaptcha-response' => 'required',
 		];
 	}
 
@@ -37,8 +38,9 @@ class RequestRegisterUser extends FormRequest {
 			'name.max' => 'Họ tên phải bé hơn 30 kí tự',
 			'password.required' => 'Mật khẩu không được để trống',
 			'password.min' => 'Mật khẩu phải lớn hơn 3 kí tự',
-			'repassword.required' => 'Mật khẩu không được để trống',
+			'repassword.required' => 'Mật khẩu xác nhận không được để trống',
 			'repassword.same' => 'Mật khẩu phải giống nhau',
+			'g-recaptcha-response.required' => 'Vui lòng nhập Captcha',
 		];
 	}
 }

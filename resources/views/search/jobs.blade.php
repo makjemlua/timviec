@@ -5,10 +5,10 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-sm-6">
-        <h1 class="page-heading">Blog</h1>
+        <h1 class="page-heading">Việc làm theo nghề nghiệp</h1>
       </div>
       <div class="col-md-6 col-sm-6">
-        <div class="breadCrumb"><a href="{{ route('home.index') }}">Home</a> / <span>Blog</span></div>
+        <div class="breadCrumb"><a href="{{ route('home.index') }}">Trang chủ</a> / <span>Việc làm</span></div>
       </div>
     </div>
   </div>

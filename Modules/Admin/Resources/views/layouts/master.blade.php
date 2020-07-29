@@ -73,16 +73,16 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" href="">
+        <a class="nav-link" href="{{ route('admin.contact') }}">
           <i class="fas fa-fw fa-table"></i>
           <span>Liên hệ</span></a>
       </li>
 
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <a class="nav-link" href="">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Đánh giá</span></a>
-      </li>
+      </li> --}}
 
       {{-- <li class="nav-item">
         <a class="nav-link" href="{{ route('admin.get.list.job') }}">
@@ -280,7 +280,7 @@
   </a>
 
   <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  {{-- <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -296,7 +296,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
 
   <!-- Bootstrap core JavaScript-->
   <script src="{{ asset('theme_admin/vendor/jquery/jquery.min.js') }}"></script>
@@ -318,6 +318,7 @@
   <script src="{{ asset('theme_admin/js/main.js') }}"></script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 
   <script type="text/javascript">
     function readURL(input) {

@@ -184,7 +184,10 @@ class SearchController extends Controller {
 
 			$skill = Skill::find($id);
 
-			$employersaves = SaveProfileUser::where('sa_employer_id', Auth::guard('employers')->user()->id)->orderByDesc('id')->where('sa_profile_id', $id)->get();
+			$employersaves = '';
+			if (Auth::guard('employers')->check()) {
+				$employersaves = SaveProfileUser::where('sa_employer_id', Auth::guard('employers')->user()->id)->orderByDesc('id')->where('sa_profile_id', $id)->get();
+			}
 
 			$years = Carbon::parse($info->user->birthday)->age;
 

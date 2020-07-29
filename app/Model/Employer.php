@@ -27,4 +27,20 @@ class Employer extends Authenticatable {
 	public function getStatus() {
 		return Arr::get($this->vip, $this->em_vip, '[N\A]');
 	}
+
+	const STATUS_PUBLIC = 1;
+	const STATUS_PRIVATE = 0;
+	protected $status = [
+		1 => [
+			'name' => 'Public',
+			'class' => 'btn-success',
+		],
+		0 => [
+			'name' => 'Private',
+			'class' => 'btn-danger',
+		],
+	];
+	public function getStatuss() {
+		return Arr::get($this->status, $this->active, '[N\A]');
+	}
 }

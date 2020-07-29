@@ -20,12 +20,20 @@ Route::prefix('auth')->group(function () {
 Route::group(['prefix' => 'admincp', 'middleware' => 'CheckLoginAdmin'], function () {
 	Route::get('/', 'AdminController@index')->name('admin.home');
 
+	//Export
+	Route::get('/export-don-hang', 'AdminExportController@exportDoanhthu')->name('export.doanhthu');
+
+	Route::get('/export-user', 'AdminExportController@exportUser')->name('export.user');
+
+	Route::get('/export-employer', 'AdminExportController@exportEmployer')->name('export.employer');
+
 	//Nhà tuyển dụng
 	Route::group(['prefix' => 'employers', 'middleware' => 'CheckRoleMod'], function () {
 		Route::get('/index', 'AdminEmployerController@index')->name('admin.get.index.employer');
 
 		Route::get('/account', 'AdminEmployerController@account')->name('admin.get.account.employer');
-		Route::get('/account/vip/{active}/{id}', 'AdminEmployerController@actionVip')->name('action.employer.account');
+		Route::get('/account/vip/{active}/{id}', 'AdminEmployerController@actionVip')->name('action.employer.vip');
+		Route::get('/account/{active}/{id}', 'AdminEmployerController@actionAccount')->name('action.employer.account');
 
 		Route::get('/recruitment', 'AdminEmployerController@recruitment')->name('admin.get.profile.employer');
 		Route::get('/recruitment/detail/{id}', 'AdminEmployerController@detailProfile')->name('admin.get.detail.profile.employer');
@@ -38,6 +46,12 @@ Route::group(['prefix' => 'admincp', 'middleware' => 'CheckLoginAdmin'], functio
 		Route::get('/account/timevip/{id}', 'AdminEmployerController@viewvip')->name('admin.account.changevip');
 		Route::post('/account/timevip/{id}', 'AdminEmployerController@changevip');
 
+		//Notication employer
+		Route::get('/notification', 'AdminNotificationController@indexEmployer')->name('admin.get.employer.noti');
+		Route::post('/notification', 'AdminNotificationController@storeEmployer');
+
+		Route::get('/notification/{action}/{id}', 'AdminNotificationController@actionEmployer')->name('admin.get.action.employer.notification');
+
 	});
 
 	//User
@@ -46,11 +60,16 @@ Route::group(['prefix' => 'admincp', 'middleware' => 'CheckLoginAdmin'], functio
 
 		Route::get('/account', 'AdminUserController@account')->name('admin.get.account.user');
 		Route::get('/account/{active}/{id}', 'AdminUserController@actionAccount')->name('action.user.account');
-		Route::get('/account/{id}', 'AdminUserController@accountDetail')->name('admin.get.detail.account.user');
 
 		Route::get('/profile', 'AdminUserController@profile')->name('admin.get.profile.user');
 		Route::get('/profile/{active}/{id}', 'AdminUserController@actionProfile')->name('action.user.profile');
 		Route::get('/profile/{id}', 'AdminUserController@detailProfile')->name('admin.get.detail.profile.user');
+
+		//Notication user
+		Route::get('/notification', 'AdminNotificationController@indexUser')->name('admin.get.user.noti');
+		Route::post('/notification', 'AdminNotificationController@storeUser');
+
+		Route::get('/notification/{action}/{id}', 'AdminNotificationController@actionUser')->name('admin.get.action.user.notification');
 
 	});
 
@@ -88,6 +107,12 @@ Route::group(['prefix' => 'admincp', 'middleware' => 'CheckLoginAdmin'], functio
 		Route::get('/changepass', 'AdminRoleController@editpass')->name('admin.get.edit.pass');
 		Route::post('/changepass', 'AdminRoleController@updatepass');
 		Route::get('/{action}/{id}', 'AdminRoleController@action')->name('admin.get.action.role');
+	});
+
+	//Contact
+	Route::group(['prefix' => 'contact'], function () {
+		Route::get('/', 'AdminContactController@index')->name('admin.contact');
+		Route::get('/{action}/{id}', 'AdminContactController@action')->name('admin.get.action.contact');
 	});
 
 });

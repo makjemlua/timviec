@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RequestPasswordEmployer;
 use App\Model\Employer;
 use App\Model\EmployerProfile;
+use App\Model\Map;
+use App\Model\Notification;
 use App\Model\SaveProfileEmployer;
 use App\Model\SaveProfileUser;
+use App\Model\Transaction;
 use App\Model\UserApplied;
+use App\Model\UserGeneralInfo;
 use App\Services\ProcessView;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -55,15 +59,30 @@ class EmployerController extends Controller {
 				->where('pr_active', EmployerProfile::STATUS_ON)
 				->find($id);
 
-			$usersaves = SaveProfileEmployer::where('usa_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->where('usa_profile_id', $id)->get();
-			$applies = UserApplied::where('ap_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->where('ap_profile_id', $id)->get();
+			$map = Map::find($id);
+
+			$usersaves = '';
+
+			if (Auth::guard('web')->check()) {
+				$usersaves = SaveProfileEmployer::where('usa_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->where('usa_profile_id', $id)->get();
+			}
+
+			$applies = '';
+			if (Auth::guard('web')->check()) {
+				$applies = UserApplied::where('ap_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->where('ap_profile_id', $id)->get();
+			}
+
+			$hoso = UserGeneralInfo::where('ge_user_id', get_data_user('web', 'id'))->where('ge_status', 1)->where('ge_active', 1)->first();
 
 			ProcessView::view('employer_profile', 'pr_view_count', 'profile', $id);
 
 			$viewData = [
+
 				'info' => $info,
+				'map' => $map,
 				'usersaves' => $usersaves,
 				'applies' => $applies,
+				'hoso' => $hoso,
 			];
 			return view('nhatuyendung.thongtin', $viewData);
 		}
@@ -87,10 +106,6 @@ class EmployerController extends Controller {
 	//Trang nhà tuyển dụng
 	public function trangchu() {
 		return view('nhatuyendung.home');
-
-	}
-
-	public function profileDetail() {
 
 	}
 
@@ -153,7 +168,7 @@ class EmployerController extends Controller {
 	// Trang hiển thị hồ sơ đã lưu
 	public function saveInfoProfile() {
 
-		$saveProfile = SaveProfileUser::with('profile:id,ge_slug,ge_active')->where('sa_employer_id', Auth::guard('employers')->user()->id)->orderByDesc('id')->paginate(5);
+		$saveProfile = SaveProfileUser::with('profile:id,ge_slug,ge_active,ge_status')->where('sa_employer_id', Auth::guard('employers')->user()->id)->orderByDesc('id')->paginate(5);
 
 		$viewData = [
 			'saveProfile' => $saveProfile,
@@ -163,12 +178,24 @@ class EmployerController extends Controller {
 	}
 
 	// Trang hiển thị hồ sơ ứng tuyển
-	public function profileApplie() {
+	public function profileApplie(Request $request) {
 
-		$profileApplie = UserApplied::with('hoso:id,ge_slug,ge_title,ge_profession')->with('user:id,name')->where('ap_employer_id', Auth::guard('employers')->user()->id)->orderByDesc('id')->paginate(5);
+		$profileApplie = UserApplied::with('hoso:id,ge_slug,ge_title,ge_profession,ge_status,ge_active')->with('user:id,name')->where('ap_employer_id', Auth::guard('employers')->user()->id);
 
+		if ($request->search) {
+			$profileApplie->where('ap_title', 'like', '%' . $request->search . '%');
+		}
+
+		if ($request->status) {
+			$profileApplie->where('ap_status', '=', $request->status);
+		}
+
+		$profileApplie = $profileApplie->orderByDesc('id')->paginate(5);
+
+		$order = UserApplied::with('user:id,name,email,address,phone')->with('hoso:id,ge_title')->where('ap_employer_id', get_data_user('employers'))->where('ap_status', 1)->get();
 		$viewData = [
 			'profileApplie' => $profileApplie,
+			'order' => $order,
 		];
 
 		return view('nhatuyendung.hosoungtuyen', $viewData);
@@ -187,6 +214,10 @@ class EmployerController extends Controller {
 			case 'cancel':
 				$profileApplie->ap_status = UserApplied::CANCEL;
 				$profileApplie->save();
+				break;
+			case 'delete':
+				$profileApplie->delete();
+				return redirect()->back();
 				break;
 			}
 		}
@@ -214,5 +245,20 @@ class EmployerController extends Controller {
 		}
 		return redirect()->back()->with('danger', 'Mật khẩu không đúng');
 
+	}
+
+	//Thông báo
+	public function notification() {
+		$notifi = Notification::where('no_check', 2)->where('no_active', 1)->get();
+		return view('nhatuyendung.notification', compact('notifi'));
+	}
+
+	//Trang thông tin thanh toán
+	public function hoadon() {
+		$transactions = Transaction::with('employer:id,name,email,em_phone,em_company')->where('tr_employer_id', get_data_user('employers'))->orderBy('id', 'DESC')->paginate(5);
+		$viewData = [
+			'transactions' => $transactions,
+		];
+		return view('nhatuyendung.thongtinthanhtoan', $viewData);
 	}
 }

@@ -17,16 +17,18 @@
 		<tr>
 			<th scope="col">Vị trí</th>
 			<th scope="col">Công ty</th>
+			<th scope="col">Hạn nộp</th>
 			<th scope="col">Thời gian lưu</th>
 			<th scope="col">Thao tác</th>
 		</tr>
 	</thead>
 	<tbody>
 		@foreach($saveProfile as $save)
-		@if($save->profile->pr_active==1 && $save->profile->pr_status==1)
+		@if($save->profile->pr_active==1)
 		<tr>
-			<td><a href="{{ route('employer.thongtin.profile', [$save->profile->pr_slug, $save->profile->id]) }}">{{ $save->usa_title }}</a></td>
+			<td><a href="{{ route('employer.thongtin.profile', [$save->profile->pr_slug, $save->profile->id]) }}">{{ $save->profile->pr_title }}</a></td>
 			<td>{{ $save->usa_company }}</td>
+			<td>{{ date('d-m-Y',strtotime($save->usa_expired_at)) }}</td>
 			<td>{{ date('d-m-Y',strtotime($save->created_at)) }}</td>
 			<td>
 				<a class="btn btn-danger" href="{{ route('user.get.delete.save', $save->id) }}">

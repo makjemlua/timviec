@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('content')
+@php
+  $page = "nha-tuyen-dung";
+@endphp
 <style type="text/css">
 	td
 	{
@@ -28,10 +31,10 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-sm-6">
-        <h1 class="page-heading">Candidates Listing</h1>
+        <h1 class="page-heading">Tuyển dụng</h1>
       </div>
       <div class="col-md-6 col-sm-6">
-        <div class="breadCrumb"><a href="">Home</a> / <a href="">Resume Search</a> / <span>Candidates</span></div>
+        <div class="breadCrumb"><a href="">Trang chủ</a> / <span>Tuyển dụng</span></div>
       </div>
     </div>
   </div>
@@ -61,20 +64,16 @@
 			    <ul>
 
 			      <li data-slotamount="7" data-transition="3dcurtain-vertical" data-masterspeed="1000" data-saveperformance="on"> <img alt="Your alt text" src="images/slider/dummy.png" data-lazyload="images/slider/banner.jpg">
-			        <div class="caption lfl large-title tp-resizeme slidertext1" data-x="left" data-y="100" data-speed="600" data-start="1600">Search Your Job<br />
-			          In your Area</div>
-			        <div class="caption lfb large-title tp-resizeme sliderpara" data-x="left" data-y="200" data-speed="600" data-start="2800">Lorem Ipsum is simply dummy text of the printing and typesetting industry.<br />
-			          Lorem Ipsum has been the industry's standard dummy text ever since.</div>
-			        <div class="caption lfl large-title tp-resizeme slidertext5" data-x="left" data-y="280" data-speed="600" data-start="3500"><a href="#.">Contact Us</a></div>
+			        <div class="caption lfl large-title tp-resizeme slidertext1" data-x="left" data-y="100" data-speed="600" data-start="1600">Tìm kiếm công việc</div>
+
+			        <div class="caption lfl large-title tp-resizeme slidertext5" data-x="left" data-y="280" data-speed="600" data-start="3500"><a href="#.">Liên hệ</a></div>
 			      </li>
 			      <!--Slide end-->
 
 			      <li data-slotamount="7" data-transition="3dcurtain-vertical" data-masterspeed="1000" data-saveperformance="on"> <img alt="Your alt text" src="images/slider/dummy.png" data-lazyload="images/slider/banner2.jpg">
-			        <div class="caption lfl large-title tp-resizeme slidertext1" data-x="left" data-y="100" data-speed="600" data-start="1600">Search Your Job<br />
-			          Around The World</div>
-			        <div class="caption lfb large-title tp-resizeme sliderpara" data-x="left" data-y="200" data-speed="600" data-start="2800">Lorem Ipsum is simply dummy text of the printing and typesetting industry.<br />
-			          Lorem Ipsum has been the industry's standard dummy text ever since.</div>
-			        <div class="caption lfl large-title tp-resizeme slidertext5" data-x="left" data-y="280" data-speed="600" data-start="3500"><a href="#.">Contact Us</a></div>
+			        <div class="caption lfl large-title tp-resizeme slidertext1" data-x="left" data-y="100" data-speed="600" data-start="1600">Dễ dàng tạo hồ sơ</div>
+
+			        <div class="caption lfl large-title tp-resizeme slidertext5" data-x="left" data-y="280" data-speed="600" data-start="3500"><a href="#.">Liên hệ</a></div>
 			      </li>
 			      <!--Slide end-->
 
@@ -96,7 +95,7 @@
 		      <div class="row">
 		      	<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
 		          <div class="boxes">
-		            <div class="pricing-table1"> STARTER<strong>30 Days sample text</strong> </div>
+		            <div class="pricing-table1"> Bắt đầu </div>
 		            <div class="main-unit text-center">
 		              {{-- <div class="pricing-unit1"></div>
 		              <div class="pricing-unit1-1">2.500.000</div>
@@ -109,10 +108,7 @@
 		              <li class="plan-detail"><i class="fa fa-check" aria-hidden="true"></i> Được hưởng chính sách bảo hành dịch vụ.</li>
 		              <li class="plan-detail"><i class="fa fa-check" aria-hidden="true"></i> Nhận được hồ sơ ứng tuyển</li>
 		              <li class="plan-detail"><i class="fa fa-check" aria-hidden="true"></i> Tuyển dụng nhanh và hiệu quả</li>
-		              <li class="plan-detail ico"><i class="fa fa-times" aria-hidden="true"></i></li>
-		              @if(Auth::guard('employers')->user()->em_vip==0)
 		              <li class="order-1"><a href="{{ route('get.list.cart') }}">Đăng ký ngay</a></li>
-		              @endif
 		            </ul>
 		          </div>
 		        </div>

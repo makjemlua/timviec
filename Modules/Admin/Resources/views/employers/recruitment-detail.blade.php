@@ -49,7 +49,7 @@
 				</tr>
 				<tr>
 					<td>Yêu cầu công việc</td>
-					<td class="info">{{ $employerProfile->pr_skill }}</td>
+					<td class="info">{!! $employerProfile->pr_skill !!}</td>
 				</tr>
 				<tr>
 					<td>Tính chất công việc</td>
@@ -77,7 +77,7 @@
 				</tr>
 				<tr>
 					<td>Quyền lợi</td>
-					<td class="info">{{ $employerProfile->pr_benefit }}</td>
+					<td class="info">{!! $employerProfile->pr_benefit !!}</td>
 				</tr>
 				<tr>
 					<td>Ngành hiển thị chính</td>

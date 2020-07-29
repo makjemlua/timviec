@@ -6,7 +6,9 @@ use App\Model\Degree;
 use App\Model\Job;
 use App\Model\Language;
 use App\Model\Province;
+use App\Model\SaveProfileUser;
 use App\Model\Skill;
+use App\Model\UserApplied;
 use App\Model\UserExperience;
 use App\Model\UserGeneralInfo;
 use App\User;
@@ -23,11 +25,18 @@ class UserProfileController extends Controller {
 		$userProfile = UserGeneralInfo::where('ge_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
 
 		$count1 = UserGeneralInfo::where('ge_user_id', get_data_user('web', 'id'))->where('ge_status', 1)->count();
-		//dd($count1);
+
+		$check = Auth::guard('web')->user();
+
+		$applied = UserApplied::where('ap_user_id', Auth::guard('web')->user()->id)->count();
+
+		//dd($applied);
 
 		$viewData = [
 			'userProfile' => $userProfile,
 			'count1' => $count1,
+			'check' => $check,
+			'applied' => $applied,
 		];
 
 		return view('users.profile.index', $viewData);
@@ -56,10 +65,20 @@ class UserProfileController extends Controller {
 	public function createProfile() {
 		$jobs = Job::all();
 		$provinces = Province::all();
+		$check = Auth::guard('web')->user();
+		if ($check->name == null || $check->phone == null || $check->birthday == null || $check->gender == null || $check->address == null || $check->avatar == null) {
+			return redirect()->route('user.info')->with('danger', 'Bạn chưa nhập đầy đủ thông tin');
+		}
+
+		$check_2 = UserGeneralInfo::where('ge_user_id', Auth::guard('web')->user()->id)->orderByDesc('id')->paginate(5);
+		if (count($check_2) >= 2) {
+			return redirect()->route('user.profile.index')->with('danger', 'Bạn đã tạo 2 hồ sơ');
+		}
 
 		$viewData = [
 			'jobs' => $jobs,
 			'provinces' => $provinces,
+			'check' => $check,
 		];
 		return view('users.profile.create', $viewData);
 	}
@@ -184,6 +203,7 @@ class UserProfileController extends Controller {
 		//Update thông tin chung
 		$userProfile = UserGeneralInfo::find($id);
 		$userProfile->ge_title = $requestProfile->ge_title;
+		$userProfile->ge_slug = Str::slug($requestProfile->ge_title);
 		$userProfile->ge_level = $requestProfile->ge_level;
 		$userProfile->ge_experience = $requestProfile->ge_experience;
 		$userProfile->ge_position_current = $requestProfile->ge_position_current;
@@ -280,13 +300,18 @@ class UserProfileController extends Controller {
 			$degrees = Degree::find($id);
 			$languages = Language::find($id);
 			$skills = Skill::find($id);
+			$EmployerSaveProfile = SaveProfileUser::where('sa_profile_id', $id);
+			$userApplie = UserApplied::where('ap_hoso_id', $id);
 			switch ($action) {
 			case 'delete':
-				$userProfile->delete();
+				$EmployerSaveProfile->delete();
+				$userApplie->delete();
 				$userProfileExp->delete();
 				$degrees->delete();
 				$languages->delete();
 				$skills->delete();
+				$userProfile->delete();
+
 				break;
 			case 'active':
 				$userProfile->ge_status = $userProfile->ge_status ? 0 : 1;

@@ -67,32 +67,46 @@ class LoginController extends Controller {
 	public function handleProviderCallback($provider) {
 		$getInfo = Socialite::driver($provider)->user();
 
-		$user = $this->createUser($getInfo, $provider);
+		//$user = $this->createUser($getInfo, $provider);
 
-		auth()->login($user);
+		$data = [
+			'name' => $getInfo->getName(),
+			'email' => $getInfo->getEmail(),
+			'avatar' => $getInfo->getAvatar(),
+			'provider' => $provider,
+			'provider_id' => $getInfo->id,
+			'email_verified_at' => Carbon::now(),
+		];
+
+		$my_user = User::where('email', '=', $getInfo->getEmail())->first();
+		$my_user1 = User::where('email', '=', $getInfo->getEmail())->whereNull('provider')->first(); //Co email k provider
+		$my_user2 = User::where('email', '=', $getInfo->getEmail())->where('provider', '=', $provider)->first(); //Co email va provider
+		if ($my_user === null) {
+			Auth::login(User::firstOrCreate($data));
+		} elseif ($my_user2) {
+			Auth::login($my_user);
+			//return redirect()->route('login.user')->with('danger', 'Tài khoản này đã tồn tại email');
+		} elseif ($my_user1) {
+			//Auth::login($my_user);
+			return redirect()->route('login.user')->with('danger', 'Tài khoản này đã tồn tại email');
+		}
+
+		//auth()->login($user);
 
 		return redirect()->route('home.index', compact('user'));
 	}
-	public function createUser($getInfo, $provider) {
-		if (User::where('email', $getInfo->email)->has('password')) {
-			return redirect()->route('home.index')->with('danger', 'Tài khoản này đã sử dụng');
-		} else {
-
-			$user = User::where('provider_id', $getInfo->id)->first();
-
-			if (!$user) {
-				$user = User::create([
-					'name' => $getInfo->name,
-					'email' => $getInfo->email,
-					'avatar' => $getInfo->getAvatar(),
-					'provider' => $provider,
-					'provider_id' => $getInfo->id,
-					'email_verified_at' => Carbon::now(),
-				]);
-			}
-
-			return $user;
-		}
-
-	}
+	// public function createUser($getInfo, $provider) {
+	// 	$user = User::where('provider_id', $getInfo->id)->first();
+	// 	if (!$user) {
+	// 		$user = User::create([
+	// 			'name' => $getInfo->name,
+	// 			'email' => $getInfo->email,
+	// 			'avatar' => $getInfo->getAvatar(),
+	// 			'provider' => $provider,
+	// 			'provider_id' => $getInfo->id,
+	// 			'email_verified_at' => Carbon::now(),
+	// 		]);
+	// 	}
+	// 	return $user;
+	// }
 }

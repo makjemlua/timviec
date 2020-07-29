@@ -34,7 +34,7 @@
                 <div class="col-md-6">
                   <div class="formrow">
                     <label>Tiêu đề hồ sơ <span class="star">*</span></label>
-                    <input type="text" name="ge_title" class="form-control" value="{{ old('ge_title', isset($userProfile->ge_title) ? $userProfile->ge_title : '') }}" placeholder="User Name">
+                    <input type="text" name="ge_title" class="form-control" value="{{ old('ge_title', isset($userProfile->ge_title) ? $userProfile->ge_title : 'Tên hồ sơ') }}" placeholder="User Name" required>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -108,65 +108,7 @@
                   <div class="formrow option-btn">
                     <label>Ngành nghề mong muốn <span class="star">*</span></label>
                     <select class="form-control" name="ge_profession">
-                      {{-- <option value="{{ old('ge_profession',isset($userProfile->ge_profession) ? $userProfile->ge_profession : '1') }}">
-                        {{ old('ge_profession',isset($userProfile->ge_profession) ? $userProfile->ge_profession : 'Nhân viên') }}
-                      </option>
-                      <option value="Bán hàng">Bán hàng</option>
-                      <option value="Tài chính/Kế toán/Kiểm toán">Tài chính/Kế toán/Kiểm toán</option>
-                      <option value="Hành chính/Thư ký/Trợ lý">Hành chính/Thư ký/Trợ lý</option>
-                      <option value="Kinh doanh">Kinh doanh</option>
-                      <option value="Thời vụ/Bán thời gian">Thời vụ/Bán thời gian</option>
-                      <option value="6">Chăm sóc khách hàng</option>
-                      <option value="7">Điện/Điện tử/Điện lạnh</option>
-                      <option value="8">Giáo dục/Đào tạo/Thư viện</option>
-                      <option value="9">Nhân sự</option>
-                      <option value="10">Báo chí/Biên tập viên</option>
-                      <option value="11">Bảo vệ/Vệ sĩ/An ninh</option>
-                      <option value="12">Bất động sản</option>
-                      <option value="13">Biên dịch/Phiên dịch</option>
-                      <option value="14">Bưu chính viễn thông</option>
-                      <option value="15">Cơ khí/Kĩ thuật ứng dụng</option>
-                      <option value="16">Công nghệ thông tin</option>
-                      <option value="17">Dầu khí/Địa chất</option>
-                      <option value="18">Dệt may</option>
-                      <option value="19">Du lịch/Nhà hàng/Khách sạn</option>
-                      <option value="20">Dược/Hóa chất/Sinh hóa</option>
-                      <option value="21">Giải trí/Vui chơi</option>
-                      <option value="22">Giao thông/Vận tải/Thủy lợi/Cầu đường</option>
-                      <option value="23">Giày da/Thuộc da</option>
-                      <option value="24">Khác</option>
-                      <option value="25">Kho vận/Vật tư/Thu mua</option>
-                      <option value="26">Khu chế xuất/Khu công nghiệp</option>
-                      <option value="27">Kiến trúc/Nội thất</option>
-                      <option value="28">Làm đẹp/Thể lực/Spa</option>
-                      <option value="29">Lao động phổ thông</option>
-                      <option value="30">Luật/Pháp lý</option>
-                      <option value="31">Môi trường/Xử lý chất thải</option>
-                      <option value="32">Mỹ phẩm/Thời trang/Trang sức</option>
-                      <option value="33">Ngân hàng/Chứng khoán/Đầu tư</option>
-                      <option value="34">Nghệ thuật/Điện ảnh</option>
-                      <option value="35">Ngoại ngữ</option>
-                      <option value="36">Nông/Lâm/Ngư nghiệp</option>
-                      <option value="37">PG/PB/Lễ tân</option>
-                      <option value="38">Phát triển thị trường</option>
-                      <option value="39">Phục vụ/Tạp vụ/Giúp việc</option>
-                      <option value="40">Quan hệ đối ngoại</option>
-                      <option value="41">Quản lý điều hành</option>
-                      <option value="42">Quảng cáo/Marketing/PR</option>
-                      <option value="43">Sản xuất/Vận hành sản xuất</option>
-                      <option value="44">Sinh viên/Mới tốt nghiệp/Thực tập</option>
-                      <option value="45">Tài xế/Lái xe/Giao nhận</option>
-                      <option value="46">Thẩm định/Giám định/Quản lý chất lượng</option>
-                      <option value="47">Thể dục/Thể thao</option>
-                      <option value="48">Thiết kế/Mỹ thuật</option>
-                      <option value="49">Thực phẩm/DV ăn uống</option>
-                      <option value="50">Trang thiết bị công nghiệp</option>
-                      <option value="51">Trang thiết bị gia dụng</option>
-                      <option value="52">Trang thiết bị văn phòng</option>
-                      <option value="53">Tư vấn bảo hiểm</option>
-                      <option value="54">Xây dựng</option>
-                      <option value="55">Xuất-Nhập khẩu/Ngoại thương</option>
-                      <option value="56">Y tế</option> --}}
+
                       @if(isset($jobs))
                         @foreach($jobs as $job)
                           <option value="{{ $job->name }}" {{ old('ge_profession', isset($userProfile->ge_profession) ? $userProfile->ge_profession : '') == $job->name ? "selected='selected'" : "" }}>{{ $job->name }}
@@ -180,7 +122,7 @@
                 <div class="col-md-6">
                   <div class="formrow">
                     <label>Mong muốn mức lương tối thiểu <span class="star">(VNĐ) *</span></label>
-                    <input type="number" name="ge_salary_min" class="form-control" value="{{ old('ge_salary_min', isset($userProfile->ge_salary_min) ? $userProfile->ge_salary_min : '0') }}" placeholder="999">
+                    <input type="number" name="ge_salary_min" class="form-control" value="{{ old('ge_salary_min', isset($userProfile->ge_salary_min) ? $userProfile->ge_salary_min : '10000000') }}" placeholder="999" min="1" max="99999999">
                   </div>
                 </div>
 

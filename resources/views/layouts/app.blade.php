@@ -4,6 +4,7 @@
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <title>Tuyển dụng - Tìm việc làm</title>
 <!-- Fav Icon -->
 <link rel="shortcut icon" href="images/favicon.ico">
@@ -26,6 +27,8 @@
 
 <!-- Custom Style -->
 <link href="{{ asset('css/main.css') }}" rel="stylesheet">
+
+<link href="{{ asset('css/chat.css') }}" rel="stylesheet">
 
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -60,9 +63,10 @@
 
 @include('components.footer')
 
-@yield('script')
+
 
 <!-- Bootstrap's JavaScript -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
@@ -73,6 +77,13 @@
 <script src="{{ asset('js/jquery.themepunch.tools.min.js') }}"></script>
 <script src="{{ asset('js/jquery.themepunch.revolution.min.js') }}"></script>
 
+@yield('script')
+
 <!-- Custom js -->
 <script src="{{ asset('js/script.js') }}"></script>
+
+{{-- <script src="{{ asset('js/chat.js') }}"></script>
+ --}}
+
+
 

@@ -88,14 +88,14 @@
         </div>
 
         <ul class="usernavdash">
-          <li><a href="{{ route('user.info') }}"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</a></li>
+          <li><a href="{{ route('user.info') }}"><i class="fa fa-tachometer" aria-hidden="true"></i> Trang chủ</a></li>
           <li><a href="{{ route('user.profile.index') }}"><i class="fa fa-user" aria-hidden="true"></i> Hồ sơ</a></li>
           {{-- <li><a href="{{ route('user.exam.cv') }}"><i class="fa fa-desktop" aria-hidden="true"></i> Mẫu CV</a></li> --}}
           <li><a href="{{ route('save.profile') }}"><i class="fa fa-download" aria-hidden="true"></i> Việc làm đã lưu</a></li>
           <li><a href="{{ route('applie.profile') }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Việc làm đã ứng tuyển</a></li>
           {{-- <li><a href="#"><i class="fa fa-eye" aria-hidden="true"></i> Nhà tuyển dụng theo dõi</a></li> --}}
           <li><a href="{{ route('user.huongdan') }}"><i class="fa fa-paper-plane" aria-hidden="true"></i> Hướng  dẫn thao tác</a></li>
-          <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> Thông báo</a></li>
+          <li><a href="{{ route('user.notification') }}"><i class="fa fa-envelope" aria-hidden="true"></i> Thông báo</a></li>
           <li><a href="{{ route('user.setting.account') }}"><i class="fa fa-lock" aria-hidden="true"></i> Cài đặt tài khoản</a></li>
           <li><a href="{{ route('get.logout.user') }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a></li>
         </ul>

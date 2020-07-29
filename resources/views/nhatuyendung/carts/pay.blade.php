@@ -12,12 +12,7 @@
 		font-weight: bold;
 	}
 </style>
-<?php
-$vnp_Url = "http://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-$vnp_Returnurl = "http://localhost/timviec/public/cart/thanh-toan-online";
-$vnp_TmnCode = "4KRY0AY0"; //Mã website tại VNPAY
-$vnp_HashSecret = "GEDLRUNWAXYGESUJNYLRWAHSZUKAEWVW"; //Chuỗi bí mật
-?>
+
 <!-- Page Title start -->
 <div class="pageTitle">
   <div class="container">
@@ -87,22 +82,22 @@ $vnp_HashSecret = "GEDLRUNWAXYGESUJNYLRWAHSZUKAEWVW"; //Chuỗi bí mật
 						<div class="form-group">
 							<div class="col-md-12"><strong>Họ tên:</strong></div>
 							<div class="col-md-12">
-								<input type="text" name="name" class="form-control" value="{{ get_data_user('employers','name') }}" />
+								<input type="text" name="name" class="form-control" value="{{ get_data_user('employers','name') }}" readonly />
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-md-12"><strong>Email Address:</strong></div>
-							<div class="col-md-12"><input type="text" name="email_address" class="form-control" value="{{ get_data_user('employers','email') }}" /></div>
+							<div class="col-md-12"><input type="text" name="email_address" class="form-control" value="{{ get_data_user('employers','email') }}" readonly/></div>
 						</div>
 						<div class="form-group">
 							<div class="col-md-12"><strong>Address:</strong></div>
 							<div class="col-md-12">
-								<input type="text" name="address" class="form-control" value="{{ get_data_user('employers','em_address') }}" />
+								<input type="text" name="address" class="form-control" value="{{ get_data_user('employers','em_address') }}" readonly/>
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="col-md-12"><strong>Phone Number:</strong></div>
-							<div class="col-md-12"><input type="text" name="phone" class="form-control" value="{{ get_data_user('employers','em_phone') }}" /></div>
+							<div class="col-md-12"><input type="text" name="phone" class="form-control" value="{{ get_data_user('employers','em_phone') }}" readonly/></div>
 						</div>
 						<div class="form-group">
 							<div class="col-md-12"><strong>Ghi chú:</strong></div>
@@ -117,64 +112,43 @@ $vnp_HashSecret = "GEDLRUNWAXYGESUJNYLRWAHSZUKAEWVW"; //Chuỗi bí mật
 					<div class="panel-heading"><span><i class="fa fa-lock"></i></span> Secure Payment</div>
 					<div class="panel-body">
 
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label for="bank_code">Ngân hàng</label>
+                                <select name="bank_code" id="bank_code" required class="form-control">
+                                    <option value="">Không chọn</option>
+                                    <option value="NCB"> Ngan hang NCB</option>
+                                    <option value="AGRIBANK"> Ngan hang Agribank</option>
+                                    <option value="SCB"> Ngan hang SCB</option>
+                                    <option value="SACOMBANK">Ngan hang SacomBank</option>
+                                    <option value="EXIMBANK"> Ngan hang EximBank</option>
+                                    <option value="MSBANK"> Ngan hang MSBANK</option>
+                                    <option value="NAMABANK"> Ngan hang NamABank</option>
+                                    <option value="VNMART"> Vi dien tu VnMart</option>
+                                    <option value="VIETINBANK">Ngan hang Vietinbank</option>
+                                    <option value="VIETCOMBANK"> Ngan hang VCB</option>
+                                    <option value="HDBANK">Ngan hang HDBank</option>
+                                    <option value="DONGABANK"> Ngan hang Dong A</option>
+                                    <option value="TPBANK"> Ngân hàng TPBank</option>
+                                    <option value="OJB"> Ngân hàng OceanBank</option>
+                                    <option value="BIDV"> Ngân hàng BIDV</option>
+                                    <option value="TECHCOMBANK"> Ngân hàng Techcombank</option>
+                                    <option value="VPBANK"> Ngan hang VPBank</option>
+                                    <option value="MBBANK"> Ngan hang MBBank</option>
+                                    <option value="ACB"> Ngan hang ACB</option>
+                                    <option value="OCB"> Ngan hang OCB</option>
+                                    <option value="IVB"> Ngan hang IVB</option>
+                                    <option value="VISA"> Thanh toan qua VISA/MASTER</option>
+                                </select>
+                            </div>
+                        </div>
+
 						<div class="form-group">
 							<div class="col-md-12">
-								<span>Thanh toán an toàn bằng thẻ tín dụng</span>
+								<button type="submit" class="btn btn-success">Xác nhận thông tin</button>
 							</div>
 						</div>
-
-<?php
-$total_pay = str_replace(',', '', \Cart::initial(0));
-//đẩy lên url
-$vnp_TxnRef = date('YmdHis'); //Mã đơn hàng.
-$vnp_OrderInfo = 'Thanh toan hoa don';
-$vnp_OrderType = 25000;
-$vnp_Amount = $total_pay * 100;
-$vnp_Locale = 'vn';
-$vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
-$inputData = array(
-	"vnp_Version" => "2.0.0",
-	"vnp_TmnCode" => $vnp_TmnCode,
-	"vnp_Amount" => $vnp_Amount,
-	"vnp_Command" => "pay",
-	"vnp_CreateDate" => date('YmdHis'),
-	"vnp_CurrCode" => "VND",
-	"vnp_IpAddr" => $vnp_IpAddr,
-	"vnp_Locale" => $vnp_Locale,
-	"vnp_OrderInfo" => $vnp_OrderInfo,
-	"vnp_OrderType" => $vnp_OrderType,
-	"vnp_ReturnUrl" => $vnp_Returnurl,
-	"vnp_TxnRef" => $vnp_TxnRef,
-);
-ksort($inputData);
-$query = "";
-$i = 0;
-$hashdata = "";
-foreach ($inputData as $key => $value) {
-	if ($i == 1) {
-		$hashdata .= '&' . $key . "=" . $value;
-	} else {
-		$hashdata .= $key . "=" . $value;
-		$i = 1;
-	}
-	$query .= urlencode($key) . "=" . urlencode($value) . '&';
-}
-
-$vnp_Url = $vnp_Url . "?" . $query;
-if (isset($vnp_HashSecret)) {
-	$vnpSecureHash = hash('sha256', $vnp_HashSecret . $hashdata);
-	$vnp_Url .= 'vnp_SecureHashType=SHA256&vnp_SecureHash=' . $vnpSecureHash;
-}
-?>
-
-						<div class="form-group">
-							<div class="col-md-6 col-sm-6 col-xs-12">
-								<button type="submit" class="btn btn-primary btn-submit-fix">Đăng ký dịch vụ <i class="fa fa-credit-card"></i>
-								</button>
-							</div>
-							{{-- <a class="btn btn-success" href="" class="beta-btn primary">Thanh toán bằng thẻ <i class="fa fa-credit-card"></i>
-							</a> --}}
-						</div>
+{{ \Request::get('vnp_BankCode') }}
 					</div>
 				</div>
 				<!--CREDIT CART PAYMENT END-->
@@ -186,4 +160,5 @@ if (isset($vnp_HashSecret)) {
 
 	</div>
 </div>
+</body>
 @stop

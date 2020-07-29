@@ -12,10 +12,10 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-sm-6">
-        <h1 class="page-heading">Register</h1>
+        <h1 class="page-heading">Đăng ký</h1>
       </div>
       <div class="col-md-6 col-sm-6">
-        <div class="breadCrumb"><a href="">Home</a> / <a href="">Nhà tuyển dụng</a> / <span>Đăng ký</span></div>
+        <div class="breadCrumb"><a href="">Trang chủ</a> / <a href="">Nhà tuyển dụng</a> / <span>Đăng ký</span></div>
       </div>
     </div>
   </div>
@@ -41,7 +41,7 @@
             <div class="tab-content">
               <div id="candidate" class="formpanel tab-pane fade in active">
                 <div class="formrow">
-                  <input type="text" name="name" class="form-control" value="{{ old('name') }}" placeholder="Full Name">
+                  <input type="text" name="name" class="form-control" value="{{ old('name') }}" placeholder="Họ và tên">
                   @if ($errors->has('name'))
                     <div class="error">{{ $errors->first('name') }}</div>
                   @endif
@@ -53,17 +53,26 @@
                   @endif
                 </div>
                 <div class="formrow">
-                  <input type="password" name="password" class="form-control" placeholder="Password">
+                  <input type="password" name="password" class="form-control" placeholder="Mật khẩu">
                   @if ($errors->has('password'))
                     <div class="error">{{ $errors->first('password') }}</div>
                   @endif
                 </div>
                 <div class="formrow">
-                  <input type="password" name="repassword" class="form-control" placeholder="Confirm Password">
+                  <input type="password" name="repassword" class="form-control" placeholder="Xác nhận mật khẩu">
                   @if ($errors->has('repassword'))
                     <div class="error">{{ $errors->first('repassword') }}</div>
                   @endif
                 </div>
+                <div>
+                  <div class="g-recaptcha" data-sitekey="6LejsqUZAAAAAHxtTQukRSvGRcBuhZWxt_WPyPMo" name="g-recaptcha-response"></div>
+                  @if ($errors->has('g-recaptcha-response'))
+                    <div class="error">{{ $errors->first('g-recaptcha-response') }}</div>
+                  @endif
+                </div>
+
+                </br>
+
                 <div class="formrow">
 
                 <input type="submit" class="btn" value="Đăng ký">

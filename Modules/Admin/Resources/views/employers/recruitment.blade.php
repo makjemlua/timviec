@@ -31,6 +31,7 @@
     					@endif
     				</select>
     			</div>
+
     			<div class="form-group">
     				<select class="form-control" name="province">
     					@if(isset($provinces))
@@ -41,6 +42,29 @@
     					@endif
     				</select>
     			</div>
+
+    			<div class="form-group">
+    				<select class="form-control" name="active">
+    							<option value="" {{ \Request::get('active') == "" ? "selected='selected'" : "" }}>
+    								Tất cả - Duyệt bài
+    							</option>
+    							<option value="1" {{ \Request::get('active') == "1" ? "selected='selected'" : "" }}>
+    								Duyệt
+    							</option>
+    							<option value="00" {{ \Request::get('active') == "00" ? "selected='selected'" : "" }}>
+    								Chưa duyệt
+    							</option>
+    				</select>
+    			</div>
+
+    			{{-- <div class="form-group">
+    				<select class="form-control" name="province">
+    					<option value="">Tất cả - Duyệt bài</option>
+    						@foreach($provinces as $province)
+    							<option value="{{ $province->name }}" {{ \Request::get('province') == $province->name ? "selected='selected'" : "" }}>{{ $province->name }}</option>
+    						@endforeach
+    				</select>
+    			</div> --}}
 				<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
     		</form>
     	</div>
@@ -138,7 +162,7 @@
 	{!! $employerProfiles->links() !!}
 </div>
 </div>
-<script src="http://code.jquery.com/jquery.js"></script>
+<script src="{{ asset('js/jquery.js') }}"></script>
 <script src="https://cdn.rawgit.com/hilios/jQuery.countdown/2.2.0/dist/jquery.countdown.min.js"></script>
 <script>
 	$('[data-countdown]').each(function() {

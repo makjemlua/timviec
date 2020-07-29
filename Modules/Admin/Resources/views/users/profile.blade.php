@@ -67,6 +67,7 @@
 				<th>Tên hồ sơ</th>
 				<th>Vị trí</th>
 				<th>Tên người đăng</th>
+				<th>Email</th>
 				<th>Địa chỉ</th>
 				<th>Trạng thái</th>
 				<th>Thao tác</th>
@@ -90,10 +91,13 @@
 							<p>{{ $profile->user->name }}</p>
 						</td>
 						<td>
+							<p>{{ $profile->user->email }}</p>
+						</td>
+						<td>
 							<p>{{ $profile->ge_provinces }}</p>
 						</td>
 						<td>
-							<a href="" class="btn {{ $profile->getStatus($profile->ge_status)['class'] }}">{{ $profile->getStatus($profile->ge_status)['name'] }}</a>
+							<a href="#" class="btn {{ $profile->getStatus($profile->ge_status)['class'] }}">{{ $profile->getStatus($profile->ge_status)['name'] }}</a>
 						</td>
 						<td><!-- Thao tác -->
 							<a href="{{ route('action.user.profile',['active', $profile->id]) }}" class="btn {{ $profile->getActive($profile->ge_active)['class'] }}">{{ $profile->getActive($profile->ge_active)['name'] }}</a>

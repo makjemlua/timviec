@@ -12,7 +12,7 @@ class Kernel extends ConsoleKernel {
 	 * @var array
 	 */
 	protected $commands = [
-		//Commands\PostCommand::class,
+		Commands\PostCommand::class,
 	];
 
 	/**
@@ -24,10 +24,10 @@ class Kernel extends ConsoleKernel {
 	protected function schedule(Schedule $schedule) {
 		// $schedule->command('inspire')
 		// 	->everyMinute();
-		$schedule->call(function () {
-			\Log::info("Cron is working fine!");
-		})->everyMinute();
-		//$schedule->command('status:delete')->everyMinute();
+		// $schedule->call(function () {
+		// 	\Log::info("Cron is working fine!");
+		// })->everyMinute();
+		$schedule->command('status:update')->everyMinute();
 	}
 
 	/**

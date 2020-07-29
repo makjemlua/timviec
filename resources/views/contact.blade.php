@@ -1,14 +1,17 @@
-@extends('layouts/app')
+@extends('layouts.app')
 @section('content')
+@php
+  $page = "contact";
+@endphp
 <!-- Page Title start -->
 <div class="pageTitle">
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-sm-6">
-        <h1 class="page-heading">Contact Us</h1>
+        <h1 class="page-heading">Liên hệ</h1>
       </div>
       <div class="col-md-6 col-sm-6">
-        <div class="breadCrumb"><a href="{{ route('home.index') }}">Home</a> / <span>Contact Us</span></div>
+        <div class="breadCrumb"><a href="{{ route('home.index') }}">Trang chủ</a> / <span>Liên hệ</span></div>
       </div>
     </div>
   </div>
@@ -61,16 +64,16 @@
               @csrf
               <div class="row">
                 <div class="col-md-6">
-                  <input name="co_name" type="text" placeholder="Full Name" required>
+                  <input name="co_name" type="text" placeholder="Họ và tên" required>
                 </div>
                 <div class="col-md-6">
-                  <input type="text" name="co_phone" placeholder="Phone Number" required>
+                  <input type="text" name="co_phone" placeholder="Số điện thoại" required>
                 </div>
                 <div class="col-md-12">
                   <input name="co_email" type="text" placeholder="Email" required>
                 </div>
                 <div class="col-md-12">
-                  <textarea rows="4" name="co_content" placeholder="Details" required></textarea>
+                  <textarea rows="4" name="co_content" placeholder="Nội dung" required></textarea>
                 </div>
                 <div class="col-md-12">
                   <button title="" class="button" type="submit" id="submit">Gửi ngay</button>
@@ -85,7 +88,10 @@
 </div>
 
 <!-- Google Map -->
-<div class="googlemap">
-  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.85762996266!2d106.6853084146229!3d10.822205392290451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174deb3ef536f31%3A0x8b7bb8b7c956157b!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBDw7RuZyBuZ2hp4buHcCBUUC5IQ00!5e0!3m2!1svi!2s!4v1582530176833!5m2!1svi!2s" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+<div class="container">
+  <div class="googlemap">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.85762996266!2d106.6853084146229!3d10.822205392290451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3174deb3ef536f31%3A0x8b7bb8b7c956157b!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBDw7RuZyBuZ2hp4buHcCBUUC5IQ00!5e0!3m2!1svi!2s!4v1582530176833!5m2!1svi!2s" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+  </div>
 </div>
+
 @stop

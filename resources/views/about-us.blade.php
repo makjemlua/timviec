@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('content')
+@php
+  $page = "about-us";
+@endphp
 <!-- Page Title start -->
 <div class="pageTitle">
   <div class="container">
@@ -8,7 +11,7 @@
         <h1 class="page-heading">Về chúng tôi</h1>
       </div>
       <div class="col-md-6 col-sm-6">
-        <div class="breadCrumb"><a href="#">Home</a> / <span>Về chúng tôi</span></div>
+        <div class="breadCrumb"><a href="#">Trang chủ</a> / <span>Về chúng tôi</span></div>
       </div>
     </div>
   </div>
@@ -42,21 +45,18 @@
             <div class="icon"><i class="fa fa-user" aria-hidden="true"></i></div>
           </div>
           <h3>15+ Năm hoạt động</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque porttitor congue enim non rhoncus. Sed ac lacus non elit malesuada blandit.</p>
         </li>
         <li class="col-md-4 col-sm-6">
           <div class="iconWrap">
             <div class="icon"><i class="fa fa-file-text"></i></div>
           </div>
           <h3>1.500.000+ số ứng viên</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque porttitor congue enim non rhoncus. Sed ac lacus non elit malesuada blandit.</p>
         </li>
         <li class="col-md-4 col-sm-6">
           <div class="iconWrap">
             <div class="icon"><i class="fa fa-briefcase" aria-hidden="true"></i></div>
           </div>
           <h3>500.000+ số nhà tuyển dụng</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque porttitor congue enim non rhoncus. Sed ac lacus non elit malesuada blandit.</p>
         </li>
       </ul>
     </div>

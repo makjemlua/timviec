@@ -88,20 +88,20 @@
         </div>
 
         <ul class="usernavdash">
-          <li><a href="{{ route('employer.info') }}"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</a></li>
+          <li><a href="{{ route('employer.info') }}"><i class="fa fa-tachometer" aria-hidden="true"></i> Trang chủ</a></li>
           <li><a href="{{ route('employer.profile.index') }}"><i class="fa fa-user" aria-hidden="true"></i> Quản lý tin tuyển dụng</a></li>
           <li><a href="{{ route('employer.profile.create') }}"><i class="fa fa-desktop" aria-hidden="true"></i> Đăng tin tuyển dụng</a></li>
           <li><a href="{{ route('search.hoso') }}"><i class="fa fa-download" aria-hidden="true"></i> Tìm hồ sơ ứng viên</a></li>
           <li><a href="{{ route('employer.save.profile') }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Hồ sơ đã lưu</a></li>
           <li><a href="{{ route('employer.applie.profile') }}"><i class="fa fa-eye" aria-hidden="true"></i> Hồ sơ đã ứng tuyển</a></li>
           <li><a href="{{ route('employer.huongdan') }}"><i class="fa fa-paper-plane" aria-hidden="true"></i> Hướng  dẫn thao tác</a></li>
-          <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> Thông báo</a></li>
-          <li><a href="#"><i class="fa fa-envelope" aria-hidden="true"></i> Thông tin thanh toán</a></li>
-          @if(Auth::guard('employers')->user()->em_vip==0)
+          <li><a href="{{ route('employer.notification') }}"><i class="fa fa-envelope" aria-hidden="true"></i> Thông báo</a></li>
+          <li><a href="{{ route('employer.thongtin.thanhtoan') }}"><i class="fa fa-envelope" aria-hidden="true"></i> Thông tin thanh toán</a></li>
+          {{-- @if(Auth::guard('employers')->user()->em_vip==0) --}}
           <li><a href="{{ route('get.list.cart') }}"><i class="fa fa-envelope" aria-hidden="true"></i> Đăng ký dịch vụ</a></li>
-          @else
+          {{-- @else
           <li><a href="#" onclick="alert('Vui lòng chờ hết hạn vip để đăng ký hoặc gia hạn tiếp, xin cảm ơn');"><i class="fa fa-envelope" aria-hidden="true"></i> Đăng ký dịch vụ</a></li>
-          @endif
+          @endif --}}
           <li><a href="{{ route('employer.setting.account') }}"><i class="fa fa-lock" aria-hidden="true"></i> Cài đặt tài khoản</a></li>
           <li><a href=""><i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a></li>
         </ul>

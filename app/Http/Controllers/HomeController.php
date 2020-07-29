@@ -10,6 +10,11 @@ use App\Model\Transaction;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller {
+	public function searchByName(Request $request) {
+		$keyword = $request->input('keyword');
+		$cakes = EmployerProfile::select('pr_title')->where('pr_title', 'LIKE', "%$keyword%")->where('pr_active', 1)->where('pr_status', 1)->get();
+		return response()->json($cakes);
+	}
 	public function index(Request $request) {
 
 		//Bài đăng mới
@@ -17,7 +22,7 @@ class HomeController extends Controller {
 			->where([
 				'pr_status' => EmployerProfile::STATUS_ON,
 				'pr_active' => EmployerProfile::ACTIVE_ON,
-			])->orderBy('id', 'DESC')->paginate(16);
+			])->orderBy('id', 'DESC')->paginate(10);
 
 		//Top thương hiệu
 		$companys = Employer::where([
@@ -145,6 +150,9 @@ class HomeController extends Controller {
 			$tinhtien = Transaction::whereBetween('created_at', [$request->date_from, $request->date_to])->sum('tr_total');
 		}
 
+		$maps = EmployerProfile::with('employer:id,em_company,em_avatar')->with('map:id,address,latitude,longitude')->where('pr_active', 1)->where('pr_status', 1)->get();
+		$encrypted = $maps->toJson();
+
 		$viewData = [
 			'profileNew' => $profileNew,
 			'companys' => $companys,
@@ -152,6 +160,7 @@ class HomeController extends Controller {
 			'jobs' => $jobs,
 			'provinces' => $provinces,
 			'tinhtien' => $tinhtien,
+			'maps' => $maps,
 		];
 
 		return view('home.index', $viewData);

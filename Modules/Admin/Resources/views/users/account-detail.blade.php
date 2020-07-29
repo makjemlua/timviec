@@ -1,1 +1,0 @@
-Xem chi tiết {{ $user->name }}

@@ -100,6 +100,8 @@ Route::group(['prefix' => 'user', 'middleware' => 'CheckLoginUser'], function ()
 	Route::get('/change-pass', 'UserController@changePass')->name('user.setting.changepass');
 	Route::post('/change-pass', 'UserController@updatepass');
 
+	Route::get('/notification', 'UserController@notification')->name('user.notification');
+
 });
 
 //Hồ sơ khách hàng
@@ -133,10 +135,17 @@ Route::group(['prefix' => 'nha-tuyen-dung', 'middleware' => 'CheckLoginEmployer'
 	Route::get('/change-pass', 'EmployerController@changePass')->name('employer.setting.changepass');
 	Route::post('/change-pass', 'EmployerController@updatepass');
 
+	Route::get('/notification', 'EmployerController@notification')->name('employer.notification');
+
+	Route::get('/hoa-don', 'EmployerController@hoadon')->name('employer.thongtin.thanhtoan');
+
+	//Export
+	Route::get('/export-applied', 'ExportController@exportApplied')->name('export.applied');
+
 });
 
 //Cart
-Route::group(['prefix' => 'cart'], function () {
+Route::group(['prefix' => 'cart', 'middleware' => 'CheckLoginEmployer'], function () {
 	Route::get('/add/{id}', 'CartController@addCart')->name('add.cart');
 	Route::get('/delete/{id}', 'CartController@delete')->name('delete.cart');
 	Route::get('/destroy', 'CartController@destroy')->name('destroy.cart');
@@ -144,25 +153,26 @@ Route::group(['prefix' => 'cart'], function () {
 	Route::get('/danh-sach', 'CartController@getListCart')->name('get.list.cart');
 	Route::get('/danh-sach/{id}', 'CartController@destroy')->name('cart.destroy');
 
-	Route::get('/thanh-toan', 'CartController@getFormPay')->name('get.form.pay');
-	Route::post('/thanh-toan', 'CartController@shoppingCart');
-	Route::get('/thanh-toan-online', 'CartController@savePay')->name('cart.pay');
+	//Online
+	Route::get('/thanh-toan-pay', 'CartController@showFormPay')->name('get.form.pay_online');
+	Route::post('/thanh-toan-pay', 'CartController@savePayOnline');
+
 	Route::get('/complete', 'CartController@getComplete')->name('complete.cart');
+
+	Route::get('/thanhcong', 'CartController@thanhcong')->name('cart.thanhcong');
 });
-
-// Route::group(['prefix' => 'nha-tuyen-dung'], function () {
-
-// 	Route::get('/ho-so/{slug}-{id}', 'EmployerController@viewListProfile')->name('employer.detail.userprofile');
-
-// });
 
 //Thông tin tuyển việc
 Route::get('/thong-tin/{slug}-{id}', 'EmployerController@thongtinProfile')->name('employer.thongtin.profile');
-Route::post('/luu-viec-lam/{slug}-{id}', 'UserController@createProfile');
-Route::get('/delete-save/{id}', 'UserController@deleteSave')->name('user.get.delete.save');
 
+Route::group(['prefix' => 'active', 'middleware' => 'CheckLoginUser'], function () {
+
+	Route::get('/delete-save/{id}', 'UserController@deleteSave')->name('user.get.delete.save');
+
+	Route::get('/delete-applie/{id}', 'UserController@deleteApplie')->name('user.get.delete.applie');
+});
+Route::post('/luu-viec-lam/{slug}-{id}', 'UserController@createProfile');
 Route::post('/nop-ho-so/{slug}-{id}', 'UserController@applied');
-Route::get('/delete-applie/{id}', 'UserController@deleteApplie')->name('user.get.delete.applie');
 
 //Hồ sơ tuyển dụng
 Route::group(['prefix' => 'nha-tuyen-dung/profile', 'middleware' => 'CheckLoginEmployer'], function () {
@@ -210,3 +220,20 @@ Route::group(['prefix' => 'nha-tuyen-dung'], function () {
 		return view('huongdan.employer.hd-dang-nhap');
 	})->name('employer.huongdan.dangnhap');
 });
+
+//Cronjob
+Route::group(['prefix' => 'cronjob'], function () {
+
+	Route::get('/reset-vip', 'CronjobController@ResetVip')->name('resetvip');
+});
+//Chat real time
+Route::group(['prefix' => 'chat'], function () {
+	Route::get('/message', 'ChatController@index')->name('chat.index');
+	Route::get('/message/{id}', 'ChatController@getMessage')->name('chat.realtime');
+	Route::post('/message-send', 'ChatController@sendMessage')->name('chat.submit');
+
+});
+
+Route::get('/search', 'HomeController@searchByName');
+
+Route::get('email', 'EmailController@sendEMail');

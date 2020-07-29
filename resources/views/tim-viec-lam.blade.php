@@ -16,10 +16,10 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-sm-6">
-        <h1 class="page-heading">Contact Us</h1>
+        <h1 class="page-heading">Tìm việc làm</h1>
       </div>
       <div class="col-md-6 col-sm-6">
-        <div class="breadCrumb"><a href="{{ route('home.index') }}">Home</a> / <span>Search Job</span></div>
+        <div class="breadCrumb"><a href="{{ route('home.index') }}">Trang chủ</a> / <span>Tìm việc làm</span></div>
       </div>
     </div>
   </div>

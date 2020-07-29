@@ -14,7 +14,18 @@ use Illuminate\Support\Carbon;
 
 class AdminEmployerController extends Controller {
 	public function index() {
-		return view('admin::employers.index');
+		$maps = EmployerProfile::with('employer:id,em_company,em_avatar')->with('map:id,address,latitude,longitude')->where('pr_active', 1)->where('pr_status', 1)->get();
+		$encrypted = $maps->toJson();
+
+		$a = Employer::where('em_vip', 0)->pluck('id');
+		if ($a->isEmpty()) {
+			$a = 0;
+		}
+
+		// $han_vip = EmployerProfile::with('employer:id,name')->where('employer_profile.pr_employer_id', $a);
+
+		// dd($han_vip);
+		return view('admin::employers.index', compact('maps', 'han_vip'));
 	}
 
 	//Xem tài khoản
@@ -55,6 +66,10 @@ class AdminEmployerController extends Controller {
 
 		if ($request->province) {
 			$employerProfiles->where('pr_provinces', $request->province);
+		}
+
+		if ($request->active) {
+			$employerProfiles->where('pr_active', '=', $request->active);
 		}
 
 		if ($request->orderby) {
@@ -153,11 +168,24 @@ class AdminEmployerController extends Controller {
 		if ($active) {
 			$employer = Employer::find($id);
 			switch ($active) {
+			case 'vip':
+				$employer->em_vip = $employer->em_vip ? 0 : 1;
+				$employer->save();
+				break;
+			}
+		}
+		return redirect()->back();
+	}
+
+	public function actionAccount($active, $id) {
+		if ($active) {
+			$employer = Employer::find($id);
+			switch ($active) {
 			case 'delete':
 				$employer->delete();
 				break;
-			case 'vip':
-				$employer->em_vip = $employer->em_vip ? 0 : 1;
+			case 'active':
+				$employer->active = $employer->active ? 0 : 1;
 				$employer->save();
 				break;
 			}

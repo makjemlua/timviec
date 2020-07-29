@@ -2,6 +2,7 @@
 
 namespace Modules\Admin\Http\Controllers;
 
+use App\Http\Requests\RequestBlogAdmin;
 use App\Model\Article;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -10,7 +11,7 @@ use Illuminate\Support\Str;
 
 class AdminArticleController extends Controller {
 	public function index(Request $request) {
-		$articles = Article::whereRaw(1);
+		$articles = Article::whereRaw(1)->orderBy('id', "DESC");
 
 		if ($request->search) {
 			$articles->where('bo_title', 'like', '%' . $request->search . '%');
@@ -26,7 +27,7 @@ class AdminArticleController extends Controller {
 	public function create() {
 		return view('admin::article.create');
 	}
-	public function store(Request $requestArticle) {
+	public function store(RequestBlogAdmin $requestArticle) {
 		//dd($requestArticle->all());
 		$this->insertOrUpdate($requestArticle);
 		return redirect()->back()->with('success', 'Thêm thành công');
@@ -40,7 +41,7 @@ class AdminArticleController extends Controller {
 		$article = Article::find($id);
 
 		$this->insertOrUpdate($requestArticle, $id);
-		return redirect()->back();
+		return redirect()->back()->with('success', 'Cập nhập thành công');
 	}
 	public function insertOrUpdate($requestArticle, $id = '') {
 		$article = new Article();

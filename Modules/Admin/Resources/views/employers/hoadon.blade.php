@@ -6,28 +6,11 @@
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Trang chủ</a></li>
         <li class="breadcrumb-item"><a href="{{ route('admin.get.index.employer') }}">Nhà tuyển dụng</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Account</li>
+        <li class="breadcrumb-item active" aria-current="page">Hóa đơn</li>
       </ol>
     </nav>
-    <div class="row">
-    	<div class="col-md-4">
-    		<form class="form-inline">
-    			<div class="form-group">
-    				<input type="text" class="form-control" name="search" placeholder="Tên" value="{{ \Request::get('search') }}">
-    			</div>
-    			<div class="form-group">
-    				<select class="form-control" name="cate">
-    					<option value="">Tất cả</option>
-						<option value="01" {{ \Request::get('cate') == '01' ? "selected=selected" : "" }}>vip</option>
-						<option value="00" {{ \Request::get('cate') == '00' ? "selected=selected" : "" }}>Normal</option>
-    				</select>
-    			</div>
-				<button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-    		</form>
-    	</div>
 
-    </div>
-	<h2 class="page-header">Quản lý nhà tuyển dụng
+	<h2 class="page-header">Quản lý hóa đơn
 	</h2>
 <div class="table-responsive">
 	<table class="table table-striped table-sm">
